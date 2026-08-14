@@ -1,0 +1,476 @@
+1-----------------------
+REG  03-12-2024 16:04   
+                  005656
+ 1 DEPT001   T1  €149.00
+   HORS TAXE 1   €124.17
+   TVA 1          €24.83
+   TOTAL  _€_1_4_9_._0_0
+   CARTES        €149.00
+FACTURE No.       004537
+2-----------------------
+4o/Wypl8Q/22h9vfU2G0/YcN
+sGw5zNMpBe3HnviTHF4=    
+1-----------------------
+REG  03-12-2024 17:35   
+                  005657
+ 1 DEPT001   T1  €250.00
+   HORS TAXE 1   €208.33
+   TVA 1          €41.67
+   TOTAL  _€_2_5_0_._0_0
+   ESPECES       €250.00
+FACTURE No.       004538
+2-----------------------
+VPDP2/FZjGw38q1TiYShpSIU
+3vlDQSP09SX2+tJqaD4=    
+1-----------------------
+REG  06-12-2024 11:59   
+                  005658
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004539
+2-----------------------
+wzgy478jhV9mIcjgwx1ViDRH
+LOa9wzqhNcz/Q7ok4Hs=    
+1-----------------------
+REG  06-12-2024 11:59   
+                  005659
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004540
+2-----------------------
+0xkzc+q08etIUJWV/mH6uAqr
+uOf57hLan1YHZ7Moj48=    
+1-----------------------
+REG  06-12-2024 18:13   
+                  005660
+ 1 DEPT001   T1   €49.90
+ 1 DEPT001   T1   €49.90
+ 1 DEPT001   T1   €49.90
+ 1 DEPT001   T1   €49.90
+   HORS TAXE 1   €166.33
+   TVA 1          €33.27
+   TOTAL  _€_1_9_9_._6_0
+   ESPECES       €199.60
+FACTURE No.       004541
+2-----------------------
+bA1ARr0PRIqCaV8NZGVElAU8
+oIMiBzcbTQnj5pwM/HQ=    
+1-----------------------
+REG  09-12-2024 14:35   
+                  005661
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1   €59.90
+ 1 DEPT001   T1   €59.90
+   HORS TAXE 1   €648.17
+   TVA 1         €129.63
+   TOTAL  _€_7_7_7_._8_0
+   ESPECES       €777.80
+FACTURE No.       004542
+2-----------------------
+7eqV+Qshco1d1/GJCDFzGa3I
+TqLPoEdZYpJF1Bsyr7Y=    
+1-----------------------
+REG  11-12-2024 11:36   
+                  005662
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1 €1,096.67
+   TVA 1         €219.33
+   TOTAL                
+      _€_1_,_3_1_6_._0_0
+   CARTES      €1,316.00
+FACTURE No.       004543
+2-----------------------
++o+lQ6VQcN+e/S+poGloq91S
+JVnTDXOtjb2Oz4CKZYs=    
+1-----------------------
+REG  12-12-2024 12:56   
+                  005663
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004544
+2-----------------------
+49E/DmI7hpZbWufRQz3oVQQ4
+IYFXfcBokvZxotOZC50=    
+1-----------------------
+REG  17-12-2024 14:57   
+                  005664
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004545
+2-----------------------
+lqGd7VbOFTs7e4XvSyVyz/8u
+KtBmjyuzm1a6tgxm/c8=    
+1-----------------------
+REG  18-12-2024 11:36   
+                  005665
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+   HORS TAXE 1   €749.58
+   TVA 1         €149.92
+   TOTAL  _€_8_9_9_._5_0
+   ESPECES       €899.50
+FACTURE No.       004546
+2-----------------------
+n5dxjamTd3QQiHCI3n7PDMKZ
+A74VZGOKUf4YjmGaXmI=    
+1-----------------------
+REG  18-12-2024 11:36   
+                  005666
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+   HORS TAXE 1   €749.58
+   TVA 1         €149.92
+   TOTAL  _€_8_9_9_._5_0
+   ESPECES       €899.50
+FACTURE No.       004547
+2-----------------------
+OHSnvjkF5Yv8c3OCYaPDQ+06
+N1S5Afz+e+8vf6eBTNM=    
+1-----------------------
+REG  18-12-2024 11:36   
+                  005667
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €179.90
+   HORS TAXE 1   €299.83
+   TVA 1          €59.97
+   TOTAL  _€_3_5_9_._8_0
+   ESPECES       €359.80
+FACTURE No.       004548
+2-----------------------
+RCcfSjZtL4lAxRh4tbIU+PfN
+cj+BAVWTDoUTR3ApGQk=    
+1-----------------------
+REG  18-12-2024 14:52   
+                  005668
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004549
+2-----------------------
+76CP55nKHdYls+Sh6rOQizSB
+POF4NhyJwnhbmjqSm+c=    
+1-----------------------
+REG  18-12-2024 14:56   
+                  005669
+ 1 DEPT001   T1   €88.00
+   HORS TAXE 1    €73.33
+   TVA 1          €14.67
+   TOTAL    _€_8_8_._0_0
+   CARTES         €88.00
+FACTURE No.       004550
+2-----------------------
+Nk7wWnNbVdTB/ccKLIgqz5Jt
+N1BPbjCSkq41MTaix70=    
+1-----------------------
+REG  18-12-2024 15:42   
+                  005670
+ 1 DEPT001   T1  €179.90
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €424.08
+   TVA 1          €84.82
+   TOTAL  _€_5_0_8_._9_0
+   ESPECES       €508.90
+FACTURE No.       004551
+2-----------------------
+WKkGUsiw0gKAYtV3aO+oDenc
+syirxD/sQOZ5xiKxScU=    
+1-----------------------
+REG  19-12-2024 16:37   
+                  005671
+ 1 DEPT001   T1   €49.80
+ 1 DEPT001   T1   €49.80
+   HORS TAXE 1    €83.00
+   TVA 1          €16.60
+   TOTAL    _€_9_9_._6_0
+   ESPECES        €99.60
+FACTURE No.       004552
+2-----------------------
+NTRpQ0CC3/wPUloPO2x/TNxx
+25hne04MaaPv+Tb4qjw=    
+1-----------------------
+REG  19-12-2024 17:31   
+                  005672
+ 1 DEPT001   T1  €395.00
+   HORS TAXE 1   €329.17
+   TVA 1          €65.83
+   TOTAL  _€_3_9_5_._0_0
+   ESPECES       €395.00
+FACTURE No.       004553
+2-----------------------
+yA0aEvj5CW9dlw+j8Q0fSXUD
+UzmiS/vrjgv3rPo1s/k=    
+1-----------------------
+REG  19-12-2024 18:17   
+                  005673
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004554
+2-----------------------
+w4DO53jH6OIf4FAnrTg/jfVZ
+Wfp/hO2Wp1HnyXzyTjI=    
+1-----------------------
+REG  19-12-2024 18:17   
+                  005674
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004555
+2-----------------------
+81bdjByN9O+hhMBzfNrnRezF
+4GXp8P5K4IvWnWlJJhc=    
+1-----------------------
+REG  20-12-2024 10:07   
+                  005675
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004556
+2-----------------------
+aMLGHDsmrXn+cheaHaM6AaGZ
+PvQa3W5G9jivrE5anVk=    
+1-----------------------
+REG  20-12-2024 10:07   
+                  005676
+ 1 DEPT001   T1  €329.00
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €548.33
+   TVA 1         €109.67
+   TOTAL  _€_6_5_8_._0_0
+   ESPECES       €658.00
+FACTURE No.       004557
+2-----------------------
+SeH4a4RV9YB8TPltZN/2Tlty
+3OOFiM/USptYNAT3Sgk=    
+1-----------------------
+REG  20-12-2024 10:16   
+                  005677
+ 1 DEPT001   T1  €250.00
+   HORS TAXE 1   €208.33
+   TVA 1          €41.67
+   TOTAL  _€_2_5_0_._0_0
+   ESPECES       €250.00
+FACTURE No.       004558
+2-----------------------
+h56cI8d+42t94jtYwPGuKvXf
+LzbC6JGL9jgBabOh/bU=    
+1-----------------------
+REG  23-12-2024 14:50   
+                  005678
+ 1 DEPT001   T1  €250.00
+   HORS TAXE 1   €208.33
+   TVA 1          €41.67
+   TOTAL  _€_2_5_0_._0_0
+   ESPECES       €250.00
+FACTURE No.       004559
+2-----------------------
+BY3iyCpwk5NIE9mYOXTcCo4i
+pboDmBsWAG3zzj91eHY=    
+1-----------------------
+REG  27-12-2024 11:13   
+                  005679
+ 1 DEPT001   T1   €49.90
+   HORS TAXE 1    €41.58
+   TVA 1           €8.32
+   TOTAL    _€_4_9_._9_0
+   ESPECES        €49.90
+FACTURE No.       004560
+2-----------------------
+R44UsaWtTlj58gyTmvFOITs7
+caItMTxSvXnXN0J7MwU=    
+1-----------------------
+REG  27-12-2024 11:18   
+                  005680
+ 1 DEPT001   T1  €250.00
+   HORS TAXE 1   €208.33
+   TVA 1          €41.67
+   TOTAL  _€_2_5_0_._0_0
+   ESPECES       €250.00
+FACTURE No.       004561
+2-----------------------
+Bi9wCrWH+icnO8zP5RvVzv80
+Fzc2Ve+R3Qz/5AGj/JI=    
+1-----------------------
+REG  30-12-2024 17:51   
+                  005681
+ 1 DEPT001   T1  €329.00
+   HORS TAXE 1   €274.17
+   TVA 1          €54.83
+   TOTAL  _€_3_2_9_._0_0
+   CARTES        €329.00
+FACTURE No.       004562
+2-----------------------
++4mn/fWgc01WCxB8BpXw1ac3
+ATIXALc8fs23h0fY/yw=    
+1-----------------------
+XZ   02-01-2025 18:05   
+                  005682
+XX1  PERIODIC 1X        
+XX1  DEPARTEMENTS       
+                 0000115
+XX1  FONC FIXES         
+                 0000111
+XX1  TRANSACTION        
+                 0000112
+2-----------------------
+VdC9QlC9zSDdrFr92V/q52fM
+Cu25kynQmX70fRV+HU4=    
+1-----------------------
+XZ   02-01-2025 18:06   
+                  005683
+XX2  PERIODIC 2X        
+XX2  DEPARTEMENTS       
+                 0000215
+XX2  FONC FIXES         
+                 0000211
+XX2  TRANSACTION        
+                 0000212
+2-----------------------
+O13yWpewR9t4Bsd2OaT80WGL
+FmkP3yh16IzB+IrWbCs=    
+1-----------------------
+XZ   02-01-2025 18:07   
+                  005684
+ZZ1  PERIODIC 1Z        
+ZZ1  DEPARTEMENTS   0084
+                 0001115
+ZZ1  FONC FIXES     0084
+                 0001111
+CA BRUT           55    
+              €12,993.60
+CA NET      No    26    
+              €12,993.60
+ESP.TIROIR    €11,111.60
+CB.TIROIR      €1,882.00
+CHQ.TIROIR         €0.00
+CR.TIROIR(1)       €0.00
+CR.TIROIR(2)       €0.00
+CR.TIROIR(3)       €0.00
+CR.TIROIR(4)       €0.00
+------------------------
+RETOUR CLE  No     0    
+                   €0.00
+CLIENTS     CT    26    
+RETOUR+ANNUL       €0.00
+NUL TICKET  No     0    
+                   €0.00
+------------------------
+HORS TAXE 1   €10,827.95
+TVA 1          €2,165.65
+HORS TAXE 2        €0.00
+TVA 2              €0.00
+HORS TAXE 3        €0.00
+TVA 3              €0.00
+------------------------
+GT    €00000002868040.72
+LAST GT                 
+      €00000002618066.82
+ZZ1  TRANSACTION    0084
+                 0001112
+2-----------------------
+wp19lxhgwc5FNkCw7keQrOh9
+HGRRCHsdl3aIWgy/8B8=    
+1-----------------------
+XZ   02-01-2025 18:07   
+                  005685
+ZZ2  PERIODIC 2Z        
+ZZ2  DEPARTEMENTS   0080
+                 0001215
+ZZ2  FONC FIXES     0080
+                 0001211
+CA BRUT           55    
+              €12,993.60
+CA NET      No    26    
+              €12,993.60
+ESP.TIROIR    €11,111.60
+CB.TIROIR      €1,882.00
+CHQ.TIROIR         €0.00
+CR.TIROIR(1)       €0.00
+CR.TIROIR(2)       €0.00
+CR.TIROIR(3)       €0.00
+CR.TIROIR(4)       €0.00
+------------------------
+RETOUR CLE  No     0    
+                   €0.00
+CLIENTS     CT    26    
+RETOUR+ANNUL       €0.00
+NUL TICKET  No     0    
+                   €0.00
+------------------------
+HORS TAXE 1   €10,827.95
+TVA 1          €2,165.65
+HORS TAXE 2        €0.00
+TVA 2              €0.00
+HORS TAXE 3        €0.00
+TVA 3              €0.00
+------------------------
+GT    €00000002868040.72
+LAST GT                 
+      €00000002618066.82
+ZZ2  TRANSACTION    0080
+                 0001212
+2-----------------------
+dWRzm9vutgz66T6a3SAOyyKX
+mNYXQDfBN/VQM2X0rTU=    
+1-----------------------
+Z    02-01-2025 18:08   
+                  005686
+Z    VENT MENSUEL   0101
+                 0001020
+2-----------------------
+f66mnxCtUpZIcdX8+rCthPWU
+IF/RzFJeskAuZn1tZxY=    
+1-----------------------
+X    02-01-2025 18:09   
+                  005687
+X    VENT MENSUEL       
+                 0000020
+2-----------------------
+IjeEwzB/2ikN/Jdb9ETL5r6V
+c94qWq0BmWFkMCMEjyM=    
+1-----------------------
+Z    02-01-2025 18:09   
+                  005688
+Z    EJ Clear           
+                 0041058
+2-----------------------
+ebeHhWJUO7Z/60oZITwJo2sF
+HNyhFhWgxiKzN6GPUFo=    

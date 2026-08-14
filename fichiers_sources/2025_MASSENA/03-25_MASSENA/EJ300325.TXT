@@ -1,0 +1,32 @@
+1-----------------------
+Z    30-03-2025 00:05   
+                  005789
+Z    VENT MENSUEL   0104
+                 0001020
+2-----------------------
+KAvdI47QdTAAUhheP+Cbd5jv
+0CqukgsRpQ0zpGNQzTE=    
+1-----------------------
+Z    30-03-2025 00:06   
+                  005790
+Z    VENT MENSUEL   0105
+                 0001020
+2-----------------------
+I7Ha8ZVFjSgK/Ovr0OwieQNU
+Hc98LYOZllvUBu5wiSg=    
+1-----------------------
+X    30-03-2025 00:06   
+                  005791
+X    VENT MENSUEL       
+                 0000020
+2-----------------------
+EcZAmJg2DM0Sq70DHVk5Vm2J
+7u4FZafw1nJKq43+PY4=    
+1-----------------------
+Z    30-03-2025 00:07   
+                  005792
+Z    EJ Clear           
+                 0041058
+2-----------------------
+C9h30nGqX0p/aftL752I52KP
+6fQZkazbqTQn+MeI+XQ=    

@@ -1,0 +1,560 @@
+{
+  "generatedAt": "2026-08-14T12:20:46.832469+00:00",
+  "generator": "Python/openpyxl",
+  "workbooks": [
+    {
+      "fileName": "TTS_EJ_ENTETES_TICKETS_MASSENA.xlsx",
+      "sheetCount": 13,
+      "sheets": [
+        "ENTETES_MASSENA_0",
+        "Entetes_TriNumInterne",
+        "Entetes_CtrlCoherence",
+        "Entetes_sequentialite",
+        "TD_OccurenceNumInterne",
+        "DoublonNumInterne",
+        "TD_OccurenceNumTicket",
+        "DoublonNumTicket",
+        "Entetes_CplteAnneeMois",
+        "TD_TotalEnctTTC",
+        "enct_mensuels_MASSENA",
+        "TD_TotalHtTvaTtc",
+        "recettes_mensuelles_MASSENA"
+      ],
+      "requestedSheets": [
+        "ENTETES_TICKETS_MASSENA_0",
+        "ENTETES_TICKETS_MASSENA_TriCrstNumInterne",
+        "ENTETES_TICKETS_MASSENA_CtrlCoherenceEntete",
+        "ENTETES_TICKETS_MASSENA_sequentialite",
+        "TD_OccurenceNumInterne",
+        "DoublonNumInterne",
+        "TD_OccurenceNumTicket",
+        "DoublonNumTicket",
+        "ENTETES_TICKETS_MASSENA_CplteAnneeMoisTotalHT",
+        "TD_TotalEnctTtc_ParAnneeMois",
+        "enct_mensuels_MASSENA_232425",
+        "TD_TotalHtTvaTtc_ParAnneeMois",
+        "recettes_mensuelles_MASSENA_232425"
+      ],
+      "sha256": "f1a2fd7d3fbd2b9e63affe7cb830c474c5ae28853c305d31ca4259c4466cd306"
+    },
+    {
+      "fileName": "TTS_EJ_LIGNES_TICKETS_MASSENA.xlsx",
+      "sheetCount": 7,
+      "sheets": [
+        "LIGNES_MASSENA_0",
+        "Lignes_TriNumInterne",
+        "Lignes_CtrlCoherence",
+        "TD_TotalLignesParTicket",
+        "CtrlCoherence_EnteteLigne",
+        "TD_OccurenceLibelle",
+        "TD_OccurenceTxTVA"
+      ],
+      "requestedSheets": [
+        "LIGNES_TICKETS_MASSENA_0",
+        "LIGNES_TICKETS_MASSENA_TriCrstNumInterne",
+        "LIGNES_TICKETS_MASSENA_CtrlCoherenceLigne",
+        "TD_TotalLignesParNumTicket",
+        "CtrlCoherence_EnteteLigne",
+        "TD_OccurenceLibelleArticle",
+        "TD_OccurenceTxTvaArticle"
+      ],
+      "sha256": "6aaa152b1529edb0213cf0a733358108ce71c11aee5eee0322d1370cfd67139c"
+    },
+    {
+      "fileName": "TTS_EJ_ENTETES_TICKETS_MATURIN.xlsx",
+      "sheetCount": 13,
+      "sheets": [
+        "ENTETES_MATURIN_0",
+        "Entetes_TriNumInterne",
+        "Entetes_CtrlCoherence",
+        "Entetes_sequentialite",
+        "TD_OccurenceNumInterne",
+        "DoublonNumInterne",
+        "TD_OccurenceNumTicket",
+        "DoublonNumTicket",
+        "Entetes_CplteAnneeMois",
+        "TD_TotalEnctTTC",
+        "enct_mensuels_MATURIN",
+        "TD_TotalHtTvaTtc",
+        "recettes_mensuelles_MATURIN"
+      ],
+      "requestedSheets": [
+        "ENTETES_TICKETS_MATURIN_0",
+        "ENTETES_TICKETS_MATURIN_TriCrstNumInterne",
+        "ENTETES_TICKETS_MATURIN_CtrlCoherenceEntete",
+        "ENTETES_TICKETS_MATURIN_sequentialite",
+        "TD_OccurenceNumInterne",
+        "DoublonNumInterne",
+        "TD_OccurenceNumTicket",
+        "DoublonNumTicket",
+        "ENTETES_TICKETS_MATURIN_CplteAnneeMoisTotalHT",
+        "TD_TotalEnctTtc_ParAnneeMois",
+        "enct_mensuels_MATURIN_232425",
+        "TD_TotalHtTvaTtc_ParAnneeMois",
+        "recettes_mensuelles_MATURIN_232425"
+      ],
+      "sha256": "244dbfc313086b4d4fc69cdc5d05a35c8556c8071853d5f0852c2c3cedff5857"
+    },
+    {
+      "fileName": "TTS_EJ_LIGNES_TICKETS_MATURIN.xlsx",
+      "sheetCount": 7,
+      "sheets": [
+        "LIGNES_MATURIN_0",
+        "Lignes_TriNumInterne",
+        "Lignes_CtrlCoherence",
+        "TD_TotalLignesParTicket",
+        "CtrlCoherence_EnteteLigne",
+        "TD_OccurenceLibelle",
+        "TD_OccurenceTxTVA"
+      ],
+      "requestedSheets": [
+        "LIGNES_TICKETS_MATURIN_0",
+        "LIGNES_TICKETS_MATURIN_TriCrstNumInterne",
+        "LIGNES_TICKETS_MATURIN_CtrlCoherenceLigne",
+        "TD_TotalLignesParNumTicket",
+        "CtrlCoherence_EnteteLigne",
+        "TD_OccurenceLibelleArticle",
+        "TD_OccurenceTxTvaArticle"
+      ],
+      "sha256": "9c70c8a4b490756c2ebf43093dd489542e45f7c2e533545ab071961e382eb16d"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2023_MASSENA_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2023_MASSENA_0",
+        "Z1_SyntheseMois_TOUS_2023_MASSENA_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2023",
+        "TD_Z1_TotalMontantParMoisAnnee_2023",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZ",
+        "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2023"
+      ],
+      "sha256": "d1044fd7e89a6cce42ed3ba78c760b4e1ac8e60e41ea3de8ba2ee06039923979"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z2_2023_MASSENA_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_ZZ1_vs_ZZ2",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2023_MASSENA_0",
+        "Z2_TransactionsMois_TOUS_2023_MASSENA_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ",
+        "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2023",
+        "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023"
+      ],
+      "sha256": "2340445a6a416ddbd277763d159c91238ac91f8923c913bf262cbc7ca66b96ce"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2024_MASSENA_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2024_MASSENA_0",
+        "Z1_SyntheseMois_TOUS_2024_MASSENA_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2024",
+        "TD_Z1_TotalMontantParMoisAnnee_2024",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZ",
+        "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2024"
+      ],
+      "sha256": "2602f1c564e9af7e45cd8cdf4ee264f3445d9dd8f63740b2fa6c5c8bf5defb65"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z2_2024_MASSENA_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_ZZ1_vs_ZZ2",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2024_MASSENA_0",
+        "Z2_TransactionsMois_TOUS_2024_MASSENA_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ",
+        "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2024",
+        "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2024"
+      ],
+      "sha256": "b380f2ce09dfe9cf1192b1af5439c775d997a773f53d8c2199c54b2917710d9c"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2025_MASSENA_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2025_MASSENA_0",
+        "Z1_SyntheseMois_TOUS_2025_MASSENA_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2025",
+        "TD_Z1_TotalMontantParMoisAnnee_2025",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZ",
+        "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2025"
+      ],
+      "sha256": "1a25afe3ece09ed0a17f8a28bfa55d33d790960edaf40fbd569fdb6a33660370"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z2_2025_MASSENA_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_ZZ1_vs_ZZ2",
+        "Compare_ZZ1_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2025_MASSENA_0",
+        "Z2_TransactionsMois_TOUS_2025_MASSENA_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ",
+        "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2025",
+        "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2025"
+      ],
+      "sha256": "821d27efe4777ac13ea1845d8f37839aa6013a942791777feb94cc5c50202ec3"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2023_MATURIN_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2023_MATURIN_0",
+        "Z1_SyntheseMois_TOUS_2023_MATURIN_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2023",
+        "TD_Z1_TotalMontantParMoisAnnee_2023",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2023_ModeZ",
+        "Compare_Montant_MATURIN_Z1ModeZvsEJ_2023"
+      ],
+      "sha256": "271d0678c0752fbd96dc7e24f0a4aaaf3b6dc2244ef3497b97fd969a386db7cd"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.xlsx",
+      "sheetCount": 7,
+      "sheets": [
+        "Z2_2023_MATURIN_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2023_MATURIN_0",
+        "Z2_TransactionsMois_TOUS_2023_MATURIN_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ",
+        "Compare_Montant_MATURIN_Z2ModeZvsEJ_2023"
+      ],
+      "sha256": "405a6eaeac35ce7ea879bf92baced1f47c22a345c91f0479f5c46dc47e0ac170"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2024_MATURIN_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2024_MATURIN_0",
+        "Z1_SyntheseMois_TOUS_2024_MATURIN_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2024",
+        "TD_Z1_TotalMontantParMoisAnnee_2024",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2024_ModeZ",
+        "Compare_Montant_MATURIN_Z1ModeZvsEJ_2024"
+      ],
+      "sha256": "ba610f7c836fff3f0bdcf7b6098266396ca2074007d2be56f2f6f678e4ae9b99"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.xlsx",
+      "sheetCount": 7,
+      "sheets": [
+        "Z2_2024_MATURIN_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2024_MATURIN_0",
+        "Z2_TransactionsMois_TOUS_2024_MATURIN_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ",
+        "Compare_Montant_MATURIN_Z2ModeZvsEJ_2024"
+      ],
+      "sha256": "7cfa83a26143efbaee8a94ac5432e7c227feab99184a9696a09f465acf2e4cf6"
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.xlsx",
+      "sheetCount": 8,
+      "sheets": [
+        "Z1_2025_MATURIN_0",
+        "Z1_CplteAnneeMois",
+        "TD_OccurenceFichMode",
+        "TD_Z1_TotalMontant",
+        "Z1_Total_ModeZZ1",
+        "Z1_Total_ModeZZ2",
+        "Z1_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z1_SyntheseMois_TOUS_2025_MATURIN_0",
+        "Z1_SyntheseMois_TOUS_2025_MATURIN_CplteAnneeMoisZ",
+        "TD_OccurenceEfichierEmodeParMoisAnnee_2025",
+        "TD_Z1_TotalMontantParMoisAnnee_2025",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZZ1",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZZ2",
+        "Z1_TotalMontantParMoisAnnee_2025_ModeZ",
+        "Compare_Montant_MATURIN_Z1ModeZvsEJ_2025"
+      ],
+      "sha256": "1850a478c30a771b6c4053d54f778211a9133c88ef648ba3e2a43c60711081a4"
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.xlsx",
+      "sheetCount": 7,
+      "sheets": [
+        "Z2_2025_MATURIN_0",
+        "Z2_CplteAnneeMois",
+        "TD_TotalNatureTransac",
+        "Z2_Total_ModeZZ1",
+        "Z2_Total_ModeZZ2",
+        "Z2_Total_ModeZ",
+        "Compare_Z_vs_EJ"
+      ],
+      "requestedSheets": [
+        "Z2_TransactionsMois_TOUS_2025_MATURIN_0",
+        "Z2_TransactionsMois_TOUS_2025_MATURIN_CplteAnneeMoisZ",
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2",
+        "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ",
+        "Compare_Montant_MATURIN_Z2ModeZvsEJ_2025"
+      ],
+      "sha256": "35e8d5f96eaeb7217cfd29145ff12e933a5e3ba6963d5d2546d4dae40c54b7c1"
+    },
+    {
+      "fileName": "recettes_mensuelles_tous_boutique_232425.xlsx",
+      "sheetCount": 1,
+      "sheets": [
+        "recettes_mensuelles_tous"
+      ],
+      "requestedSheets": [
+        "recettes_mensuelles_tous_boutique_232425"
+      ],
+      "sha256": "bf00747bae91a0849b7dd0cae7236810c9781ae630aaf04df96db2750923206a"
+    },
+    {
+      "fileName": "CompareCA_Gesco_CA3.xlsx",
+      "sheetCount": 1,
+      "sheets": [
+        "CompareCA_Gesco_CA3"
+      ],
+      "requestedSheets": [
+        "CompareCA_Gesco_CA3"
+      ],
+      "sha256": "9b86f2abf6b9164f2589d5e92c281604abcbb196e2d0e2776bb0a2059ca3df47"
+    }
+  ],
+  "csvFiles": [
+    "EJ_ENTETES_TICKETS_MASSENA.csv",
+    "EJ_LIGNES_TICKETS_MASSENA.csv",
+    "Z1_SyntheseMois_TOUS_2023_MASSENA.csv",
+    "Z2_TransactionsMois_TOUS_2023_MASSENA.csv",
+    "Z1_SyntheseMois_TOUS_2024_MASSENA.csv",
+    "Z2_TransactionsMois_TOUS_2024_MASSENA.csv",
+    "Z1_SyntheseMois_TOUS_2025_MASSENA.csv",
+    "Z2_TransactionsMois_TOUS_2025_MASSENA.csv",
+    "EJ_ENTETES_TICKETS_MATURIN.csv",
+    "EJ_LIGNES_TICKETS_MATURIN.csv",
+    "Z1_SyntheseMois_TOUS_2023_MATURIN.csv",
+    "Z2_TransactionsMois_TOUS_2023_MATURIN.csv",
+    "Z1_SyntheseMois_TOUS_2024_MATURIN.csv",
+    "Z2_TransactionsMois_TOUS_2024_MATURIN.csv",
+    "Z1_SyntheseMois_TOUS_2025_MATURIN.csv",
+    "Z2_TransactionsMois_TOUS_2025_MATURIN.csv"
+  ],
+  "checks": [
+    {
+      "fileName": "TTS_EJ_ENTETES_TICKETS_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_EJ_LIGNES_TICKETS_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_EJ_ENTETES_TICKETS_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_EJ_LIGNES_TICKETS_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "recettes_mensuelles_tous_boutique_232425.xlsx",
+      "formulaErrors": 0
+    },
+    {
+      "fileName": "CompareCA_Gesco_CA3.xlsx",
+      "formulaErrors": 0
+    }
+  ],
+  "summary": {
+    "excelFiles": 18,
+    "excelSheets": 135,
+    "csvFiles": 16
+  },
+  "controle": {
+    "blocs_lus": 2511,
+    "tickets_selectionnes_et_ecrits": 1875,
+    "blocs_non_selectionnes": 636,
+    "inventaire_types": {
+      "REG": 2151,
+      "X": 32,
+      "XZ": 133,
+      "Z": 157,
+      "_R_F": 38
+    },
+    "types_inconnus": [],
+    "rapprochements_ok": 57,
+    "rapprochements_total": 57,
+    "periodes_avec_cloture": 60,
+    "periodes_sans_cloture": 4,
+    "periodes_ambigues": 0,
+    "fichiers_multi_mois_z1_z2": 6,
+    "statut": "CONFORME SUR LE PÉRIMÈTRE CAISSE - À COMPLÉTER",
+    "elements_absents": [
+      "FEC",
+      "CA3",
+      "justificatifs externes"
+    ]
+  }
+}
