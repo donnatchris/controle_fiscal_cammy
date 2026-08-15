@@ -22,7 +22,7 @@ SOURCE_ROOTS = (
     "2025_MATURIN",
 )
 EXPECTED_SOURCE_COUNTS = {".txt": 63, ".csv": 449, ".pdf": 1}
-EXPECTED_DB_COUNTS = {"tickets": 1875, "lignes_ticket": 4131}
+EXPECTED_DB_COUNTS = {"tickets": 2511, "lignes_ticket": 4131}
 SUMMARY_FILES = (
     "RESUME_REPRISE_EJ.json",
     "RESUME_REPRISE_Z.json",
@@ -115,11 +115,11 @@ def historical_summaries(control_dir: Path | None) -> dict[str, Any]:
 
 
 def audit(root: Path) -> dict[str, Any]:
-    source_dir = root / "traitement_chris" / "fichiers_sources"
+    source_dir = root / "fichiers_sources"
     specification = source_dir / "751 - CAMMY FRANCE DEVELOPPEMENT LTD.pdf"
     inventory = source_inventory(source_dir)
     source_status = git_source_status(root, source_dir) if source_dir.is_dir() else []
-    db_counts = database_counts(root / "traitement_chris" / "database" / "db.sqlite")
+    db_counts = database_counts(root / "database" / "db.sqlite")
     historical = historical_summaries(newest_control_directory(root))
 
     errors: list[str] = []

@@ -9,7 +9,7 @@ Le programme actif se trouve intégralement dans `src/`. Le dossier `output/` es
 - Société : CAMMY FRANCE DEVELOPPEMENT LTD.
 - Boutiques : MASSENA et MATURIN.
 - Exercices : 2023, 2024 et janvier à août 2025.
-- Sources actives : 63 fichiers EJ, 449 fichiers CSV Z et le cahier des charges PDF, soit 513 fichiers au total.
+- Sources actives : 63 fichiers EJ, 449 fichiers CSV Z, une notice explicative et le cahier des charges PDF, soit 514 fichiers au total (hors `.DS_Store`).
 - Données attendues après reconstruction : 2 511 blocs EJ, 4 131 lignes de détail, 96 fichiers Z1 et 96 fichiers Z2.
 
 Le traitement couvre actuellement le périmètre caisse EJ/Z. Les FEC, les déclarations CA3 et les justificatifs externes de correction ou d'annulation ne sont pas présents. Le statut maximal est donc `CONFORME SUR LE PÉRIMÈTRE CAISSE - À COMPLÉTER`.
@@ -124,7 +124,6 @@ Avec l'option `--qa`, chaque feuille est rendue en PNG par LibreOffice et Popple
 ## Architecture du projet
 
 ```text
-traitement_chris/
 ├── src/                         Programme Python actif
 │   ├── traitement.py            Point d'entrée du workflow complet
 │   ├── classes/                  Modèles et parseurs EJ/Z
@@ -208,7 +207,7 @@ Node.js n'est pas nécessaire. Le mode optionnel `--qa` nécessite en plus Libre
 
 ## Exécution
 
-Toutes les commandes suivantes sont à lancer depuis `traitement_chris/`.
+Toutes les commandes suivantes sont à lancer depuis la racine du projet, c'est-à-dire le dossier contenant `pyproject.toml`.
 
 ### Traitement complet
 
@@ -275,10 +274,10 @@ uv run python src/scripts/generer_rapport_fiscal_751.py \
 Exécuter toute la suite de tests :
 
 ```bash
-uv run pytest -v
+uv run python -m pytest -v
 ```
 
-Auditer le projet depuis la racine du dépôt `marco/` :
+Auditer le projet depuis la racine du dépôt :
 
 ```bash
 python3 .agents/skills/piloter-reprise-fiscale-751/scripts/audit_project.py
@@ -292,3 +291,198 @@ Les principaux seuils de non-régression sont les volumes SQLite, les 1 875 tick
 - Les déclarations CA3 ne sont pas présentes ; les cellules correspondantes du classeur de comparaison restent volontairement vides.
 - Les règles de gestion et justificatifs externes nécessaires à une conclusion complète sur les corrections et annulations ne sont pas fournis.
 - Le traitement ne constitue pas, à lui seul, une attestation de conformité fiscale ou juridique au-delà du périmètre de caisse effectivement contrôlé.
+
+## Accès direct à la base SQLite
+
+La base générée se trouve dans `database/db.sqlite`. Elle peut être interrogée directement avec le client en ligne de commande `sqlite3`. Pour éviter toute modification accidentelle, toujours l'ouvrir avec l'option `-readonly`. Une modification manuelle serait non tracée et pourrait être écrasée lors du prochain `uv run traitement`.
+
+### Installer le client SQLite
+
+Vérifier d'abord si le client est déjà disponible :
+
+```bash
+sqlite3 --version
+```
+
+Sur macOS avec Homebrew :
+
+```bash
+brew install sqlite
+```
+
+Sur Debian ou Ubuntu :
+
+```bash
+sudo apt update
+sudo apt install sqlite3
+```
+
+La documentation du client est disponible sur [sqlite.org](https://www.sqlite.org/cli.html).
+
+### Ouvrir la base en lecture seule
+
+Depuis la racine du projet :
+
+```bash
+sqlite3 -readonly database/db.sqlite
+```
+
+Quelques commandes utiles dans le terminal SQLite :
+
+```text
+.headers on
+.mode column
+.nullvalue NULL
+.tables
+.schema tickets
+.schema lignes_ticket
+.quit
+```
+
+Une requête peut aussi être exécutée directement depuis le terminal, sans ouvrir de session interactive :
+
+```bash
+sqlite3 -readonly -header -column database/db.sqlite \
+  "SELECT boutique, type, COUNT(*) AS nombre FROM tickets GROUP BY boutique, type ORDER BY boutique, type;"
+```
+
+### Requêtes de contrôle courantes
+
+Compter les lignes de chaque table principale :
+
+```sql
+SELECT 'tickets' AS table_sqlite, COUNT(*) AS lignes FROM tickets
+UNION ALL
+SELECT 'lignes_ticket', COUNT(*) FROM lignes_ticket
+UNION ALL
+SELECT 'z1_entetes', COUNT(*) FROM z1_entetes
+UNION ALL
+SELECT 'z1_lignes', COUNT(*) FROM z1_lignes
+UNION ALL
+SELECT 'z2_entetes', COUNT(*) FROM z2_entetes
+UNION ALL
+SELECT 'z2_lignes', COUNT(*) FROM z2_lignes;
+```
+
+Inventorier les blocs EJ par boutique et par type :
+
+```sql
+SELECT boutique, type, COUNT(*) AS nombre
+FROM tickets
+GROUP BY boutique, type
+ORDER BY boutique, type;
+```
+
+Rechercher les ruptures chronologiques de `E_NUM_INTERNE` :
+
+```sql
+WITH nums AS (
+    SELECT
+        id,
+        boutique,
+        nomFichier,
+        E_DATE_TICKET,
+        E_HEURE_TICKET,
+        CAST(E_NUM_INTERNE AS INTEGER) AS num,
+        LAG(CAST(E_NUM_INTERNE AS INTEGER)) OVER (
+            PARTITION BY boutique
+            ORDER BY E_DATE_TICKET, E_HEURE_TICKET, id
+        ) AS precedent
+    FROM tickets
+    WHERE E_NUM_INTERNE IS NOT NULL
+      AND E_NUM_INTERNE != ''
+)
+SELECT
+    boutique,
+    nomFichier,
+    E_DATE_TICKET,
+    E_HEURE_TICKET,
+    precedent,
+    num,
+    num - precedent AS ecart
+FROM nums
+WHERE precedent IS NOT NULL
+  AND num != precedent + 1
+ORDER BY boutique, E_DATE_TICKET, E_HEURE_TICKET, num;
+```
+
+Cette requête contrôle la séquence interne de tous les blocs du journal électronique. Une absence de résultat signifie qu'aucune rupture n'a été détectée. `E_NUM_INTERNE` ne doit pas être confondu avec `E_NUM_TICKET`, qui est le numéro du ticket de vente.
+
+Rechercher les ruptures de `E_NUM_TICKET` pour les ventes et retours de vente :
+
+```sql
+WITH ventes AS (
+    SELECT
+        id,
+        boutique,
+        nomFichier,
+        E_DATE_TICKET,
+        E_HEURE_TICKET,
+        CAST(E_NUM_TICKET AS INTEGER) AS num,
+        LAG(CAST(E_NUM_TICKET AS INTEGER)) OVER (
+            PARTITION BY boutique
+            ORDER BY E_DATE_TICKET, E_HEURE_TICKET, id
+        ) AS precedent
+    FROM tickets
+    WHERE type IN ('REG', '_R_F')
+      AND COALESCE(E_NUM_TICKET, '') != ''
+)
+SELECT
+    boutique,
+    nomFichier,
+    E_DATE_TICKET,
+    E_HEURE_TICKET,
+    precedent,
+    num,
+    num - precedent AS ecart
+FROM ventes
+WHERE precedent IS NOT NULL
+  AND num != precedent + 1
+ORDER BY boutique, E_DATE_TICKET, E_HEURE_TICKET, num;
+```
+
+Rechercher les doublons de numéro de ticket de vente :
+
+```sql
+SELECT boutique, E_NUM_TICKET, COUNT(*) AS occurrences
+FROM tickets
+WHERE type IN ('REG', '_R_F')
+  AND COALESCE(E_NUM_TICKET, '') != ''
+GROUP BY boutique, E_NUM_TICKET
+HAVING COUNT(*) > 1
+ORDER BY boutique, CAST(E_NUM_TICKET AS INTEGER);
+```
+
+Compter les retours `_R_F` et distinguer ceux qui portent un numéro de ticket de vente :
+
+```sql
+SELECT
+    boutique,
+    COUNT(*) AS blocs_retour,
+    SUM(
+        CASE
+            WHEN COALESCE(E_NUM_TICKET, '') != '' THEN 1
+            ELSE 0
+        END
+    ) AS retours_vente
+FROM tickets
+WHERE type = '_R_F'
+GROUP BY boutique
+ORDER BY boutique;
+```
+
+Vérifier l'intégrité SQLite et rechercher d'éventuelles lignes de détail orphelines :
+
+```sql
+PRAGMA integrity_check;
+PRAGMA foreign_key_check;
+
+SELECT COUNT(*) AS lignes_orphelines
+FROM lignes_ticket AS l
+LEFT JOIN tickets AS t ON t.id = l.ticket_id
+WHERE t.id IS NULL;
+```
+
+`PRAGMA integrity_check` doit retourner `ok`, `PRAGMA foreign_key_check` ne doit retourner aucune ligne et le nombre de lignes orphelines doit être nul.
+
+Les montants sont stockés en texte décimal afin de préserver leur valeur exacte. Ne pas utiliser `CAST(... AS REAL)` pour conclure sur un écart monétaire : les contrôles fiscaux au centime doivent rester effectués par le programme Python avec `Decimal` ou à partir des fichiers de contrôle générés dans `controle/`.

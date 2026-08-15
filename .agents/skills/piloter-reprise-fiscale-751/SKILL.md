@@ -1,13 +1,13 @@
 ---
 name: piloter-reprise-fiscale-751
-description: Encadrer l'analyse, le développement, les contrôles, les rapprochements et la livraison du dossier fiscal 751 CAMMY FRANCE DEVELOPPEMENT LTD à partir des journaux électroniques EJ, rapports Z et exigences du cahier des charges L.47 A-II b LPF. Utiliser ce skill pour toute modification, revue, correction, génération de CSV/SQLite/Excel/PDF, validation de données de caisse, comparaison CA/TVA/FEC/CA3 ou préparation de livraison dans le projet marco.
+description: Encadrer l'analyse, le développement, les contrôles, les rapprochements et la livraison du dossier fiscal 751 CAMMY FRANCE DEVELOPPEMENT LTD à partir des journaux électroniques EJ, rapports Z et exigences du cahier des charges L.47 A-II b LPF. Utiliser ce skill pour toute modification, revue, correction, génération de CSV/SQLite/Excel/PDF, validation de données de caisse, comparaison CA/TVA/FEC/CA3 ou préparation de livraison dans le projet fiscal 751.
 ---
 
 # Piloter la reprise fiscale 751
 
 ## Charger le contexte utile
 
-1. Localiser la racine du dépôt contenant `traitement_chris/`.
+1. Localiser la racine du projet contenant `pyproject.toml`, `src/` et `fichiers_sources/`.
 2. Lire [references/cahier-des-charges.md](references/cahier-des-charges.md) avant de modifier une règle métier, un schéma, une formule ou un livrable.
 3. Lire [references/project-map.md](references/project-map.md) avant de choisir le code canonique ou de réutiliser un résultat existant.
 4. Lire [references/quality-gates.md](references/quality-gates.md) avant de valider, publier ou annoncer une conformité.
@@ -15,7 +15,7 @@ description: Encadrer l'analyse, le développement, les contrôles, les rapproch
 
 ## Appliquer les invariants
 
-- Traiter le PDF et les six dossiers boutique/exercice de `traitement_chris/fichiers_sources/` comme des preuves immuables. Ne jamais les corriger, renommer ou réécrire.
+- Traiter le PDF et les six dossiers boutique/exercice de `fichiers_sources/` comme des preuves immuables. Ne jamais les corriger, renommer ou réécrire.
 - Conserver une provenance jusqu'au fichier, au bloc ou à la ligne source et produire un manifeste SHA-256 pour toute livraison.
 - Représenter les montants avec `Decimal` ou des centimes entiers pendant les calculs. Ne jamais utiliser de flottants binaires pour décider d'un écart.
 - Conserver les zéros comme zéros et les données absentes comme champs vides. Ne jamais inventer une valeur, une clôture, un FEC, une CA3 ou une justification.

@@ -1,6 +1,6 @@
 # Cahier des charges fiscal 751 - synthèse opératoire
 
-Source : `traitement_chris/fichiers_sources/751 - CAMMY FRANCE DEVELOPPEMENT LTD.pdf`, scan de 36 pages daté du 16 juillet 2026. Les pages 1 à 25 portent les exigences ; les pages 26 à 36 forment l'annexe d'inventaire. Le PDF ne contient pas de couche texte : relire visuellement la page source avant toute interprétation litigieuse.
+Source : `fichiers_sources/751 - CAMMY FRANCE DEVELOPPEMENT LTD.pdf`, scan de 36 pages daté du 16 juillet 2026. Les pages 1 à 25 portent les exigences ; les pages 26 à 36 forment l'annexe d'inventaire. Le PDF ne contient pas de couche texte : relire visuellement la page source avant toute interprétation litigieuse.
 
 ## Cadre et échéance
 

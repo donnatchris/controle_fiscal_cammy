@@ -2,11 +2,11 @@
 
 ## Source de vérité active
 
-- `traitement_chris/fichiers_sources/` : PDF contractuel et six dossiers de données brutes. Considérer ce répertoire comme immuable.
-- `traitement_chris/src/` : implémentation Python active en cours de développement.
-- `traitement_chris/tests/` : tests Python actifs.
-- `traitement_chris/database/` et `traitement_chris/output/` : données dérivées régénérables ; ne pas les confondre avec les sources.
-- `traitement_chris/pyproject.toml` : Python >= 3.12, pandas, openpyxl et pytest via uv.
+- `fichiers_sources/` : PDF contractuel et six dossiers de données brutes. Considérer ce répertoire comme immuable.
+- `src/` : implémentation Python active en cours de développement.
+- `tests/` : tests Python actifs.
+- `database/` et `output/` : données dérivées régénérables ; ne pas les confondre avec les sources.
+- `pyproject.toml` : Python >= 3.12, pandas, openpyxl et pytest via uv.
 
 ## Référence historique non canonique
 
@@ -23,7 +23,7 @@ La reprise historique contient notamment :
 ## État observé lors de la création du skill
 
 - Sources actives : 63 TXT EJ, 449 CSV Z et 1 PDF explicatif dans les six dossiers, soit 513 fichiers ; le cahier des charges principal est à la racine de `fichiers_sources/`.
-- Base SQLite active : 2 511 lignes `tickets` et 4 130 lignes `lignes_ticket`.
+- Base SQLite active : 2 511 lignes `tickets` et 4 131 lignes `lignes_ticket`.
 - Baseline historique : 1 875 tickets de vente, 4 131 lignes, 35 retours `_R_F` pour -19 821,00 EUR, 57 rapprochements de clôtures concordants et quatre périodes sans clôture Z.
 - Le résumé historique annonce 519 fichiers, dont 7 `AUTRE`, alors que l'arborescence active observée en contient 513, dont un PDF explicatif. Vérifier les empreintes et expliquer cet écart avant de réutiliser cette baseline.
 - Les FEC 2023-2025, les CA3 et les justificatifs de correction/annulation sont signalés comme absents de la livraison historique.
@@ -42,12 +42,11 @@ Ces chiffres servent à détecter une régression, pas à la masquer. Recalculer
 
 ## Commandes usuelles
 
-Depuis `traitement_chris/` :
+Depuis la racine du projet contenant `pyproject.toml` :
 
 ```bash
-uv run pytest -v
-uv run python src/scripts/ej_vers_db.py fichiers_sources database/db.sqlite
-uv run python src/scripts/db_ej_vers_xlsx.py
+uv run python -m pytest -v
+uv run traitement
 ```
 
 Lancer la reconstruction destructive de la base uniquement après avoir confirmé la cible exacte et protégé tout résultat utilisateur utile.
