@@ -9,12 +9,12 @@ import re
 import sqlite3
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Iterable, Mapping, Sequence
 
-from shared.constantes import CHEMIN_DB
+from shared.constantes import CHEMIN_DB, SEPARATEUR_CSV
 
 
 BOUTIQUES = ("MASSENA", "MATURIN")
@@ -40,6 +40,8 @@ CHAMPS_MONETAIRES_EJ = {
     "E_HT_NON_TAXABLE", "E_TTC", "E_MDP_CB", "E_MDP_ESPECES", "E_MDP_CHEQUES",
     "D_MONTANT_ARTICLE", "D_CORRECTION",
 }
+CHAMPS_IDENTIFIANTS_EJ = {"E_NUM_INTERNE", "E_NUM_TICKET"}
+CHAMPS_IDENTIFIANTS_Z = {"E_COMPTEUR_Z", "D_ENREGISTREMENT"}
 PATTERN_PERIODE = re.compile(r"(?:^|_)(0[1-9]|1[0-2])(20\d{2})(?=_|\.|$)")
 
 
@@ -51,6 +53,45 @@ def format_decimal(value: object | None) -> str:
     return "" if value in (None, "") else format(decimal(value), ".2f")
 
 
+def format_entier(value: object | None) -> str:
+    """Formate une quantité entière sans lui appliquer un format monétaire."""
+    if value in (None, ""):
+        return ""
+    nombre = Decimal(str(value))
+    entier = nombre.to_integral_value()
+    if not nombre.is_finite() or nombre != entier:
+        raise ValueError(f"Quantité non entière impossible à exporter sans perte : {value!r}")
+    return format(entier, "f")
+
+
+def format_date_iso(value: object | None) -> str:
+    """Retourne une date au format contractuel YYYY-MM-DD."""
+    if value in (None, ""):
+        return ""
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
+    texte = str(value).strip()
+    for format_source in ("%Y-%m-%d", "%Y%m%d", "%d-%m-%Y"):
+        try:
+            return datetime.strptime(texte, format_source).date().isoformat()
+        except ValueError:
+            continue
+    raise ValueError(f"Date impossible à exporter au format YYYY-MM-DD : {value!r}")
+
+
+def verifier_identifiants_textuels(
+    row: Mapping[str, object],
+    champs: Iterable[str],
+) -> None:
+    """Refuse une valeur déjà numérisée, dont les zéros initiaux seraient irrécupérables."""
+    for champ in champs:
+        valeur = row.get(champ)
+        if valeur not in (None, "") and not isinstance(valeur, str):
+            raise TypeError(f"{champ} doit rester du texte, valeur reçue : {valeur!r}")
+
+
 def periodes_fichier(nom_fichier: str) -> list[str]:
     return list(dict.fromkeys(f"{annee}-{mois}" for mois, annee in PATTERN_PERIODE.findall(nom_fichier)))
 
@@ -58,7 +99,12 @@ def periodes_fichier(nom_fichier: str) -> list[str]:
 def ecrire_csv(chemin: Path, colonnes: Sequence[str], rows: Iterable[Mapping[str, object]]) -> None:
     chemin.parent.mkdir(parents=True, exist_ok=True)
     with chemin.open("w", encoding="utf-8-sig", newline="") as fichier:
-        writer = csv.DictWriter(fichier, fieldnames=colonnes, delimiter=";", extrasaction="ignore")
+        writer = csv.DictWriter(
+            fichier,
+            fieldnames=colonnes,
+            delimiter=SEPARATEUR_CSV,
+            extrasaction="ignore",
+        )
         writer.writeheader()
         for row in rows:
             writer.writerow({colonne: "" if row.get(colonne) is None else row.get(colonne) for colonne in colonnes})
@@ -70,10 +116,20 @@ def rows_dict(connection: sqlite3.Connection, query: str, params: tuple = ()) ->
 
 def normaliser_ej(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     for row in rows:
-        row["E_DATE_TICKET"] = str(row["E_DATE_TICKET"]).replace("-", "")
+        verifier_identifiants_textuels(row, CHAMPS_IDENTIFIANTS_EJ)
+        row["E_DATE_TICKET"] = format_date_iso(row["E_DATE_TICKET"])
         for champ in CHAMPS_MONETAIRES_EJ:
             if champ in row:
                 row[champ] = format_decimal(row[champ])
+    return rows
+
+
+def normaliser_z(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    for row in rows:
+        verifier_identifiants_textuels(row, CHAMPS_IDENTIFIANTS_Z)
+        row["E_DATE"] = format_date_iso(row["E_DATE"])
+        row["D_QUANTITE"] = format_entier(row["D_QUANTITE"])
+        row["D_MONTANT"] = format_decimal(row["D_MONTANT"])
     return rows
 
 
@@ -151,9 +207,7 @@ def charger_z(connection: sqlite3.Connection, niveau: int) -> list[dict[str, obj
 def exporter_z(connection: sqlite3.Connection, staging: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     jeux = {1: charger_z(connection, 1), 2: charger_z(connection, 2)}
     for niveau, rows in jeux.items():
-        for row in rows:
-            row["D_QUANTITE"] = format_decimal(row["D_QUANTITE"])
-            row["D_MONTANT"] = format_decimal(row["D_MONTANT"])
+        normaliser_z(rows)
         for boutique in BOUTIQUES:
             for annee in ANNEES:
                 selection = [

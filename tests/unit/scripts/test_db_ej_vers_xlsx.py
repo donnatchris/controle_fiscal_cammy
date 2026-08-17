@@ -7,7 +7,14 @@ from pathlib import Path
 
 from classes.ticket import EjEnteteTicket, EjLigneTicket, EjTicket
 from scripts import db_ej_vers_xlsx, db_vers_csv_751, ej_vers_db
-from scripts.construire_classeurs_751 import nettoyer_nom, periodes_reference
+from scripts.construire_classeurs_751 import (
+    format_colonne,
+    lire_csv as lire_csv_classeurs,
+    nettoyer_nom,
+    periodes_reference,
+)
+from scripts.generer_rapport_fiscal_751 import lire_csv as lire_csv_rapport
+from shared.constantes import SEPARATEUR_CSV
 
 
 def ticket(*, numero: str, type_ticket: str = "REG", facture: str | None = None) -> EjTicket:
@@ -37,7 +44,26 @@ def ticket(*, numero: str, type_ticket: str = "REG", facture: str | None = None)
 
 def lire_csv(chemin: Path) -> list[dict[str, str]]:
     with chemin.open(encoding="utf-8-sig", newline="") as fichier:
-        return list(csv.DictReader(fichier, delimiter=";"))
+        return list(csv.DictReader(fichier, delimiter=SEPARATEUR_CSV))
+
+
+def test_generateur_et_lecteurs_csv_utilisent_le_separateur_partage(
+    tmp_path: Path,
+) -> None:
+    chemin = tmp_path / "export.csv"
+    lignes = [{"E_NUM_INTERNE": "000001", "E_DATE_TICKET": "2023-01-02"}]
+
+    db_vers_csv_751.ecrire_csv(
+        chemin,
+        ["E_NUM_INTERNE", "E_DATE_TICKET"],
+        lignes,
+    )
+
+    assert chemin.read_text(encoding="utf-8-sig").splitlines()[0] == (
+        f"E_NUM_INTERNE{SEPARATEUR_CSV}E_DATE_TICKET"
+    )
+    assert lire_csv_classeurs(chemin) == lignes
+    assert lire_csv_rapport(chemin) == lignes
 
 
 def test_export_ej_filtre_uniquement_les_ventes_et_respecte_le_contrat(tmp_path: Path) -> None:
@@ -55,10 +81,44 @@ def test_export_ej_filtre_uniquement_les_ventes_et_respecte_le_contrat(tmp_path:
     assert compteurs["lignes_MASSENA"] == 1
     assert list(entetes[0]) == db_vers_csv_751.COLONNES_EJ
     assert entetes[0]["nomfichier"] == "EJ020123.TXT"
-    assert entetes[0]["E_DATE_TICKET"] == "20230102"
+    assert entetes[0]["E_NUM_INTERNE"] == "000001"
+    assert entetes[0]["E_NUM_TICKET"] == "000900"
+    assert entetes[0]["E_DATE_TICKET"] == "2023-01-02"
     assert entetes[0]["E_HT2"] == ""
     assert lignes[0]["D_TAUX_TVA_ARTICLE"] == "T1"
     assert lignes[0]["D_LIBELLE_ARTICLE"] == ""
+    assert ";" not in (tmp_path / "EJ_ENTETES_TICKETS_MASSENA.csv").read_text(
+        encoding="utf-8-sig"
+    ).splitlines()[0]
+
+
+def test_normaliser_z_preserve_identifiants_quantite_entiere_et_date_iso() -> None:
+    lignes = [{
+        "E_COMPTEUR_Z": "0021",
+        "E_DATE": "01-04-2023",
+        "D_ENREGISTREMENT": "0001",
+        "D_QUANTITE": "75.00",
+        "D_MONTANT": Decimal("25372.00"),
+    }]
+
+    db_vers_csv_751.normaliser_z(lignes)
+
+    assert lignes == [{
+        "E_COMPTEUR_Z": "0021",
+        "E_DATE": "2023-04-01",
+        "D_ENREGISTREMENT": "0001",
+        "D_QUANTITE": "75",
+        "D_MONTANT": "25372.00",
+    }]
+
+
+def test_format_entier_refuse_une_quantite_decimale() -> None:
+    try:
+        db_vers_csv_751.format_entier("1.5")
+    except ValueError as exc:
+        assert "non entière" in str(exc)
+    else:
+        raise AssertionError("Une quantité décimale aurait dû être refusée")
 
 
 def test_periodes_fichier_conserve_une_periode_multi_mois() -> None:
@@ -72,6 +132,8 @@ def test_constructeur_python_conserve_periodes_et_noms_excel() -> None:
         "Z101_01_042025_052025_062025_MASSENA.CSV"
     ) == ["2025-04", "2025-05", "2025-06"]
     assert nettoyer_nom("REF./TIROIR") == "REF__TIROIR"
+    assert format_colonne("E_DATE") == "yyyy-mm-dd"
+    assert format_colonne("D_QUANTITE") == "0"
 
 
 def test_verifier_dossier_exige_les_18_classeurs_et_autorise_le_rapport(

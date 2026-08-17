@@ -23,6 +23,10 @@ description: Encadrer l'analyse, le développement, les contrôles, les rapproch
 - Utiliser la période métier portée par le dossier et le nom du fichier. Utiliser la date et l'heure Z comme bornes entre deux clôtures réelles ; ne pas réduire silencieusement un lot multi-mois.
 - Isoler en quarantaine tout bloc ambigu, incomplet ou non reconnu. Ne pas ignorer silencieusement une erreur de parsing.
 - Séparer strictement sources, staging, résultats, contrôles, programme, documentation et package de livraison.
+- Générer tous les CSV dérivés avec le séparateur `|`, de façon explicite et constante.
+- Traiter `E_NUM_INTERNE`, `E_NUM_TICKET`, `E_COMPTEUR_Z` et `D_ENREGISTREMENT` comme du texte de bout en bout ; préserver exactement leurs zéros initiaux et ne jamais les convertir en nombres ni les normaliser par suppression de ces zéros.
+- Exporter `D_QUANTITE` comme un entier sans séparateur décimal. Signaler ou rejeter toute valeur source qui ne peut pas être représentée sans perte comme un entier.
+- Exporter toutes les dates au format ISO `YYYY-MM-DD`, sans conversion locale implicite.
 - Préserver les changements utilisateur présents dans le worktree et limiter les modifications au périmètre demandé.
 
 ## Suivre le workflow
@@ -49,7 +53,7 @@ description: Encadrer l'analyse, le développement, les contrôles, les rapproch
 
 - Pour un parseur ou une formule : ajouter un test unitaire avec montant négatif, champ vide, ligne coupée et format inattendu pertinent.
 - Pour une agrégation ou un rapprochement : vérifier des totaux indépendants et les cas multi-mois, absence de clôture et retour `_R_F`.
-- Pour un schéma de sortie : contrôler noms, ordre, types, séparateur, encodage, format de date et virgule décimale.
+- Pour un schéma de sortie : contrôler noms, ordre, types, séparateur `|`, encodage, dates `YYYY-MM-DD`, préservation des zéros initiaux des identifiants textuels, `D_QUANTITE` entier et virgule décimale réservée aux montants.
 - Pour Excel, DOCX ou PDF : utiliser le skill spécialisé correspondant et effectuer un rendu visuel avant livraison.
 - Pour un package : vérifier les empreintes, l'absence de fichiers temporaires et la présence du programme, des résultats, des contrôles et du rapport.
 

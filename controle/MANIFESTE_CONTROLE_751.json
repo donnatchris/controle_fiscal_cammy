@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T13:10:50.498156+00:00",
+  "generatedAt": "2026-08-15T11:38:56.967772+00:00",
   "generator": "Python/openpyxl",
   "workbooks": [
     {
@@ -35,7 +35,7 @@
         "TD_TotalHtTvaTtc_ParAnneeMois",
         "recettes_mensuelles_MASSENA_232425"
       ],
-      "sha256": "4c37d26ea19fb35d805aebe593f04f10b1cdb32353a99437d49ce82a9c6989fe"
+      "sha256": "5d66ee2fda1ab20ec4d0cac1ace3d6b5edbb991d0de6cce0cb7f0d5b82b37f9a"
     },
     {
       "fileName": "TTS_EJ_LIGNES_TICKETS_MASSENA.xlsx",
@@ -58,7 +58,7 @@
         "TD_OccurenceLibelleArticle",
         "TD_OccurenceTxTvaArticle"
       ],
-      "sha256": "2ff4222ce37ed7fe0d37a705ef9ec644336184824a8a4625fd66cf3c04e44b9c"
+      "sha256": "4e10c98aa38f1d4880680d51b2605b4841609c513cce31453344b704b5e7bb73"
     },
     {
       "fileName": "TTS_EJ_ENTETES_TICKETS_MATURIN.xlsx",
@@ -93,7 +93,7 @@
         "TD_TotalHtTvaTtc_ParAnneeMois",
         "recettes_mensuelles_MATURIN_232425"
       ],
-      "sha256": "4885505fff8eefd9fbed0c9d098ddc229a644831e679e123c76e2f3e0dcfbefe"
+      "sha256": "62e97289fea2dac1ae23e1646529ecac0752c1dfd4939e449f065a20f39ffb3e"
     },
     {
       "fileName": "TTS_EJ_LIGNES_TICKETS_MATURIN.xlsx",
@@ -116,7 +116,7 @@
         "TD_OccurenceLibelleArticle",
         "TD_OccurenceTxTvaArticle"
       ],
-      "sha256": "71a7eb1763aa2eafaa5d883bcdb589be842c0ef51a89e2202a6153695de3da15"
+      "sha256": "20eccf7a58d187a465fdb0baeb7c7ddc3665e471f4a1b1a975fd2fbaed8ed073"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.xlsx",
@@ -141,7 +141,7 @@
         "Z1_TotalMontantParMoisAnnee_2023_ModeZ",
         "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2023"
       ],
-      "sha256": "04a76ba9d4adf5e59a30b56b2aaf1bb9b31152798eb5b392592c7369cc161c73"
+      "sha256": "540c1eb2f168836fcdc4790564323a56e6bc425dba25ef7be861bc092bdf953f"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.xlsx",
@@ -166,7 +166,7 @@
         "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2023",
         "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023"
       ],
-      "sha256": "23e7f64f0f857a0375683e566610d41b1db857c964cc5891ce5ce00de17ee11a"
+      "sha256": "27905a82b99f6b2090f493ff75e91e7c52b9b90b404628958d16035aba6a0346"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.xlsx",
@@ -191,7 +191,7 @@
         "Z1_TotalMontantParMoisAnnee_2024_ModeZ",
         "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2024"
       ],
-      "sha256": "cd1645e0dd3d57d17751dc329ae64d8ad110b02236427339666f1a651bcbc888"
+      "sha256": "b07f628f9be98520fb547e9899a5bd98bb3bc246539f68de39ab7bc6a00ad76c"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.xlsx",
@@ -216,7 +216,7 @@
         "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2024",
         "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2024"
       ],
-      "sha256": "777f155845a0e75813f4b18acc3ed05f3b14475c443b0b62601637d452d056be"
+      "sha256": "c907926a24cb3eead93fe5266666a5f03d9cacc4a3f1365b677a0a59c8bd2abf"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.xlsx",
@@ -241,7 +241,7 @@
         "Z1_TotalMontantParMoisAnnee_2025_ModeZ",
         "Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2025"
       ],
-      "sha256": "da7e4ddec3c20573af0ef66905351e5a57cf8482d2257f43c2580d7ae5ea81bc"
+      "sha256": "08e98074278702ca6c1bf12ada4d2883cf4bdc17aa7e035b5486c30175299fb1"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.xlsx",
@@ -266,7 +266,7 @@
         "Compare_Montant_Massena_Z2_ModeZZ1vsModeZZ2_2025",
         "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2025"
       ],
-      "sha256": "b02ccdc973019f14c4fa29fc0d174e43770d8df3b86dfef2b8de8bc9dd8d04ea"
+      "sha256": "afbbb0ed5387549288da9e8a51cf652e2ee237038851e2b47cb62426e6307753"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.xlsx",
@@ -291,7 +291,7 @@
         "Z1_TotalMontantParMoisAnnee_2023_ModeZ",
         "Compare_Montant_MATURIN_Z1ModeZvsEJ_2023"
       ],
-      "sha256": "73c930f441abf0ce4e5eced8dd7476384e33d1aa36cca4093701507195153237"
+      "sha256": "084001d6c39418ba192fe67b9d2fdd684cca559c3a8cbf28b4f97d21cb9b43f1"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.xlsx",
@@ -314,7 +314,7 @@
         "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ",
         "Compare_Montant_MATURIN_Z2ModeZvsEJ_2023"
       ],
-      "sha256": "655b6f3fb681264229860ce30ad5282300f3b01cb2a296540f6c5b3c183d0a40"
+      "sha256": "ffb0a874fe7f003ed36549e2332974ac3ed45fb353c4429b7a794e15bcd6668b"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.xlsx",
@@ -339,7 +339,7 @@
         "Z1_TotalMontantParMoisAnnee_2024_ModeZ",
         "Compare_Montant_MATURIN_Z1ModeZvsEJ_2024"
       ],
-      "sha256": "6c3e1cdfa918ca1364ed3f04e810f7bc5af001f22df3878fd1d3b3924c34be6d"
+      "sha256": "5e7256191627fdad8a250f7ec51695bd42d2dae98e6684c4f406fb5f8e5684c3"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.xlsx",
@@ -362,7 +362,7 @@
         "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ",
         "Compare_Montant_MATURIN_Z2ModeZvsEJ_2024"
       ],
-      "sha256": "be0c47cc3dfd3cecd7e7306afb521c358aa896bb756ae566ac7444189444ee89"
+      "sha256": "5364747bde2bd24b089cdb60d54f827ff659fbf4617dffc9c90fa81f3ce9ff2d"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.xlsx",
@@ -387,7 +387,7 @@
         "Z1_TotalMontantParMoisAnnee_2025_ModeZ",
         "Compare_Montant_MATURIN_Z1ModeZvsEJ_2025"
       ],
-      "sha256": "f672a3206b927b2954097a8a310763ec81fd46b0cd784ec8c477fda660b6a498"
+      "sha256": "dfdd32d97b8d67703bd6ea1fc2680fe5c9048e224d78d247a6f8141281015ed9"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.xlsx",
@@ -410,7 +410,7 @@
         "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ",
         "Compare_Montant_MATURIN_Z2ModeZvsEJ_2025"
       ],
-      "sha256": "1b11c72d0b864348993a85aff833e72431420659451a3f8d246248e003591b2b"
+      "sha256": "1b9cd21d61d8a418ed96da2b5dea1d58567913f6947e757b3f96d258d4753838"
     },
     {
       "fileName": "recettes_mensuelles_tous_boutique_232425.xlsx",
@@ -421,7 +421,7 @@
       "requestedSheets": [
         "recettes_mensuelles_tous_boutique_232425"
       ],
-      "sha256": "b6d3bbec9d0d58b203437e00d171d420dadc77c712a9dfb2b9c56c879ce8a85d"
+      "sha256": "226ac264e7220902e75b6d2ad076dec6eb5eda44c89d7474bb162593a258c7cc"
     },
     {
       "fileName": "CompareCA_Gesco_CA3.xlsx",
@@ -432,7 +432,7 @@
       "requestedSheets": [
         "CompareCA_Gesco_CA3"
       ],
-      "sha256": "e3f225b7783f98cf1df19e0d727e1741bf2a3c72f5b43ee33353afe865682159"
+      "sha256": "fb22b9fb453c4b4a4164e208d406db67a3694a8b48f7d3fe0e6f66c5e6596673"
     }
   ],
   "csvFiles": [

@@ -24,6 +24,8 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
 
+from shared.constantes import SEPARATEUR_CSV
+
 
 BOUTIQUES = ("MASSENA", "MATURIN")
 ANNEES = (2023, 2024, 2025)
@@ -88,7 +90,7 @@ def nombre(valeur: Decimal | None) -> Decimal:
 def lire_csv(chemin: Path) -> list[dict[str, Any]]:
     with chemin.open(encoding="utf-8-sig", newline="") as fichier:
         lignes = []
-        for ligne in csv.DictReader(fichier, delimiter=";"):
+        for ligne in csv.DictReader(fichier, delimiter=SEPARATEUR_CSV):
             lignes.append({
                 champ: valeur_decimal(valeur) if champ in CHAMPS_NUMERIQUES else (valeur or "")
                 for champ, valeur in ligne.items()
@@ -159,13 +161,13 @@ def largeur_colonne(nom: str) -> float:
 
 def format_colonne(nom: str) -> str | None:
     if nom in {"E_DATE_TICKET", "E_DATE"}:
-        return "yyyymmdd"
+        return "yyyy-mm-dd"
     if "ANNEE" in nom:
         return "0"
     if nom in {"E_NUM_INTERNE", "E_NUM_TICKET", "E_COMPTEUR_Z", "D_ENREGISTREMENT"}:
         return "@"
     if any(terme in nom for terme in ("QUANTITE", "OCCURRENCE", "COMPTE")):
-        return FORMAT_MONTANT
+        return "0"
     if (
         re.match(r"^(E_HT|E_TVA|E_TTC|E_MDP|D_MONTANT|D_CORRECTION|AJ_|SOMME_|MASSENA_|MATURIN_|MTT_)", nom)
         or "MONTANT" in nom

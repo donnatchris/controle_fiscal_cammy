@@ -30,6 +30,8 @@ from reportlab.platypus import (
     TableStyle,
 )
 
+from shared.constantes import SEPARATEUR_CSV
+
 
 NOM_RAPPORT = "RAPPORT_ANALYSE_FISCALE_751.pdf"
 TOLERANCE = Decimal("0.02")
@@ -57,7 +59,7 @@ def est_vente(ligne: sqlite3.Row) -> bool:
 
 def lire_csv(chemin: Path) -> list[dict[str, str]]:
     with chemin.open(encoding="utf-8-sig", newline="") as fichier:
-        return list(csv.DictReader(fichier, delimiter=";"))
+        return list(csv.DictReader(fichier, delimiter=SEPARATEUR_CSV))
 
 
 def analyser_sequences(lignes: list[sqlite3.Row]) -> dict[str, dict[str, Any]]:
