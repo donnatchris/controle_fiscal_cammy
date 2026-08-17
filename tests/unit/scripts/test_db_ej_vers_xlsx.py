@@ -136,7 +136,7 @@ def test_constructeur_python_conserve_periodes_et_noms_excel() -> None:
     assert format_colonne("D_QUANTITE") == "0"
 
 
-def test_verifier_dossier_exige_les_18_classeurs_et_autorise_le_rapport(
+def test_verifier_dossier_exige_exclusivement_les_18_classeurs(
     tmp_path: Path,
 ) -> None:
     repertoire = tmp_path
@@ -146,9 +146,6 @@ def test_verifier_dossier_exige_les_18_classeurs_et_autorise_le_rapport(
     classeurs = db_ej_vers_xlsx.verifier_dossier_classeurs(tmp_path)
 
     assert len(classeurs) == 18
-
-    (repertoire / "RAPPORT_ANALYSE_FISCALE_751.pdf").touch()
-    assert len(db_ej_vers_xlsx.verifier_dossier_classeurs(tmp_path)) == 18
 
     (repertoire / "diagnostic.ndjson").touch()
     try:

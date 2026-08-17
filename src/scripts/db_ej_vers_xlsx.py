@@ -8,29 +8,13 @@ import shutil
 from pathlib import Path
 
 from scripts import db_vers_csv_751, construire_classeurs_751
-from shared.constantes import CHEMIN_DB
+from shared.constantes import CHEMIN_DB, iterer_classeurs_751
 
 
 NOMS_CLASSEURS_ATTENDUS = {
-    "TTS_EJ_ENTETES_TICKETS_MASSENA.xlsx",
-    "TTS_EJ_ENTETES_TICKETS_MATURIN.xlsx",
-    "TTS_EJ_LIGNES_TICKETS_MASSENA.xlsx",
-    "TTS_EJ_LIGNES_TICKETS_MATURIN.xlsx",
-    *{
-        f"TTS_Z1_SyntheseMois_TOUS_{annee}_{boutique}.xlsx"
-        for annee in (2023, 2024, 2025)
-        for boutique in ("MASSENA", "MATURIN")
-    },
-    *{
-        f"TTS_Z2_TransactionsMois_TOUS_{annee}_{boutique}.xlsx"
-        for annee in (2023, 2024, 2025)
-        for boutique in ("MASSENA", "MATURIN")
-    },
-    "recettes_mensuelles_tous_boutique_232425.xlsx",
-    "CompareCA_Gesco_CA3.xlsx",
+    classeur.nom_fichier for classeur in iterer_classeurs_751()
 }
 NOMBRE_CLASSEURS_ATTENDU = len(NOMS_CLASSEURS_ATTENDUS)
-NOMS_LIVRABLES_COMPLEMENTAIRES = {"RAPPORT_ANALYSE_FISCALE_751.pdf"}
 ANCIENS_FICHIERS_SORTIE = {
     "EJ_ENTETE_TICKETS_MASSENA.xlsx",
     "EJ_ENTETE_TICKETS_MATURIN.xlsx",
@@ -62,7 +46,7 @@ def nettoyer_ancienne_sortie(sortie: Path) -> None:
 
 
 def verifier_dossier_classeurs(sortie: Path) -> list[Path]:
-    """Exige les 18 classeurs et autorise le rapport PDF régénéré ensuite."""
+    """Exige exclusivement les 18 classeurs dans le dossier Excel."""
     repertoire_classeurs = sortie
     if not repertoire_classeurs.is_dir():
         raise FileNotFoundError(
@@ -80,7 +64,9 @@ def verifier_dossier_classeurs(sortie: Path) -> list[Path]:
     inattendus = sorted(
         element.name
         for element in elements
-        if element.name not in NOMS_CLASSEURS_ATTENDUS | NOMS_LIVRABLES_COMPLEMENTAIRES
+        if (
+            element.name not in NOMS_CLASSEURS_ATTENDUS
+        )
     )
     if manquants or inattendus:
         raise RuntimeError(

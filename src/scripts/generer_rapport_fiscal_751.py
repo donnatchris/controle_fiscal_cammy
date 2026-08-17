@@ -34,6 +34,8 @@ from shared.constantes import SEPARATEUR_CSV
 
 
 NOM_RAPPORT = "RAPPORT_ANALYSE_FISCALE_751.pdf"
+NOM_DOSSIER_TRAVAUX_PRELIMINAIRES = "travaux_preliminaires"
+NOM_DOSSIER_EXCEL = "excel"
 TOLERANCE = Decimal("0.02")
 TYPES_VENTE = {"REG", "_R_F"}
 
@@ -184,7 +186,8 @@ def analyser_donnees(
     total_feuilles = 0
     total_formules = 0
     erreurs_ref = 0
-    for chemin in sorted(sortie.glob("*.xlsx")):
+    repertoire_excel = sortie / NOM_DOSSIER_EXCEL
+    for chemin in sorted(repertoire_excel.glob("*.xlsx")):
         classeur = load_workbook(chemin, read_only=True, data_only=False)
         formules = 0
         refs = 0
@@ -758,7 +761,7 @@ def generer_pdf(analyse: dict[str, Any], destination: Path) -> None:
         p(
             "Le rapport est régénéré par le programme Python à chaque traitement complet. Ses "
             "constats sont calculés directement depuis database/db.sqlite, les fichiers de contrôle "
-            "et les classeurs présents dans output ; ils ne reposent pas sur une saisie manuelle.",
+            "et les classeurs présents dans output/excel ; ils ne reposent pas sur une saisie manuelle.",
             styles["petit"],
         ),
     ])
@@ -767,13 +770,25 @@ def generer_pdf(analyse: dict[str, Any], destination: Path) -> None:
 
 
 def verifier_livraison(sortie: Path) -> None:
-    elements = {chemin.name for chemin in sortie.iterdir()}
+    elements = list(sortie.iterdir())
     pdf = sortie / NOM_RAPPORT
+    repertoire_excel = sortie / NOM_DOSSIER_EXCEL
     if not pdf.is_file() or pdf.stat().st_size == 0:
         raise RuntimeError(f"Rapport PDF absent ou vide : {pdf}")
+    classeurs = sorted(repertoire_excel.glob("*.xlsx")) if repertoire_excel.is_dir() else []
+    if len(classeurs) != 18:
+        raise RuntimeError(
+            f"Dossier Excel incomplet : {len(classeurs)} classeurs dans {repertoire_excel}"
+        )
     inattendus = sorted(
-        nom for nom in elements
-        if not nom.endswith(".xlsx") and nom != NOM_RAPPORT
+        chemin.name for chemin in elements
+        if (
+            chemin.name != NOM_RAPPORT
+            and not (
+                chemin.name in {NOM_DOSSIER_TRAVAUX_PRELIMINAIRES, NOM_DOSSIER_EXCEL}
+                and chemin.is_dir()
+            )
+        )
     )
     if inattendus:
         raise RuntimeError(f"Fichiers non autorisés dans output : {inattendus}")

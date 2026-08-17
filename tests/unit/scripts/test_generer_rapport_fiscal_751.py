@@ -1,6 +1,8 @@
 import sqlite3
+from pathlib import Path
 
-from scripts.generer_rapport_fiscal_751 import analyser_sequences
+from scripts.generer_rapport_fiscal_751 import analyser_sequences, verifier_livraison
+from scripts.db_ej_vers_xlsx import NOMS_CLASSEURS_ATTENDUS
 
 
 def test_sequence_exhaustive_explique_les_sauts_des_ventes() -> None:
@@ -31,3 +33,16 @@ def test_sequence_exhaustive_explique_les_sauts_des_ventes() -> None:
     assert massena["absents_expliques"] is True
     assert massena["ticket_absents"] == 0
     assert massena["regressions_chronologiques"] == 0
+
+
+def test_verifier_livraison_exige_excel_et_autorise_les_travaux_preliminaires(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "RAPPORT_ANALYSE_FISCALE_751.pdf").write_bytes(b"rapport")
+    (tmp_path / "travaux_preliminaires").mkdir()
+    excel = tmp_path / "excel"
+    excel.mkdir()
+    for nom in NOMS_CLASSEURS_ATTENDUS:
+        (excel / nom).touch()
+
+    verifier_livraison(tmp_path)

@@ -7,22 +7,46 @@ from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
 
 RACINE_PROJET = Path(__file__).resolve().parents[1]
 REPERTOIRE_SORTIE_PAR_DEFAUT = RACINE_PROJET / "output"
-REPERTOIRE_STAGING_PAR_DEFAUT = RACINE_PROJET / "staging"
+NOM_DOSSIER_EXCEL = "excel"
+REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT = (
+    REPERTOIRE_SORTIE_PAR_DEFAUT / "travaux_preliminaires"
+)
 REPERTOIRE_CONTROLE_PAR_DEFAUT = RACINE_PROJET / "controle"
 REGLES_Z_PAR_DEFAUT = RACINE_PROJET / "config/regles_modes_z.json"
+
+
+def ranger_anciens_classeurs(
+    repertoire_sortie: Path,
+    repertoire_excel: Path,
+) -> None:
+    """Déplace les 18 classeurs historiques de la racine output vers output/excel."""
+    repertoire_excel.mkdir(parents=True, exist_ok=True)
+    for nom in db_ej_vers_xlsx.NOMS_CLASSEURS_ATTENDUS:
+        source = repertoire_sortie / nom
+        if not source.is_file():
+            continue
+        destination = repertoire_excel / nom
+        if destination.is_file():
+            destination.unlink()
+        source.replace(destination)
+    fichier_systeme = repertoire_sortie / ".DS_Store"
+    if fichier_systeme.is_file():
+        fichier_systeme.unlink()
 
 
 def executer_traitements(
     chemin_repertoire: Path,
     chemin_base: Path,
     repertoire_sortie: Path = REPERTOIRE_SORTIE_PAR_DEFAUT,
-    repertoire_staging: Path = REPERTOIRE_STAGING_PAR_DEFAUT,
+    repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
     repertoire_controle: Path = REPERTOIRE_CONTROLE_PAR_DEFAUT,
     chemin_regles: Path = REGLES_Z_PAR_DEFAUT,
     qa: bool = False,
 ) -> bool:
     """Reconstruit la base et génère les 18 classeurs et le rapport PDF."""
+    repertoire_excel = repertoire_sortie / NOM_DOSSIER_EXCEL
     repertoire_sortie.mkdir(parents=True, exist_ok=True)
+    ranger_anciens_classeurs(repertoire_sortie, repertoire_excel)
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_controle.mkdir(parents=True, exist_ok=True)
     rapport = repertoire_controle / "rapport_reconstruction_751.json"
@@ -40,7 +64,7 @@ def executer_traitements(
     print("\n=== 2/3 Génération des contrôles et des 18 classeurs Excel ===")
     arguments_excel = [
         "--base", str(chemin_base),
-        "--sortie", str(repertoire_sortie),
+        "--sortie", str(repertoire_excel),
         "--staging", str(repertoire_staging),
         "--controle", str(repertoire_controle),
         "--regles", str(chemin_regles),
@@ -60,7 +84,8 @@ def executer_traitements(
         return False
 
     print("\nTraitement terminé avec succès.")
-    print(f"Livrables contractuels : {repertoire_sortie}")
+    print(f"Classeurs Excel : {repertoire_excel}")
+    print(f"Rapport PDF : {repertoire_sortie}")
     print(f"Contrôles techniques : {repertoire_controle}")
     return True
 
@@ -83,13 +108,18 @@ def main(argv: list[str] | None = None) -> int:
         "--sortie",
         type=Path,
         default=REPERTOIRE_SORTIE_PAR_DEFAUT,
-        help="Dossier contenant les 18 classeurs et le rapport PDF (défaut : output).",
+        help="Dossier contenant excel/, travaux_preliminaires/ et le rapport PDF (défaut : output).",
     )
     parser.add_argument(
         "--staging",
+        "--travaux-preliminaires",
+        dest="staging",
         type=Path,
-        default=REPERTOIRE_STAGING_PAR_DEFAUT,
-        help="Dossier des CSV intermédiaires (défaut : staging).",
+        default=REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
+        help=(
+            "Dossier des CSV intermédiaires "
+            "(défaut : output/travaux_preliminaires)."
+        ),
     )
     parser.add_argument(
         "--controle",

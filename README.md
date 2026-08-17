@@ -2,7 +2,20 @@
 
 Ce projet Python reconstruit une base SQLite exhaustive à partir des journaux électroniques EJ et des rapports Z, exécute les contrôles demandés par le cahier des charges, puis génère les 18 classeurs Excel contractuels et un rapport PDF d'analyse destiné à l'administration fiscale.
 
-Le programme actif se trouve intégralement dans `src/`. Le dossier `output/` est réservé aux 19 livrables à remettre : 18 classeurs et le rapport PDF. Il ne contient ni code, ni données intermédiaires, ni fichiers de contrôle technique.
+Le programme actif se trouve intégralement dans `src/`. Le dossier `output/excel/` rassemble les 18 classeurs, tandis que le rapport PDF reste à la racine de `output/`. Les CSV régénérables sont isolés dans `output/travaux_preliminaires/` et les contrôles techniques dans `controle/`.
+
+## En bref
+
+Pour exécuter le traitement complet, depuis la reconstruction de la base SQLite jusqu'à la génération des classeurs et du rapport PDF, lancer la commande suivante depuis la racine du projet :
+
+```bash
+uv run traitement
+```
+
+Il faut disposer de Python 3.12 ou supérieur et de l'outil `uv` pour créer un environnement virtuel et installer les dépendances verrouillées. Le mode optionnel `--qa` nécessite en plus LibreOffice (`soffice`) et Poppler (`pdftoppm`) pour produire des rendus PNG de chaque feuille Excel.
+
+> Les résultat tel que demandé par le cahier des charges se trouve dans le dossier `output/` :
+
 
 ## Périmètre
 
@@ -66,7 +79,8 @@ Si un contrôle échoue, la base temporaire est supprimée et la base active res
 
 ### 6. Préparation des données intermédiaires
 
-Le programme interroge SQLite et écrit 16 CSV dans `staging/` :
+Le programme interroge SQLite et écrit 16 CSV dans
+`output/travaux_preliminaires/` :
 
 - quatre jeux EJ, entêtes et lignes pour chaque boutique ;
 - six jeux Z1, un par boutique et exercice ;
@@ -134,10 +148,12 @@ Avec l'option `--qa`, chaque feuille est rendue en PNG par LibreOffice et Popple
 ├── fichiers_sources/             Sources EJ/Z et cahier des charges, immuables
 ├── config/                       Règles explicites de sélection des modes Z
 ├── database/                     Base SQLite active et sauvegardes horodatées
-├── staging/                      16 CSV intermédiaires régénérables
 ├── controle/                     Preuves et diagnostics techniques
 │   └── qa_previews/              135 PNG optionnels produits avec --qa
-├── output/                       18 classeurs contractuels et rapport PDF
+├── output/                       Livrables et travaux régénérables
+│   ├── excel/                    18 classeurs contractuels
+│   ├── travaux_preliminaires/    16 CSV intermédiaires régénérables
+│   └── RAPPORT_ANALYSE_FISCALE_751.pdf
 ├── pyproject.toml                Dépendances et commande `traitement`
 ├── uv.lock                       Versions Python verrouillées
 └── README.md                     Documentation d'exploitation
@@ -151,9 +167,9 @@ Avec l'option `--qa`, chaque feuille est rendue en PNG par LibreOffice et Popple
 - `src/scripts/reconstruire_base_751.py` construit, contrôle et publie SQLite.
 - `src/scripts/ej_vers_db.py` charge tous les blocs EJ dans SQLite.
 - `src/scripts/z1_vers_db.py` et `src/scripts/z2_vers_db.py` chargent les rapports Z.
-- `src/scripts/db_vers_csv_751.py` produit le staging et les rapprochements.
+- `src/scripts/db_vers_csv_751.py` produit les travaux préliminaires et les rapprochements.
 - `src/scripts/construire_classeurs_751.py` construit les 18 classeurs.
-- `src/scripts/db_ej_vers_xlsx.py` orchestre les exports et vérifie `output/`.
+- `src/scripts/db_ej_vers_xlsx.py` orchestre les exports et vérifie `output/excel/`.
 - `src/scripts/generer_rapport_fiscal_751.py` recalcule les constats et produit le PDF fiscal.
 
 ### Contenu de `controle/`
@@ -172,7 +188,7 @@ Ce dossier est interne au traitement et n'est pas remis comme résultat Excel. I
 
 ### Contenu de `output/`
 
-`output/` contient exactement :
+`output/` contient exactement le rapport PDF et les deux sous-dossiers `excel/` et `travaux_preliminaires/`. Le dossier `output/excel/` contient :
 
 - 4 classeurs `TTS_EJ_*.xlsx` ;
 - 6 classeurs `TTS_Z1_*.xlsx` ;
@@ -181,7 +197,7 @@ Ce dossier est interne au traitement et n'est pas remis comme résultat Excel. I
 - `CompareCA_Gesco_CA3.xlsx`.
 - `RAPPORT_ANALYSE_FISCALE_751.pdf` : analyse, anomalies expliquées, limites et conclusion.
 
-Aucun programme, manifeste, JSON, CSV, aperçu PNG ou sous-dossier n'est admis dans `output/`.
+Aucun programme, manifeste, JSON ou aperçu PNG n'est admis dans `output/`. Aucun élément autre que les 18 classeurs attendus n'est admis dans `output/excel/`.
 
 ## Prérequis
 
@@ -215,7 +231,7 @@ Toutes les commandes suivantes sont à lancer depuis la racine du projet, c'est-
 uv run traitement
 ```
 
-Cette commande reconstruit la base, publie `database/db.sqlite`, régénère le staging et les contrôles, remplace les 18 classeurs attendus puis recrée le rapport PDF dans `output/`.
+Cette commande reconstruit la base, publie `database/db.sqlite`, régénère les travaux préliminaires dans `output/travaux_preliminaires/` et les contrôles, remplace les 18 classeurs dans `output/excel/`, puis recrée le rapport PDF dans `output/`.
 
 ### Traitement complet avec contrôle visuel
 
@@ -230,7 +246,7 @@ uv run traitement \
   fichiers_sources \
   database/db.sqlite \
   --sortie output \
-  --staging staging \
+  --travaux-preliminaires output/travaux_preliminaires \
   --controle controle \
   --regles config/regles_modes_z.json
 ```
@@ -252,8 +268,8 @@ Sans `--publier`, la base temporaire est validée mais ne remplace pas `database
 ```bash
 uv run python src/scripts/db_ej_vers_xlsx.py \
   --base database/db.sqlite \
-  --sortie output \
-  --staging staging \
+  --sortie output/excel \
+  --staging output/travaux_preliminaires \
   --controle controle \
   --regles config/regles_modes_z.json
 ```

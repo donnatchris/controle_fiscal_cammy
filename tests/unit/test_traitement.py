@@ -57,7 +57,7 @@ def test_executer_traitements_enchaine_reconstruction_et_classeurs(
             "excel",
             [
                 "--base", str(base),
-                "--sortie", str(sortie),
+                "--sortie", str(sortie / "excel"),
                 "--staging", str(staging),
                 "--controle", str(controle),
                 "--regles", str(regles),
@@ -74,6 +74,7 @@ def test_executer_traitements_enchaine_reconstruction_et_classeurs(
         ),
     ]
     assert sortie.is_dir()
+    assert (sortie / "excel").is_dir()
     assert staging.is_dir()
     assert controle.is_dir()
 
@@ -123,7 +124,45 @@ def test_main_utilise_output_par_defaut(
 
     assert traitement.main([]) == 0
     assert arguments["repertoire_sortie"] == traitement.RACINE_PROJET / "output"
-    assert arguments["repertoire_staging"] == traitement.RACINE_PROJET / "staging"
+    assert arguments["repertoire_staging"] == (
+        traitement.RACINE_PROJET / "output/travaux_preliminaires"
+    )
     assert arguments["repertoire_controle"] == traitement.RACINE_PROJET / "controle"
     assert arguments["chemin_repertoire"] == traitement.RACINE_PROJET / "fichiers_sources"
     assert arguments["chemin_base"] == traitement.RACINE_PROJET / "database/db.sqlite"
+
+
+def test_main_accepte_option_travaux_preliminaires(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    arguments: dict[str, object] = {}
+    destination = tmp_path / "travaux_preliminaires"
+
+    monkeypatch.setattr(
+        traitement,
+        "executer_traitements",
+        lambda **kwargs: arguments.update(kwargs) or True,
+    )
+
+    assert traitement.main(["--travaux-preliminaires", str(destination)]) == 0
+    assert arguments["repertoire_staging"] == destination
+
+
+def test_ranger_anciens_classeurs_deplace_uniquement_les_xlsx_attendus(
+    tmp_path: Path,
+) -> None:
+    sortie = tmp_path / "output"
+    excel = sortie / "excel"
+    sortie.mkdir()
+    nom = next(iter(traitement.db_ej_vers_xlsx.NOMS_CLASSEURS_ATTENDUS))
+    ancien = sortie / nom
+    ancien.write_bytes(b"xlsx")
+    inconnu = sortie / "a_preserver.xlsx"
+    inconnu.write_bytes(b"utilisateur")
+
+    traitement.ranger_anciens_classeurs(sortie, excel)
+
+    assert not ancien.exists()
+    assert (excel / nom).read_bytes() == b"xlsx"
+    assert inconnu.read_bytes() == b"utilisateur"
