@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T09:54:49.546975+00:00",
+  "generatedAt": "2026-08-19T06:09:00.315822+00:00",
   "generator": "Python/openpyxl",
   "excelDirectory": "excel",
   "workbooks": [
@@ -145,7 +145,7 @@
           "immediateSources": [
             "TD_OccurenceNumInterne"
           ],
-          "operation": "copie en valeur et filtre des doublons"
+          "operation": "copie en valeur"
         },
         {
           "targetSheet": "TD_OccurenceNumTicket",
@@ -159,14 +159,14 @@
           "immediateSources": [
             "TD_OccurenceNumTicket"
           ],
-          "operation": "copie en valeur et filtre des doublons"
+          "operation": "copie en valeur"
         },
         {
           "targetSheet": "Entetes_CplteAnneeMois",
           "immediateSources": [
             "Entetes_TriNumInterne"
           ],
-          "operation": "copie en valeur et enrichissement année/mois/HT/TVA"
+          "operation": "copie, enrichissement année/mois et formules HT/TVA"
         },
         {
           "targetSheet": "TD_TotalEnctTTC",
@@ -197,7 +197,7 @@
           "operation": "copie en valeur"
         }
       ],
-      "sha256": "1ed155f737c6d77b213fb9325e2ca694752b5974fd387be0f76094f6625ea308"
+      "sha256": "d87f085295a87f0f379c5cfaa12ebbe54040e6cc42b2d9a61a826c1ddb82df7b"
     },
     {
       "fileName": "TTS_EJ_LIGNES_TICKETS_MASSENA.xlsx",
@@ -292,7 +292,7 @@
           "immediateSources": [
             "TD_TotalLignesParTicket"
           ],
-          "operation": "copie en valeur et calcul d'écart"
+          "operation": "copie en valeur et formule d'écart"
         },
         {
           "targetSheet": "TD_OccurenceLibelle",
@@ -309,7 +309,7 @@
           "operation": "agrégation des occurrences"
         }
       ],
-      "sha256": "4aa2ced7877759ab440dc1365dec572edb7e777f9eaa9a8503f506aea09af849"
+      "sha256": "d159d18dfcb2df4211b35f29c0adaae6acbf245b38fd43472542e038c1f6c3bf"
     },
     {
       "fileName": "TTS_EJ_ENTETES_TICKETS_MATURIN.xlsx",
@@ -453,7 +453,7 @@
           "immediateSources": [
             "TD_OccurenceNumInterne"
           ],
-          "operation": "copie en valeur et filtre des doublons"
+          "operation": "copie en valeur"
         },
         {
           "targetSheet": "TD_OccurenceNumTicket",
@@ -467,14 +467,14 @@
           "immediateSources": [
             "TD_OccurenceNumTicket"
           ],
-          "operation": "copie en valeur et filtre des doublons"
+          "operation": "copie en valeur"
         },
         {
           "targetSheet": "Entetes_CplteAnneeMois",
           "immediateSources": [
             "Entetes_TriNumInterne"
           ],
-          "operation": "copie en valeur et enrichissement année/mois/HT/TVA"
+          "operation": "copie, enrichissement année/mois et formules HT/TVA"
         },
         {
           "targetSheet": "TD_TotalEnctTTC",
@@ -505,7 +505,7 @@
           "operation": "copie en valeur"
         }
       ],
-      "sha256": "6f9587bef7b17d27bf9747153a98fa9d692903228684ce867d1dc08b780c10f2"
+      "sha256": "c5636e7b9cab36d45fcae20ee8a94622c43628c8732da38100e781106984f6b4"
     },
     {
       "fileName": "TTS_EJ_LIGNES_TICKETS_MATURIN.xlsx",
@@ -600,7 +600,7 @@
           "immediateSources": [
             "TD_TotalLignesParTicket"
           ],
-          "operation": "copie en valeur et calcul d'écart"
+          "operation": "copie en valeur et formule d'écart"
         },
         {
           "targetSheet": "TD_OccurenceLibelle",
@@ -617,7 +617,7 @@
           "operation": "agrégation des occurrences"
         }
       ],
-      "sha256": "f0c5978835ff96f7b069b6a296776316c516deee04351b014b983262a5aae213"
+      "sha256": "34355be6abea6ce0cf0e0aeefab412afca34b9d3ddcb6125c73104301ead2ab7"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.xlsx",
@@ -744,7 +744,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "c3316a27d8c229408cfceac3949a8fc056adc7ae6bc8e563409344c16d9a43cd"
+      "sha256": "f53ded4289c3343ebf594d54937bc1fd867384bab14a1c6f22f0faddc324d43d"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.xlsx",
@@ -872,7 +872,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "ad88694e4c2cd9b25d3e56a945621288c06eb6f6a185ea5e2ec8a39bb01f95c3"
+      "sha256": "4d6b62275af124c6d97206e5b8fd0db80bce06a2898dfb73bd1bfc78d3b04295"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.xlsx",
@@ -999,7 +999,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "112e6ef4cdf2a1d1e49ab856790179618412f58fa03d0e83d5f1dd5ccf54ed96"
+      "sha256": "c97e0831fd605510f512add8568b859736f78a4ee1570cfc0a3926b57a21ebb2"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.xlsx",
@@ -1127,7 +1127,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "9c7b64a7ee7077da977812a9de7b1dd4804d8f0a2dda4978675815406ba66c69"
+      "sha256": "3a83ab277e3357a610e90a5a349249887e6dfcac4b4cb329984745723f1a1595"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.xlsx",
@@ -1254,7 +1254,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "b507214e669d484f14e0fb5e86c7ddcf4a27749376d2e12dfa596af61626c1b1"
+      "sha256": "34db00143c090b18a70d4b39a4f0ca35ceb76edbefe522b6485db138332db3ef"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.xlsx",
@@ -1382,7 +1382,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "4e32bff8d6e94d58075a0a7ebc13dc3922e0d1f43bc6dbeca51281b80ab49a73"
+      "sha256": "9934b600b9bb082edd66054fb16fe65e6850b36f19e4242ffb7bffe35b62b423"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.xlsx",
@@ -1509,7 +1509,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "3530032d2165539632128bb55f544c2c06d891a377b919ebaeaece87eb39bb91"
+      "sha256": "6505af6fcd2bf73a7cc9df1063e11b48615596ff3f6db3f338e21bc3d3ff771f"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.xlsx",
@@ -1622,7 +1622,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "1dbb10ce7a0ea50e74509280dc28bf54875321d16d26c2fe27df1d746cb48837"
+      "sha256": "0519d7cbe51e74161414f64e1235d810a953695410ac854529e96e59eec2a5ce"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.xlsx",
@@ -1749,7 +1749,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "57dae372288760a29cf12e0919574ac39571f8721b89eb75baeae96a782db752"
+      "sha256": "292458cba762aaeb2fca6df7169b413bf6b1292d46f877d2aa3375f6d0a0c779"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.xlsx",
@@ -1862,7 +1862,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "e3f1254fc4a9504601ad19b92f44dee53c3d75d6a29b1c919d2739f7dcc853f5"
+      "sha256": "1a0c1ff95f262d918ddaa158d87ff355ecd027755b82ed799774c2f6aef348b6"
     },
     {
       "fileName": "TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.xlsx",
@@ -1989,7 +1989,7 @@
           "operation": "comparaison Z1/EJ"
         }
       ],
-      "sha256": "c7a458310c68d1a323e653632f316857710d94214805ee43d95629176083a938"
+      "sha256": "1957de54f3ae21f3882a8688ce38e0173ee882ca001b8c860dfeddb04ba7a919"
     },
     {
       "fileName": "TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.xlsx",
@@ -2102,7 +2102,7 @@
           "operation": "comparaison Z2/EJ"
         }
       ],
-      "sha256": "fd14021a95ccf719364c3539a75f5d4f11415ff8fd20bc05a4f82ef8dea5ffa7"
+      "sha256": "b6b5ca6f9cfb689ce1cda4730bdb5264584c10fb50d23d6486be3d5348e8bb78"
     },
     {
       "fileName": "recettes_mensuelles_tous_boutique_232425.xlsx",
@@ -2131,7 +2131,7 @@
           "operation": "assemblage en valeur des deux boutiques"
         }
       ],
-      "sha256": "260705d4118fcfdd507bf58f596bddf53615a5e8a6b6e2f85662f0f7d987ea82"
+      "sha256": "d669a2521bff119d848341879c2d6bd9762038f6f223cf7b692b694f4a823d11"
     },
     {
       "fileName": "CompareCA_Gesco_CA3.xlsx",
@@ -2160,7 +2160,7 @@
           "operation": "copie des recettes reconstituées et comparaison CA3"
         }
       ],
-      "sha256": "171cd71a678dddae35a69f2faafc0e37319d15eec85ffd289c6e655446f07f36"
+      "sha256": "cda11bba0e46e0651304c1f510218299a432772f247b0a6c551abd4ef1b68d2b"
     }
   ],
   "csvFiles": [
@@ -2258,7 +2258,8 @@
   "summary": {
     "excelFiles": 18,
     "excelSheets": 135,
-    "csvFiles": 16
+    "csvFiles": 16,
+    "qaPreviews": 135
   },
   "controle": {
     "blocs_lus": 2511,

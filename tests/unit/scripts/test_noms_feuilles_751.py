@@ -165,6 +165,84 @@ def test_copie_en_valeur_lit_la_feuille_source_sans_formule_de_liaison() -> None
     )
 
 
+def test_classeur_entetes_respecte_copies_et_formules_contractuelles() -> None:
+    constructeur = object.__new__(Constructeur751)
+    constructeur.donnees = {"entetes": {"MASSENA": [{
+        "nomfichier": "EJ010123.txt", "E_NUM_INTERNE": "000001", "E_NUM_TICKET": "000001",
+        "E_DATE_TICKET": "2023-01-01", "E_HEURE_TICKET": "10:00:00",
+        "E_HT1": 10, "E_HT2": None, "E_HT3": -1, "E_HT4": 0,
+        "E_TVA1": -2, "E_TVA2": 0, "E_TVA3": 0, "E_TVA4": 0,
+        "E_HT_NON_TAXABLE": 0, "E_TTC": 12,
+        "E_MDP_CB": 12, "E_MDP_ESPECES": 0, "E_MDP_CHEQUES": 0,
+    }]}}
+    classeur_produit = []
+    constructeur.exporter = lambda classeur, _definition: classeur_produit.append(classeur)
+
+    constructeur.construire_entetes("MASSENA")
+
+    entetes = [cellule.value for cellule in classeur_produit[0]["Entetes_sequentialite"][1]]
+    assert entetes == [
+        "nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_DATE_TICKET",
+        "E_HEURE_TICKET", "AJ_TROU_NUM_TICKET",
+    ]
+    assert lire_lignes_feuille(classeur_produit[0]["DoublonNumInterne"]) == (
+        lire_lignes_feuille(classeur_produit[0]["TD_OccurenceNumInterne"])
+    )
+    assert lire_lignes_feuille(classeur_produit[0]["DoublonNumTicket"]) == (
+        lire_lignes_feuille(classeur_produit[0]["TD_OccurenceNumTicket"])
+    )
+
+    complete = classeur_produit[0]["Entetes_CplteAnneeMois"]
+    entetes_complete = [cellule.value for cellule in complete[1]]
+    colonne_total_ht = entetes_complete.index("AJ_TOTAL_HT") + 1
+    colonne_total_tva = entetes_complete.index("AJ_TOTAL_TVA_20") + 1
+    assert complete.cell(2, colonne_total_ht).value == "=F2+G2+H2+I2+N2"
+    assert complete.cell(2, colonne_total_tva).value == "=J2"
+
+    recette_janvier = lire_lignes_feuille(
+        classeur_produit[0]["TD_TotalHtTvaTtc"]
+    )[0]
+    assert recette_janvier["SOMME_AJ_TOTAL_HT"] == 9
+    assert recette_janvier["SOMME_AJ_TOTAL_TVA_20"] == -2
+    assert constructeur.filiations_actives[5]["operation"] == "copie en valeur"
+    assert constructeur.filiations_actives[7]["operation"] == "copie en valeur"
+    assert constructeur.filiations_actives[8] == {
+        "targetSheet": "Entetes_CplteAnneeMois",
+        "immediateSources": ["Entetes_TriNumInterne"],
+        "operation": "copie, enrichissement année/mois et formules HT/TVA",
+    }
+
+
+def test_coherence_entete_ligne_utilise_une_formule_excel() -> None:
+    constructeur = object.__new__(Constructeur751)
+    constructeur.donnees = {"lignes": {"MASSENA": [{
+        "nomfichier": "EJ010123.txt",
+        "E_NUM_INTERNE": "000001",
+        "E_NUM_TICKET": "000001",
+        "E_DATE_TICKET": "2023-01-01",
+        "E_HEURE_TICKET": "10:00:00",
+        "E_TTC": 10,
+        "D_QUANTITE_ARTICLE": 1,
+        "D_LIBELLE_ARTICLE": "",
+        "D_TAUX_TVA_ARTICLE": 20,
+        "D_MONTANT_ARTICLE": 12,
+        "D_CORRECTION": -2,
+        "D_AUTRE_INFO": "",
+    }]}}
+    classeur_produit = []
+    constructeur.exporter = lambda classeur, _definition: classeur_produit.append(classeur)
+
+    constructeur.construire_lignes("MASSENA")
+
+    coherence = classeur_produit[0]["CtrlCoherence_EnteteLigne"]
+    assert coherence["F2"].value == "=B2-(D2+E2)"
+    assert constructeur.filiations_actives[4] == {
+        "targetSheet": "CtrlCoherence_EnteteLigne",
+        "immediateSources": ["TD_TotalLignesParTicket"],
+        "operation": "copie en valeur et formule d'écart",
+    }
+
+
 def test_manifeste_enregistre_la_source_immediate(tmp_path) -> None:
     definition = resoudre_classeur_751("comparaison_ca3")
     constructeur = object.__new__(Constructeur751)

@@ -367,6 +367,23 @@ def agreger_mois_ej(
     return list(resultat.values())
 
 
+def valeurs_entetes_completes_pour_agregation(
+    feuille: Any,
+) -> list[dict[str, Any]]:
+    """Matérialise les deux formules de la feuille complète pour ses agrégats enfants."""
+    lignes = lire_lignes_feuille(feuille)
+    for ligne in lignes:
+        ligne["AJ_TOTAL_HT"] = sum(
+            (
+                decimal_cellule(ligne.get(champ))
+                for champ in ("E_HT1", "E_HT2", "E_HT3", "E_HT4", "E_HT_NON_TAXABLE")
+            ),
+            start=Decimal("0"),
+        )
+        ligne["AJ_TOTAL_TVA_20"] = decimal_cellule(ligne.get("E_TVA1"))
+    return lignes
+
+
 def sommer_periode(
     lignes: Iterable[dict[str, Any]],
     periode: str,
@@ -565,17 +582,11 @@ class Constructeur751:
         for nom in ("AJ_ECART_TVA1", "AJ_ECART_TTC", "AJ_SOLDE_TOUS_MDP"):
             mise_en_forme_ecart(ctrl, entetes_ctrl.index(nom), len(lignes_ctrl))
 
-        entetes_seq = ["nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_DATE_TICKET", "E_HEURE_TICKET", "AJ_TROU_NUM_TICKET", "AJ_TROU_NUM_INTERNE", "OBSERVATION"]
+        entetes_seq = ["nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_DATE_TICKET", "E_HEURE_TICKET", "AJ_TROU_NUM_TICKET"]
         lignes_seq = lire_lignes_feuille(ctrl, entetes_seq[:5])
         seq = ajouter_feuille(classeur, noms[3], entetes_seq, lignes_seq, "EntetesSeq")
         self.noter_filiation(noms[3], [noms[2]], "copie en valeur et analyse séquentielle")
         colonne_formules(seq, 5, len(lignes_seq), lambda r, i: '=""' if i == 0 else f"=C{r}-C{r-1}")
-        colonne_formules(seq, 6, len(lignes_seq), lambda r, i: '=""' if i == 0 else f"=B{r}-B{r-1}")
-        colonne_formules(seq, 7, len(lignes_seq), lambda r, i: '="Premier enregistrement"' if i == 0 else f'=IF(AND(F{r}=1,G{r}=1),"OK","À JUSTIFIER")')
-        seq.conditional_formatting.add(
-            f"H2:H{len(lignes_seq)+1}",
-            FormulaRule(formula=['ISNUMBER(SEARCH("JUSTIFIER",H2))'], fill=REMPLISSAGE_ALERTE, font=POLICE_ALERTE),
-        )
 
         source_seq = lire_lignes_feuille(seq, ["E_NUM_INTERNE", "E_NUM_TICKET"])
         comptes_internes = Counter(ligne["E_NUM_INTERNE"] for ligne in source_seq if ligne.get("E_NUM_INTERNE") not in (None, ""))
@@ -586,9 +597,8 @@ class Constructeur751:
         entetes_occ_int = ["E_NUM_INTERNE", "COMPTER_E_NUM_INTERNE"]
         occ_int = ajouter_feuille(classeur, noms[4], entetes_occ_int, valeurs_internes, "OccInt")
         self.noter_filiation(noms[4], [noms[3]], "agrégation des occurrences")
-        doublons_int = [ligne for ligne in lire_lignes_feuille(occ_int, entetes_occ_int) if int(ligne["COMPTER_E_NUM_INTERNE"]) > 1]
-        ajouter_feuille(classeur, noms[5], entetes_occ_int, doublons_int or [{"E_NUM_INTERNE": "AUCUN", "COMPTER_E_NUM_INTERNE": 0}], "DupInt")
-        self.noter_filiation(noms[5], [noms[4]], "copie en valeur et filtre des doublons")
+        feuille_copie_valeurs(classeur, noms[5], occ_int, entetes_occ_int, "DupInt")
+        self.noter_filiation(noms[5], [noms[4]], "copie en valeur")
 
         comptes_tickets = Counter(ligne["E_NUM_TICKET"] for ligne in source_seq if ligne.get("E_NUM_TICKET") not in (None, ""))
         valeurs_tickets = [
@@ -598,9 +608,8 @@ class Constructeur751:
         entetes_occ_ticket = ["E_NUM_TICKET", "COMPTER_E_NUM_TICKET"]
         occ_ticket = ajouter_feuille(classeur, noms[6], entetes_occ_ticket, valeurs_tickets, "OccTicket")
         self.noter_filiation(noms[6], [noms[3]], "agrégation des occurrences")
-        doublons_ticket = [ligne for ligne in lire_lignes_feuille(occ_ticket, entetes_occ_ticket) if int(ligne["COMPTER_E_NUM_TICKET"]) > 1]
-        ajouter_feuille(classeur, noms[7], entetes_occ_ticket, doublons_ticket or [{"E_NUM_TICKET": "AUCUN", "COMPTER_E_NUM_TICKET": 0}], "DupTicket")
-        self.noter_filiation(noms[7], [noms[6]], "copie en valeur et filtre des doublons")
+        feuille_copie_valeurs(classeur, noms[7], occ_ticket, entetes_occ_ticket, "DupTicket")
+        self.noter_filiation(noms[7], [noms[6]], "copie en valeur")
 
         entetes_completes = [*COLONNES_EJ, "AJ_TOTAL_HT", "AJ_TOTAL_TVA_20", "AJ_ANNEE", "AJ_MOIS"]
         lignes_completes = []
@@ -608,16 +617,34 @@ class Constructeur751:
             mois = mois_ticket(ligne["E_DATE_TICKET"])
             lignes_completes.append({
                 **ligne,
-                "AJ_TOTAL_HT": sum((decimal_cellule(ligne.get(champ)) for champ in ("E_HT1", "E_HT2", "E_HT3", "E_HT4", "E_HT_NON_TAXABLE")), start=Decimal("0")),
-                "AJ_TOTAL_TVA_20": decimal_cellule(ligne.get("E_TVA1")),
                 "AJ_ANNEE": int(mois[:4]),
                 "AJ_MOIS": mois,
             })
         complete = ajouter_feuille(classeur, noms[8], entetes_completes, lignes_completes, "EntetesCplte")
-        self.noter_filiation(noms[8], [noms[1]], "copie en valeur et enrichissement année/mois/HT/TVA")
+        self.noter_filiation(noms[8], [noms[1]], "copie, enrichissement année/mois et formules HT/TVA")
+        colonnes_completes = {
+            nom: get_column_letter(index + 1)
+            for index, nom in enumerate(entetes_completes)
+        }
+        colonne_formules(
+            complete,
+            entetes_completes.index("AJ_TOTAL_HT"),
+            len(lignes_completes),
+            lambda r, _i: "=" + "+".join(
+                f"{colonnes_completes[champ]}{r}"
+                for champ in ("E_HT1", "E_HT2", "E_HT3", "E_HT4", "E_HT_NON_TAXABLE")
+            ),
+        )
+        colonne_formules(
+            complete,
+            entetes_completes.index("AJ_TOTAL_TVA_20"),
+            len(lignes_completes),
+            lambda r, _i: f"={colonnes_completes['E_TVA1']}{r}",
+        )
+        lignes_complete_agregeables = valeurs_entetes_completes_pour_agregation(complete)
 
         entetes_enc = ["AJ_ANNEE", "AJ_MOIS", "SOMME_E_TTC", "SOMME_E_MDP_CB", "SOMME_E_MDP_CHEQUES", "SOMME_E_MDP_ESPECES"]
-        lignes_enc = agreger_mois_ej(lire_lignes_feuille(complete), {
+        lignes_enc = agreger_mois_ej(lignes_complete_agregeables, {
             "SOMME_E_TTC": "E_TTC",
             "SOMME_E_MDP_CB": "E_MDP_CB",
             "SOMME_E_MDP_CHEQUES": "E_MDP_CHEQUES",
@@ -629,7 +656,7 @@ class Constructeur751:
         self.noter_filiation(noms[10], [noms[9]], "copie en valeur")
 
         entetes_rec = ["AJ_ANNEE", "AJ_MOIS", "SOMME_AJ_TOTAL_HT", "SOMME_AJ_TOTAL_TVA_20", "SOMME_E_TTC"]
-        lignes_rec = agreger_mois_ej(lire_lignes_feuille(complete), {
+        lignes_rec = agreger_mois_ej(lignes_complete_agregeables, {
             "SOMME_AJ_TOTAL_HT": "AJ_TOTAL_HT",
             "SOMME_AJ_TOTAL_TVA_20": "AJ_TOTAL_TVA_20",
             "SOMME_E_TTC": "E_TTC",
@@ -675,14 +702,23 @@ class Constructeur751:
         self.noter_filiation(noms[3], [noms[2]], "agrégation par numéro de ticket")
 
         entetes_coherence = [*entetes_totaux, "AJ_ECART_TTC"]
-        lignes_coherence = []
-        for ligne in lire_lignes_feuille(feuille_totaux, entetes_totaux):
-            lignes_coherence.append({
-                **ligne,
-                "AJ_ECART_TTC": decimal_cellule(ligne["E_TTC"]) - decimal_cellule(ligne["SOMME_D_MONTANT_ARTICLE"]) - decimal_cellule(ligne["SOMME_D_CORRECTION"]),
-            })
+        lignes_coherence = lire_lignes_feuille(feuille_totaux, entetes_totaux)
         coherence = ajouter_feuille(classeur, noms[4], entetes_coherence, lignes_coherence, "CoherenceEnteteLigne")
-        self.noter_filiation(noms[4], [noms[3]], "copie en valeur et calcul d'écart")
+        self.noter_filiation(noms[4], [noms[3]], "copie en valeur et formule d'écart")
+        colonnes_coherence = {
+            nom: get_column_letter(index + 1)
+            for index, nom in enumerate(entetes_coherence)
+        }
+        colonne_formules(
+            coherence,
+            entetes_coherence.index("AJ_ECART_TTC"),
+            len(lignes_coherence),
+            lambda r, _i: (
+                f"={colonnes_coherence['E_TTC']}{r}-("
+                f"{colonnes_coherence['SOMME_D_MONTANT_ARTICLE']}{r}+"
+                f"{colonnes_coherence['SOMME_D_CORRECTION']}{r})"
+            ),
+        )
         mise_en_forme_ecart(coherence, 5, len(totaux))
 
         libelles = Counter(ligne["D_LIBELLE_ARTICLE"] for ligne in lignes_ctrl if ligne.get("D_LIBELLE_ARTICLE"))
