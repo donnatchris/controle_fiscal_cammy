@@ -297,7 +297,7 @@ def ajouter_OccurenceTxTvaArticle(document: Any, boutique: str) -> None:
 
 
 def ajouter_CtrlCoherenceEnteteLigne(document: Any, boutique: str) -> None:
-    """Copie les valeurs du TCD et calcule l'écart TTC par numéro de ticket."""
+    """Copie les valeurs du TCD, nettoie ses en-têtes et calcule l'écart TTC."""
     feuille = copier_valeurs_feuille(
         document,
         FeuilleEjTickets.TD_TOTAL_LIGNES.pour(boutique),
@@ -313,6 +313,17 @@ def ajouter_CtrlCoherenceEnteteLigne(document: Any, boutique: str) -> None:
         adresse.EndColumn,
         adresse.EndRow,
     ).getDataArray()
+
+    if _supprimer_ligne_data_tcd(feuille, valeurs_tcd):
+        curseur = feuille.createCursor()
+        curseur.gotoEndOfUsedArea(True)
+        adresse = curseur.getRangeAddress()
+        valeurs_tcd = feuille.getCellRangeByPosition(
+            adresse.StartColumn,
+            adresse.StartRow,
+            adresse.EndColumn,
+            adresse.EndRow,
+        ).getDataArray()
 
     index_ttc, ligne_entete_ttc = _position_entete_tcd(valeurs_tcd, "E_TTC")
     index_montant, ligne_entete_montant = _position_entete_tcd(
@@ -362,14 +373,11 @@ def _position_entete_tcd(
     champ: str | None = None,
 ) -> tuple[int, int]:
     """Trouve la position d'un en-tête de TCD malgré son formatage par Calc."""
-    def normaliser(valeur: object) -> str:
-        return "".join(caractere for caractere in str(valeur).upper() if caractere.isalnum())
-
-    attendu_normalise = normaliser(nom_attendu)
-    champ_normalise = normaliser(champ) if champ is not None else None
+    attendu_normalise = _normaliser_entete_tcd(nom_attendu)
+    champ_normalise = _normaliser_entete_tcd(champ) if champ is not None else None
     for ligne, valeurs_ligne in enumerate(valeurs):
         for colonne, entete in enumerate(valeurs_ligne):
-            entete_normalise = normaliser(entete)
+            entete_normalise = _normaliser_entete_tcd(entete)
             if entete_normalise == attendu_normalise:
                 return colonne, ligne
             if champ_normalise is not None and champ_normalise in entete_normalise:
@@ -377,6 +385,53 @@ def _position_entete_tcd(
     raise ValueError(
         f"Colonne du TCD introuvable : {nom_attendu}; valeurs présentes : {valeurs}"
     )
+
+
+def _normaliser_entete_tcd(valeur: object) -> str:
+    """Normalise un libellé de TCD pour neutraliser espaces et soulignés Calc."""
+    return "".join(
+        caractere for caractere in str(valeur).upper() if caractere.isalnum()
+    )
+
+
+def _supprimer_ligne_data_tcd(
+    feuille: Any,
+    valeurs: tuple[tuple[object, ...], ...],
+) -> bool:
+    """Fusionne les en-têtes du TCD puis retire sa ligne synthétique Data."""
+    ligne_data = next(
+        (
+            ligne
+            for ligne, valeurs_ligne in enumerate(valeurs)
+            if any(_normaliser_entete_tcd(valeur) == "DATA" for valeur in valeurs_ligne)
+        ),
+        None,
+    )
+    if ligne_data is None:
+        return False
+
+    lignes_mesures = {
+        _position_entete_tcd(valeurs, nom, champ=champ)[1]
+        for nom, champ in (
+            ("Compter - D_LIBELLE_ARTICLE", "D_LIBELLE_ARTICLE"),
+            ("Somme - D_MONTANT_ARTICLE", "D_MONTANT_ARTICLE"),
+            ("Somme - D_CORRECTION", "D_CORRECTION"),
+        )
+    }
+    if len(lignes_mesures) != 1:
+        return False
+    ligne_entetes = lignes_mesures.pop()
+    if ligne_entetes <= ligne_data:
+        return False
+
+    for colonne, valeur in enumerate(valeurs[ligne_data]):
+        if valeur in (None, "") or _normaliser_entete_tcd(valeur) == "DATA":
+            continue
+        if valeurs[ligne_entetes][colonne] in (None, ""):
+            feuille.getCellByPosition(colonne, ligne_entetes).String = str(valeur)
+
+    feuille.getRows().removeByIndex(ligne_data, 1)
+    return True
 
 
 def creer_et_enregistrer_classeur(

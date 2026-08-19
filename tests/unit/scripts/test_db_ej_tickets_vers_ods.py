@@ -15,6 +15,37 @@ def test_position_entete_tcd_accepte_la_ligne_data_et_le_formatage_calc() -> Non
     ) == (3, 1)
 
 
+def test_supprimer_ligne_data_tcd_fusionne_les_entetes_avant_suppression() -> None:
+    valeurs = (
+        ("E_NUM_TICKET", "E_TTC", "Data", "", ""),
+        (
+            "",
+            "",
+            "Compter - D_LIBELLE_ARTICLE",
+            "Somme - D_MONTANT_ARTICLE",
+            "Somme - D_CORRECTION",
+        ),
+        ("000609", 897, 3, 897, ""),
+    )
+    cellules: dict[tuple[int, int], SimpleNamespace] = {}
+    suppressions: list[tuple[int, int]] = []
+    feuille = SimpleNamespace(
+        getCellByPosition=lambda colonne, ligne: cellules.setdefault(
+            (colonne, ligne), SimpleNamespace(String="")
+        ),
+        getRows=lambda: SimpleNamespace(
+            removeByIndex=lambda ligne, nombre: suppressions.append((ligne, nombre))
+        ),
+    )
+
+    supprimee = db_ej_tickets_vers_ods._supprimer_ligne_data_tcd(feuille, valeurs)
+
+    assert supprimee is True
+    assert cellules[(0, 1)].String == "E_NUM_TICKET"
+    assert cellules[(1, 1)].String == "E_TTC"
+    assert suppressions == [(0, 1)]
+
+
 def test_ajouter_tri_copie_la_feuille_0_dans_la_feuille_de_controle(
     monkeypatch,
 ) -> None:
