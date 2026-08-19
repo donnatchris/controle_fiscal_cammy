@@ -68,7 +68,7 @@ class ClasseurResolu751:
 NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     "ej_entetes": DefinitionClasseur751(
         identifiant="ej_entetes",
-        nom_fichier="TTS_EJ_ENTETES_TICKETS_{boutique}.xlsx",
+        nom_fichier="TTS_EJ_ENTETES_TICKETS_{boutique}.ods",
         par_boutique=True,
         feuilles=(
             NomFeuille751("ENTETES_TICKETS_{boutique}_0", "ENTETES_{boutique}_0"),
@@ -88,7 +88,7 @@ NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     ),
     "ej_lignes": DefinitionClasseur751(
         identifiant="ej_lignes",
-        nom_fichier="TTS_EJ_LIGNES_TICKETS_{boutique}.xlsx",
+        nom_fichier="TTS_EJ_LIGNES_TICKETS_{boutique}.ods",
         par_boutique=True,
         feuilles=(
             NomFeuille751("LIGNES_TICKETS_{boutique}_0", "LIGNES_{boutique}_0"),
@@ -102,7 +102,7 @@ NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     ),
     "z2": DefinitionClasseur751(
         identifiant="z2",
-        nom_fichier="TTS_Z2_TransactionsMois_TOUS_{annee}_{boutique}.xlsx",
+        nom_fichier="TTS_Z2_TransactionsMois_TOUS_{annee}_{boutique}.ods",
         par_boutique=True,
         par_annee=True,
         feuilles=(
@@ -119,7 +119,7 @@ NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     ),
     "z1": DefinitionClasseur751(
         identifiant="z1",
-        nom_fichier="TTS_Z1_SyntheseMois_TOUS_{annee}_{boutique}.xlsx",
+        nom_fichier="TTS_Z1_SyntheseMois_TOUS_{annee}_{boutique}.ods",
         par_boutique=True,
         par_annee=True,
         feuilles=(
@@ -136,12 +136,12 @@ NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     ),
     "recettes_toutes": DefinitionClasseur751(
         identifiant="recettes_toutes",
-        nom_fichier="recettes_mensuelles_tous_boutique_232425.xlsx",
+        nom_fichier="recettes_mensuelles_tous_boutique_232425.ods",
         feuilles=(NomFeuille751("recettes_mensuelles_tous_boutique_232425", "recettes_mensuelles_tous"),),
     ),
     "comparaison_ca3": DefinitionClasseur751(
         identifiant="comparaison_ca3",
-        nom_fichier="CompareCA_Gesco_CA3.xlsx",
+        nom_fichier="CompareCA_Gesco_CA3.ods",
         feuilles=(NomFeuille751("CompareCA_Gesco_CA3", "CompareCA_Gesco_CA3"),),
     ),
 })

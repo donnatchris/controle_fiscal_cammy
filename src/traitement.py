@@ -1,13 +1,12 @@
 import argparse
 from pathlib import Path
 
-from scripts import db_ej_vers_xlsx, generer_rapport_fiscal_751, reconstruire_base_751
+from scripts import db_vers_csv_751, reconstruire_base_751
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
 
 
 RACINE_PROJET = Path(__file__).resolve().parents[1]
 REPERTOIRE_SORTIE_PAR_DEFAUT = RACINE_PROJET / "output"
-NOM_DOSSIER_EXCEL = "excel"
 REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT = (
     REPERTOIRE_SORTIE_PAR_DEFAUT / "travaux_preliminaires"
 )
@@ -15,43 +14,19 @@ REPERTOIRE_CONTROLE_PAR_DEFAUT = RACINE_PROJET / "controle"
 REGLES_Z_PAR_DEFAUT = RACINE_PROJET / "config/regles_modes_z.json"
 
 
-def ranger_anciens_classeurs(
-    repertoire_sortie: Path,
-    repertoire_excel: Path,
-) -> None:
-    """Déplace les 18 classeurs historiques de la racine output vers output/excel."""
-    repertoire_excel.mkdir(parents=True, exist_ok=True)
-    for nom in db_ej_vers_xlsx.NOMS_CLASSEURS_ATTENDUS:
-        source = repertoire_sortie / nom
-        if not source.is_file():
-            continue
-        destination = repertoire_excel / nom
-        if destination.is_file():
-            destination.unlink()
-        source.replace(destination)
-    fichier_systeme = repertoire_sortie / ".DS_Store"
-    if fichier_systeme.is_file():
-        fichier_systeme.unlink()
-
-
 def executer_traitements(
     chemin_repertoire: Path,
     chemin_base: Path,
-    repertoire_sortie: Path = REPERTOIRE_SORTIE_PAR_DEFAUT,
     repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
     repertoire_controle: Path = REPERTOIRE_CONTROLE_PAR_DEFAUT,
     chemin_regles: Path = REGLES_Z_PAR_DEFAUT,
-    qa: bool = False,
 ) -> bool:
-    """Reconstruit la base et génère les 18 classeurs et le rapport PDF."""
-    repertoire_excel = repertoire_sortie / NOM_DOSSIER_EXCEL
-    repertoire_sortie.mkdir(parents=True, exist_ok=True)
-    ranger_anciens_classeurs(repertoire_sortie, repertoire_excel)
+    """Reconstruit la base SQLite puis exporte les CSV et contrôles associés."""
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_controle.mkdir(parents=True, exist_ok=True)
     rapport = repertoire_controle / "rapport_reconstruction_751.json"
 
-    print("\n=== 1/3 Reconstruction et validation de la base ===")
+    print("\n=== 1/2 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main([
         "--sources", str(chemin_repertoire),
         "--base", str(chemin_base),
@@ -61,31 +36,18 @@ def executer_traitements(
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/3 Génération des contrôles et des 18 classeurs Excel ===")
-    arguments_excel = [
+    print("\n=== 2/2 Génération des CSV et contrôles ===")
+    if db_vers_csv_751.main([
         "--base", str(chemin_base),
-        "--sortie", str(repertoire_excel),
         "--staging", str(repertoire_staging),
         "--controle", str(repertoire_controle),
         "--regles", str(chemin_regles),
-    ]
-    if qa:
-        arguments_excel.append("--qa")
-
-    if db_ej_vers_xlsx.main(arguments_excel) != 0:
-        return False
-
-    print("\n=== 3/3 Génération du rapport d'analyse fiscale PDF ===")
-    if generer_rapport_fiscal_751.main([
-        "--base", str(chemin_base),
-        "--controle", str(repertoire_controle),
-        "--sortie", str(repertoire_sortie),
     ]) != 0:
         return False
 
     print("\nTraitement terminé avec succès.")
-    print(f"Classeurs Excel : {repertoire_excel}")
-    print(f"Rapport PDF : {repertoire_sortie}")
+    print(f"Base SQLite : {chemin_base}")
+    print(f"CSV : {repertoire_staging}")
     print(f"Contrôles techniques : {repertoire_controle}")
     return True
 
@@ -105,21 +67,12 @@ def main(argv: list[str] | None = None) -> int:
         default=str(RACINE_PROJET / CHEMIN_DB),
     )
     parser.add_argument(
-        "--sortie",
-        type=Path,
-        default=REPERTOIRE_SORTIE_PAR_DEFAUT,
-        help="Dossier contenant excel/, travaux_preliminaires/ et le rapport PDF (défaut : output).",
-    )
-    parser.add_argument(
         "--staging",
         "--travaux-preliminaires",
         dest="staging",
         type=Path,
         default=REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
-        help=(
-            "Dossier des CSV intermédiaires "
-            "(défaut : output/travaux_preliminaires)."
-        ),
+        help="Dossier des CSV intermédiaires (défaut : output/travaux_preliminaires).",
     )
     parser.add_argument(
         "--controle",
@@ -128,21 +81,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Dossier des contrôles techniques (défaut : controle).",
     )
     parser.add_argument("--regles", type=Path, default=REGLES_Z_PAR_DEFAUT)
-    parser.add_argument(
-        "--qa",
-        action="store_true",
-        help="Rend également les 135 feuilles en PNG avec LibreOffice.",
-    )
     args = parser.parse_args(argv)
 
     succes = executer_traitements(
         chemin_repertoire=Path(args.chemin_repertoire),
         chemin_base=Path(args.chemin_base),
-        repertoire_sortie=args.sortie,
         repertoire_staging=args.staging,
         repertoire_controle=args.controle,
         chemin_regles=args.regles,
-        qa=args.qa,
     )
     return 0 if succes else 1
 
