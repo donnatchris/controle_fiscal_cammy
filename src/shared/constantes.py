@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from types import MappingProxyType
 from typing import Literal, Mapping
+from pathlib import Path
 
 
 BOUTIQUES = ["MASSENA", "MATURIN"]
@@ -12,10 +13,10 @@ SEPARATEUR_TICKET = "1-----------------------"
 SEPARATEUR_SIGNATURE = "2-----------------------"
 SEPARATEUR_CSV = "|"
 
-CHEMIN_DB = "database/db.sqlite"
-REPERTOIRE_SORTIE = "output/"
-REPERTOIRE_SOURCE = "fichiers_sources/"
-
+REPERTOIRE_SORTIE = Path("output")
+CHEMIN_DB = Path(REPERTOIRE_SORTIE / "database" / "db.sqlite")
+REPERTOIRE_SOURCE = Path("fichiers_sources")
+LARGEUR_COLONNE_DEFAUT = 4000
 
 ModeNomFeuille751 = Literal["nom_complet", "alias_court"]
 NOM_COMPLET: ModeNomFeuille751 = "nom_complet"
@@ -68,7 +69,7 @@ class ClasseurResolu751:
 NOMS_CLASSEURS_751: Mapping[str, DefinitionClasseur751] = MappingProxyType({
     "ej_entetes": DefinitionClasseur751(
         identifiant="ej_entetes",
-        nom_fichier="TTS_EJ_ENTETES_TICKETS_{boutique}.ods",
+        nom_fichier="EJ_ENTETES_TICKETS_{boutique}.ods",
         par_boutique=True,
         feuilles=(
             NomFeuille751("ENTETES_TICKETS_{boutique}_0", "ENTETES_{boutique}_0"),

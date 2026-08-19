@@ -46,7 +46,3 @@ def test_normaliser_z_preserve_identifiants_quantite_entiere_et_date_iso() -> No
     lignes = [{"E_COMPTEUR_Z": "0021", "E_DATE": "01-04-2023", "D_ENREGISTREMENT": "0001", "D_QUANTITE": "75.00", "D_MONTANT": Decimal("25372.00")}]
     db_vers_csv_751.normaliser_z(lignes)
     assert lignes[0] == {"E_COMPTEUR_Z": "0021", "E_DATE": "2023-04-01", "D_ENREGISTREMENT": "0001", "D_QUANTITE": "75", "D_MONTANT": "25372.00"}
-
-
-def test_periodes_fichier_conserve_une_periode_multi_mois() -> None:
-    assert db_vers_csv_751.periodes_fichier("Z101_01_042025_052025_062025_MASSENA.CSV") == ["2025-04", "2025-05", "2025-06"]

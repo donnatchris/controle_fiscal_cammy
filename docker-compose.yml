@@ -1,0 +1,8 @@
+services:
+  controle-fiscal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./output:/app/output

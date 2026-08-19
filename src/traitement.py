@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from scripts import db_vers_csv_751, reconstruire_base_751
+from scripts import db_ej_entetes_vers_ods, db_vers_csv_751, reconstruire_base_751
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
 
 
@@ -10,45 +10,46 @@ REPERTOIRE_SORTIE_PAR_DEFAUT = RACINE_PROJET / "output"
 REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT = (
     REPERTOIRE_SORTIE_PAR_DEFAUT / "travaux_preliminaires"
 )
-REPERTOIRE_CONTROLE_PAR_DEFAUT = RACINE_PROJET / "controle"
-REGLES_Z_PAR_DEFAUT = RACINE_PROJET / "config/regles_modes_z.json"
+REPERTOIRE_LIBREOFFICE_PAR_DEFAUT = REPERTOIRE_SORTIE_PAR_DEFAUT / "libreoffice"
 
 
 def executer_traitements(
     chemin_repertoire: Path,
     chemin_base: Path,
     repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
-    repertoire_controle: Path = REPERTOIRE_CONTROLE_PAR_DEFAUT,
-    chemin_regles: Path = REGLES_Z_PAR_DEFAUT,
+    repertoire_libreoffice: Path = REPERTOIRE_LIBREOFFICE_PAR_DEFAUT,
 ) -> bool:
-    """Reconstruit la base SQLite puis exporte les CSV et contrôles associés."""
+    """Reconstruit la base, exporte les CSV et les deux feuilles ODS d'entrée EJ."""
     repertoire_staging.mkdir(parents=True, exist_ok=True)
-    repertoire_controle.mkdir(parents=True, exist_ok=True)
-    rapport = repertoire_controle / "rapport_reconstruction_751.json"
+    repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
-    print("\n=== 1/2 Reconstruction et validation de la base ===")
+    print("\n=== 1/3 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main([
         "--sources", str(chemin_repertoire),
         "--base", str(chemin_base),
-        "--rapport", str(rapport),
         "--publier",
     ])
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/2 Génération des CSV et contrôles ===")
+    print("\n=== 2/3 Génération des CSV ===")
     if db_vers_csv_751.main([
         "--base", str(chemin_base),
         "--staging", str(repertoire_staging),
-        "--controle", str(repertoire_controle),
-        "--regles", str(chemin_regles),
+    ]) != 0:
+        return False
+
+    print("\n=== 3/3 Génération des feuilles ODS d'entêtes EJ ===")
+    if db_ej_entetes_vers_ods.main([
+        "--base", str(chemin_base),
+        "--sortie", str(repertoire_libreoffice),
     ]) != 0:
         return False
 
     print("\nTraitement terminé avec succès.")
     print(f"Base SQLite : {chemin_base}")
     print(f"CSV : {repertoire_staging}")
-    print(f"Contrôles techniques : {repertoire_controle}")
+    print(f"Classeurs LibreOffice : {repertoire_libreoffice}")
     return True
 
 
@@ -59,6 +60,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Chemin du repertoire contenant les fichiers sources",
         nargs="?",
         default=str(RACINE_PROJET / REPERTOIRE_SOURCE),
+    )
+    parser.add_argument(
+        "--libreoffice",
+        type=Path,
+        default=REPERTOIRE_LIBREOFFICE_PAR_DEFAUT,
+        help="Dossier des classeurs ODS (défaut : output/libreoffice).",
     )
     parser.add_argument(
         "chemin_base",
@@ -74,21 +81,13 @@ def main(argv: list[str] | None = None) -> int:
         default=REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
         help="Dossier des CSV intermédiaires (défaut : output/travaux_preliminaires).",
     )
-    parser.add_argument(
-        "--controle",
-        type=Path,
-        default=REPERTOIRE_CONTROLE_PAR_DEFAUT,
-        help="Dossier des contrôles techniques (défaut : controle).",
-    )
-    parser.add_argument("--regles", type=Path, default=REGLES_Z_PAR_DEFAUT)
     args = parser.parse_args(argv)
 
     succes = executer_traitements(
         chemin_repertoire=Path(args.chemin_repertoire),
         chemin_base=Path(args.chemin_base),
         repertoire_staging=args.staging,
-        repertoire_controle=args.controle,
-        chemin_regles=args.regles,
+        repertoire_libreoffice=args.libreoffice,
     )
     return 0 if succes else 1
 

@@ -5,7 +5,7 @@ import pytest
 import traitement
 
 
-def test_executer_traitements_enchaine_reconstruction_et_csv(
+def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -13,8 +13,7 @@ def test_executer_traitements_enchaine_reconstruction_et_csv(
     sources = tmp_path / "sources"
     base = tmp_path / "database/db.sqlite"
     staging = tmp_path / "staging"
-    controle = tmp_path / "controle"
-    regles = tmp_path / "config/regles.json"
+    libreoffice = tmp_path / "libreoffice"
     monkeypatch.setattr(
         traitement.reconstruire_base_751,
         "main",
@@ -25,26 +24,30 @@ def test_executer_traitements_enchaine_reconstruction_et_csv(
         "main",
         lambda arguments: appels.append(("csv", arguments)) or 0,
     )
+    monkeypatch.setattr(
+        traitement.db_ej_entetes_vers_ods,
+        "main",
+        lambda arguments: appels.append(("ods", arguments)) or 0,
+    )
 
     assert traitement.executer_traitements(
         chemin_repertoire=sources,
         chemin_base=base,
         repertoire_staging=staging,
-        repertoire_controle=controle,
-        chemin_regles=regles,
+        repertoire_libreoffice=libreoffice,
     ) is True
     assert appels == [
         ("reconstruction", [
             "--sources", str(sources), "--base", str(base),
-            "--rapport", str(controle / "rapport_reconstruction_751.json"), "--publier",
+            "--publier",
         ]),
         ("csv", [
             "--base", str(base), "--staging", str(staging),
-            "--controle", str(controle), "--regles", str(regles),
         ]),
+        ("ods", ["--base", str(base), "--sortie", str(libreoffice)]),
     ]
     assert staging.is_dir()
-    assert controle.is_dir()
+    assert libreoffice.is_dir()
 
 
 def test_executer_traitements_sarrete_si_reconstruction_echoue(
@@ -57,12 +60,16 @@ def test_executer_traitements_sarrete_si_reconstruction_echoue(
         "main",
         lambda _: pytest.fail("Les CSV ne doivent pas être générés"),
     )
+    monkeypatch.setattr(
+        traitement.db_ej_entetes_vers_ods,
+        "main",
+        lambda _: pytest.fail("Les ODS ne doivent pas être générés"),
+    )
 
     assert traitement.executer_traitements(
         chemin_repertoire=tmp_path / "sources",
         chemin_base=tmp_path / "db.sqlite",
         repertoire_staging=tmp_path / "staging",
-        repertoire_controle=tmp_path / "controle",
     ) is False
 
 
@@ -76,4 +83,4 @@ def test_main_utilise_les_repertoires_par_defaut(monkeypatch: pytest.MonkeyPatch
 
     assert traitement.main([]) == 0
     assert arguments["repertoire_staging"] == traitement.RACINE_PROJET / "output/travaux_preliminaires"
-    assert arguments["repertoire_controle"] == traitement.RACINE_PROJET / "controle"
+    assert arguments["repertoire_libreoffice"] == traitement.RACINE_PROJET / "output/libreoffice"

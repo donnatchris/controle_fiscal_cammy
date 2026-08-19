@@ -1,10 +1,9 @@
-"""Reconstruit et contrôle la base 751 avant publication atomique."""
+"""Reconstruit et valide la base 751 avant publication atomique."""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
-import json
 import os
 import shutil
 import sqlite3
@@ -50,8 +49,8 @@ def somme_decimal(rows: list[sqlite3.Row], colonne: str) -> Decimal:
     )
 
 
-def controler_base(chemin_base: Path) -> dict[str, object]:
-    """Contrôle les invariants comptables avec Decimal, jamais avec des flottants."""
+def valider_base(chemin_base: Path) -> None:
+    """Valide les invariants comptables avec Decimal, jamais avec des flottants."""
     with sqlite3.connect(chemin_base) as connection:
         connection.row_factory = sqlite3.Row
         compte = lambda table: connection.execute(
@@ -86,7 +85,7 @@ def controler_base(chemin_base: Path) -> dict[str, object]:
             """
         ).fetchall()
         ventes = sum(ventes_par_boutique.values())
-        rapport: dict[str, object] = {
+        validation: dict[str, object] = {
             "blocs_ej": compte("tickets"),
             "details": compte("lignes_ticket"),
             "tickets_vente": ventes,
@@ -105,16 +104,15 @@ def controler_base(chemin_base: Path) -> dict[str, object]:
 
     erreurs = []
     for cle, attendu in ATTENDUS.items():
-        obtenu = Decimal(rapport[cle]) if cle == "retours_ttc" else rapport[cle]
+        obtenu = Decimal(validation[cle]) if cle == "retours_ttc" else validation[cle]
         if obtenu != attendu:
             erreurs.append(f"{cle}: attendu={attendu}, obtenu={obtenu}")
-    if rapport["ventes_par_boutique"] != {"MASSENA": 1_153, "MATURIN": 722}:
-        erreurs.append(f"ventes_par_boutique: {rapport['ventes_par_boutique']}")
-    if rapport["foreign_key_errors"] != 0:
-        erreurs.append(f"foreign_key_errors: {rapport['foreign_key_errors']}")
+    if validation["ventes_par_boutique"] != {"MASSENA": 1_153, "MATURIN": 722}:
+        erreurs.append(f"ventes_par_boutique: {validation['ventes_par_boutique']}")
+    if validation["foreign_key_errors"] != 0:
+        erreurs.append(f"foreign_key_errors: {validation['foreign_key_errors']}")
     if erreurs:
-        raise RuntimeError("Contrôles de reconstruction non conformes : " + "; ".join(erreurs))
-    return rapport
+        raise RuntimeError("Validation de reconstruction échouée : " + "; ".join(erreurs))
 
 
 def reconstruire(repertoire_sources: Path, chemin_temporaire: Path) -> None:
@@ -133,7 +131,6 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sources", type=Path, default=Path(REPERTOIRE_SOURCE))
     parser.add_argument("--base", type=Path, default=Path(CHEMIN_DB))
-    parser.add_argument("--rapport", type=Path, default=Path("controle/rapport_reconstruction_751.json"))
     parser.add_argument(
         "--publier",
         action="store_true",
@@ -142,13 +139,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     args.base.parent.mkdir(parents=True, exist_ok=True)
-    args.rapport.parent.mkdir(parents=True, exist_ok=True)
     chemin_temporaire = args.base.with_name(f".{args.base.name}.{uuid.uuid4().hex}.tmp")
     avant = empreintes_sources(args.sources)
 
     try:
         reconstruire(args.sources, chemin_temporaire)
-        controles = controler_base(chemin_temporaire)
+        valider_base(chemin_temporaire)
         apres = empreintes_sources(args.sources)
         if avant != apres:
             raise RuntimeError("Les sources ont changé pendant la reconstruction")
@@ -166,15 +162,7 @@ def main(argv: list[str] | None = None) -> int:
                 "sauvegarde": str(sauvegarde.resolve()) if sauvegarde else None,
             }
 
-        rapport = {
-            "statut": "CONFORME",
-            "sources_controlees": len(avant),
-            "sources_inchangees": True,
-            "controles": controles,
-            "publication": publication,
-        }
-        args.rapport.write_text(json.dumps(rapport, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(json.dumps(rapport, indent=2, ensure_ascii=False))
+        print(f"Base validée à partir de {len(avant)} sources inchangées.")
         if not args.publier:
             print(f"Base temporaire validée et conservée : {chemin_temporaire}")
         return 0
