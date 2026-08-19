@@ -1,11 +1,7 @@
-import sqlite3
-from datetime import date
-from decimal import Decimal
 from pathlib import Path
 from types import SimpleNamespace
 
-from classes.ticket import EjEnteteTicket, EjTicket
-from scripts import db_ej_entetes_vers_ods, ej_vers_db
+from scripts import db_ej_entetes_vers_ods
 
 
 def test_ajouter_tri_construit_le_nom_de_feuille_depuis_la_boutique(
@@ -32,7 +28,7 @@ def test_ajouter_tri_construit_le_nom_de_feuille_depuis_la_boutique(
         "copier_feuille",
         lambda _document, _source, destination: destinations.append(destination) or FausseFeuille(),
     )
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
     monkeypatch.setitem(
         __import__("sys").modules,
         "com.sun.star.util",
@@ -125,7 +121,7 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
         lambda _document, source, destination: destinations.append((source, destination)) or feuille,
     )
     monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
 
     db_ej_entetes_vers_ods.ajouter_CtrlCoherenceEntete(
         document=SimpleNamespace(getNumberFormats=lambda: object()),
@@ -261,7 +257,7 @@ def test_ajouter_sequentialite_copie_uniquement_les_colonnes_demandees_en_valeur
     feuilles = FaussesFeuilles(source)
     document = SimpleNamespace(getSheets=lambda: feuilles, getNumberFormats=lambda: object())
     monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
 
     db_ej_entetes_vers_ods.ajouter_sequentialite(document, "MASSENA")
 
@@ -377,7 +373,7 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, value: f"{enum}.{value}"),
     )
     feuilles = FaussesFeuilles()
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
     db_ej_entetes_vers_ods.ajouter_TD_OccurenceNumInterne(
         SimpleNamespace(getSheets=lambda: feuilles), "MASSENA"
     )
@@ -389,59 +385,100 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.DATA"),
         ("Function", "com.sun.star.sheet.GeneralFunction.COUNT"),
+        ("Name", "Compter - E_NUM_INTERNE"),
     ]
     assert feuille_destination.tableaux.insertions == [
         ("TD_OccurenceNumInterne", "A1", descripteur)
     ]
 
 
-def creer_ticket(boutique: str, numero: str) -> EjTicket:
-    return EjTicket(entete=EjEnteteTicket(
-        nomFichier="EJ020123.TXT", boutique=boutique, E_NUM_INTERNE=numero,
-        E_DATE_TICKET=date(2023, 1, 2), E_HEURE_TICKET="11:25", type="REG",
-        E_NUM_TICKET="000900", E_HT1=Decimal("100.00"), E_TVA1=Decimal("20.00"),
-        E_TTC=Decimal("120.00"),
-    ))
+def test_ajouter_entetes_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypatch) -> None:
+    chemin_csv = tmp_path / "EJ_ENTETES_TICKETS_MASSENA.csv"
+    chemin_csv.write_text(
+        "|".join(db_ej_entetes_vers_ods.COLONNES_ENTETES)
+        + "\nEJ010123.TXT|000001|000010|2023-01-02|11:25|100.00||||20.00|||||120.00|120.00||\n",
+        encoding="utf-8-sig",
+    )
+    rows: list[object] = []
+
+    class FausseFeuille:
+        def setName(self, _: str) -> None:
+            pass
+
+        def getCellRangeByPosition(self, *_: int) -> SimpleNamespace:
+            return SimpleNamespace(setDataArray=lambda _: None, CharWeight=0)
+
+    feuille = FausseFeuille()
+    document = SimpleNamespace(
+        getSheets=lambda: SimpleNamespace(getByIndex=lambda _: feuille),
+        getNumberFormats=lambda: object(),
+    )
+    monkeypatch.setattr(
+        db_ej_entetes_vers_ods,
+        "ecrire_tableau",
+        lambda _feuille, lignes, *_args, **_kwargs: rows.extend(lignes),
+    )
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+
+    db_ej_entetes_vers_ods.ajouter_entetes_0(
+        document,
+        "ENTETES_TICKETS_MASSENA_0",
+        chemin_csv,
+    )
+
+    assert rows == [{
+        "nomfichier": "EJ010123.TXT",
+        "E_NUM_INTERNE": "000001",
+        "E_NUM_TICKET": "000010",
+        "E_DATE_TICKET": "2023-01-02",
+        "E_HEURE_TICKET": "11:25",
+        "E_HT1": "100.00",
+        "E_HT2": "",
+        "E_HT3": "",
+        "E_HT4": "",
+        "E_TVA1": "20.00",
+        "E_TVA2": "",
+        "E_TVA3": "",
+        "E_TVA4": "",
+        "E_HT_NON_TAXABLE": "",
+        "E_TTC": "120.00",
+        "E_MDP_CB": "120.00",
+        "E_MDP_ESPECES": "",
+        "E_MDP_CHEQUES": "",
+    }]
 
 
-def test_select_entetes_est_visible_et_filtre_par_boutique() -> None:
-    with sqlite3.connect(":memory:") as connection:
-        connection.row_factory = sqlite3.Row
-        ej_vers_db.creer_base(connection)
-        ej_vers_db.inserer_ticket(connection, creer_ticket("MASSENA", "000001"))
-        ej_vers_db.inserer_ticket(connection, creer_ticket("MATURIN", "000002"))
-        rows = db_ej_entetes_vers_ods.charger_entetes(connection, "MASSENA")
-
-    assert "FROM tickets" in db_ej_entetes_vers_ods.SQL_ENTETES_TICKETS
-    assert [row["E_NUM_INTERNE"] for row in rows] == ["000001"]
-    assert tuple(rows[0]) == db_ej_entetes_vers_ods.COLONNES_ENTETES
-
-
-def test_generer_classeurs_produit_uniquement_les_deux_ods(tmp_path: Path, monkeypatch) -> None:
-    base = tmp_path / "db.sqlite"
-    with sqlite3.connect(base) as connection:
-        connection.row_factory = sqlite3.Row
-        ej_vers_db.creer_base(connection)
-        ej_vers_db.inserer_ticket(connection, creer_ticket("MASSENA", "000001"))
-        ej_vers_db.inserer_ticket(connection, creer_ticket("MATURIN", "000002"))
+def test_generer_classeurs_produit_uniquement_les_deux_ods_depuis_les_csv(
+    tmp_path: Path, monkeypatch
+) -> None:
+    staging = tmp_path / "travaux_preliminaires"
+    staging.mkdir()
+    for boutique in ("MASSENA", "MATURIN"):
+        (staging / f"EJ_ENTETES_TICKETS_{boutique}.csv").write_text(
+            "|".join(db_ej_entetes_vers_ods.COLONNES_ENTETES) + "\n",
+            encoding="utf-8-sig",
+        )
 
     def creer(
         _: object,
         __: str,
         destination: Path,
         ___: str,
-        ____: list[dict[str, object]],
+        chemin_csv: Path,
         *,
         boutique: str,
     ) -> None:
         assert boutique in {"MASSENA", "MATURIN"}
+        assert chemin_csv == staging / f"EJ_ENTETES_TICKETS_{boutique}.csv"
         destination.write_bytes(b"ods")
 
     monkeypatch.setattr(db_ej_entetes_vers_ods, "creer_et_enregistrer_classeur", creer)
-    resultats = db_ej_entetes_vers_ods.generer_classeurs(base, tmp_path / "sortie", uno=object())
+    resultats = db_ej_entetes_vers_ods.generer_classeurs(
+        staging, tmp_path / "sortie", uno=object()
+    )
     assert {chemin.name for chemin in resultats.values()} == {
-        "EJ_ENTETES_TICKETS_MASSENA.ods", "EJ_ENTETES_TICKETS_MATURIN.ods",
+        "TTS_EJ_ENTETES_TICKETS_MASSENA.ods", "TTS_EJ_ENTETES_TICKETS_MATURIN.ods",
     }
     assert {chemin.name for chemin in (tmp_path / "sortie").iterdir()} == {
-        "EJ_ENTETES_TICKETS_MASSENA.ods", "EJ_ENTETES_TICKETS_MATURIN.ods",
+        "TTS_EJ_ENTETES_TICKETS_MASSENA.ods", "TTS_EJ_ENTETES_TICKETS_MATURIN.ods",
     }

@@ -3,52 +3,27 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import os
 import shutil
-import sqlite3
 import subprocess
 import sys
 import tempfile
-import time
-from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
-from shared.constantes import BOUTIQUES, CHEMIN_DB, FeuilleEjEntetes
+from shared.constantes import BOUTIQUES, FeuilleEjEntetes, SEPARATEUR_CSV
 from shared.ods_helpers import (
+    connecter_uno,
     copier_feuille,
+    demarrer_libreoffice,
     ecrire_tableau,
     obtenir_format,
-    optimiser_largeur_colonnes,
+    definir_largeur_colonnes,
+    proprietes,
+    python_pyuno_defaut,
+    pyuno_disponible,
 )
-
-# SELECT de référence : il constitue la source directe des feuilles *_0.
-SQL_ENTETES_TICKETS = """
-    SELECT
-        nomFichier AS nomfichier,
-        E_NUM_INTERNE,
-        E_NUM_TICKET,
-        E_DATE_TICKET,
-        E_HEURE_TICKET,
-        E_HT1,
-        E_HT2,
-        E_HT3,
-        E_HT4,
-        E_TVA1,
-        E_TVA2,
-        E_TVA3,
-        E_TVA4,
-        E_HT_NON_TAXABLE,
-        E_TTC,
-        E_MDP_CB,
-        E_MDP_ESPECES,
-        E_MDP_CHEQUES
-    FROM tickets
-    WHERE boutique = ?
-      AND type IN ('REG', '_R_F')
-      AND NULLIF(TRIM(E_NUM_TICKET), '') IS NOT NULL
-    ORDER BY E_DATE_TICKET, E_HEURE_TICKET, E_NUM_INTERNE
-"""
 
 COLONNES_ENTETES = (
     "nomfichier",
@@ -74,7 +49,6 @@ COLONNES_TEXTE = {"nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_HEURE_TICKET
 COLONNE_DATE = "E_DATE_TICKET"
 FORMAT_DATE = "YYYY-MM-DD"
 FORMAT_NOMBRE = "0.00"
-PORT_UNO = 2002
 
 COLONNES_CTRL_COHERENCE_ENTETE = (
     "AJ_TVA1_CALCULE",
@@ -110,62 +84,42 @@ FORMULE_TROU_NUM_TICKET = (
 )
 
 
-def charger_entetes(
-    connection: sqlite3.Connection, boutique: str
-) -> list[dict[str, object]]:
-    """Lit uniquement les entêtes de vente destinés à la feuille *_0 demandée."""
-    return [dict(row) for row in connection.execute(SQL_ENTETES_TICKETS, (boutique,))]
+def ajouter_entetes_0(
+    document: Any,
+    nom_feuille: str,
+    chemin_csv: Path,
+) -> None:
+    """Crée la feuille initiale des entêtes EJ depuis son CSV préparatoire."""
+    with chemin_csv.open(encoding="utf-8-sig", newline="") as fichier:
+        lecteur = csv.DictReader(fichier, delimiter=SEPARATEUR_CSV)
+        if tuple(lecteur.fieldnames or ()) != COLONNES_ENTETES:
+            raise ValueError(f"Colonnes inattendues dans {chemin_csv}")
+        rows = list(lecteur)
 
+    feuilles = document.getSheets()
+    feuille = feuilles.getByIndex(0)
+    feuille.setName(nom_feuille)
 
-def proprietes(uno: Any, **valeurs: object) -> tuple[Any, ...]:
-    """Crée un tuple de PropertyValue UNO à partir d'un dictionnaire de valeurs."""
-    resultat = []
-    for nom, valeur in valeurs.items():
-        propriete = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
-        propriete.Name = nom
-        propriete.Value = valeur
-        resultat.append(propriete)
-    return tuple(resultat)
+    plage_entete = feuille.getCellRangeByPosition(
+        0,
+        0,
+        len(COLONNES_ENTETES) - 1,
+        0,
+    )
+    plage_entete.setDataArray((COLONNES_ENTETES,))
+    plage_entete.CharWeight = 150
 
-
-def demarrer_libreoffice(soffice: str, profil: Path) -> subprocess.Popen[str]:
-    """Démarre une instance Calc isolée, pilotée exclusivement par PyUNO."""
-    executable = shutil.which(soffice) if Path(soffice).name == soffice else soffice
-    if not executable:
-        raise FileNotFoundError(
-            "LibreOffice introuvable : installez ou indiquez soffice."
-        )
-    return subprocess.Popen(
-        [
-            executable,
-            "--headless",
-            "--nologo",
-            "--nodefault",
-            "--nofirststartwizard",
-            "--norestore",
-            f"--accept=socket,host=127.0.0.1,port={PORT_UNO};urp;StarOffice.ComponentContext",
-            f"-env:UserInstallation={profil.as_uri()}",
-        ],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.PIPE,
-        text=True,
+    ecrire_tableau(
+        feuille,
+        rows,
+        COLONNES_ENTETES,
+        document.getNumberFormats(),
+        colonnes_texte=COLONNES_TEXTE,
+        colonne_date=COLONNE_DATE,
+        format_date=FORMAT_DATE,
     )
 
-
-def connecter_uno(uno: Any, delai_secondes: float = 15) -> Any:
-    """Se connecte à l'instance LibreOffice via PyUNO, avec un délai d'attente."""
-    contexte_local = uno.getComponentContext()
-    resolveur = contexte_local.ServiceManager.createInstanceWithContext(
-        "com.sun.star.bridge.UnoUrlResolver", contexte_local
-    )
-    url = f"uno:socket,host=127.0.0.1,port={PORT_UNO};urp;StarOffice.ComponentContext"
-    fin = time.monotonic() + delai_secondes
-    while time.monotonic() < fin:
-        try:
-            return resolveur.resolve(url)
-        except Exception:  # LibreOffice ouvre le socket de manière asynchrone.
-            time.sleep(0.1)
-    raise RuntimeError("Impossible de se connecter à LibreOffice via PyUNO.")
+    definir_largeur_colonnes(feuille, len(COLONNES_ENTETES))
 
 
 def ajouter_TriCrstNumInterne(
@@ -202,7 +156,7 @@ def ajouter_TriCrstNumInterne(
             propriete.Value = True
 
     plage.sort(descripteur_tri)
-    optimiser_largeur_colonnes(feuille)
+    definir_largeur_colonnes(feuille, len(COLONNES_ENTETES))
 
 
 def ajouter_CtrlCoherenceEntete(document: Any, boutique: str) -> None:
@@ -253,7 +207,10 @@ def ajouter_CtrlCoherenceEntete(document: Any, boutique: str) -> None:
         plage_formules.setFormulaArray(formules)
         plage_formules.NumberFormat = format_nombre
 
-    optimiser_largeur_colonnes(feuille)
+    definir_largeur_colonnes(
+        feuille,
+        len(COLONNES_ENTETES) + len(COLONNES_CTRL_COHERENCE_ENTETE),
+    )
 
 
 def ajouter_sequentialite(document: Any, boutique: str) -> None:
@@ -345,7 +302,7 @@ def ajouter_sequentialite(document: Any, boutique: str) -> None:
             "0",
         )
 
-    optimiser_largeur_colonnes(feuille_destination)
+    definir_largeur_colonnes(feuille_destination, len(COLONNES_SEQUENTIALITE))
 
 
 def ajouter_TD_OccurenceNumInterne(document: Any, boutique: str) -> None:
@@ -398,7 +355,7 @@ def ajouter_TD_OccurenceNumInterne(document: Any, boutique: str) -> None:
         feuille_destination.getCellByPosition(0, 0).CellAddress,
         descripteur,
     )
-    optimiser_largeur_colonnes(feuille_destination)
+    definir_largeur_colonnes(feuille_destination, 2)
 
 
 def ajouter_DoublonNumInterne(document: Any, boutique: str) -> None:
@@ -408,7 +365,7 @@ def ajouter_DoublonNumInterne(document: Any, boutique: str) -> None:
         FeuilleEjEntetes.TD_OCCURRENCE_NUM_INTERNE.pour(boutique),
         FeuilleEjEntetes.DOUBLON_NUM_INTERNE.pour(boutique),
     )
-    optimiser_largeur_colonnes(feuille)
+    definir_largeur_colonnes(feuille, 2)
 
 
 def ajouter_TD_OccurenceNumTicket(document: Any, boutique: str) -> None:
@@ -461,7 +418,7 @@ def ajouter_TD_OccurenceNumTicket(document: Any, boutique: str) -> None:
         feuille_destination.getCellByPosition(0, 0).CellAddress,
         descripteur,
     )
-    optimiser_largeur_colonnes(feuille_destination)
+    definir_largeur_colonnes(feuille_destination, 2)
 
 
 def ajouter_DoublonTicket(document: Any, boutique: str) -> None:
@@ -471,7 +428,7 @@ def ajouter_DoublonTicket(document: Any, boutique: str) -> None:
         FeuilleEjEntetes.TD_OCCURRENCE_NUM_TICKET.pour(boutique),
         FeuilleEjEntetes.DOUBLON_NUM_TICKET.pour(boutique),
     )
-    optimiser_largeur_colonnes(feuille)
+    definir_largeur_colonnes(feuille, 2)
 
 
 def creer_et_enregistrer_classeur(
@@ -479,7 +436,7 @@ def creer_et_enregistrer_classeur(
     soffice: str,
     destination: Path,
     nom_feuille: str,
-    rows: list[Mapping[str, object]],
+    chemin_csv: Path,
     *,
     boutique: str,
 ) -> None:
@@ -498,33 +455,12 @@ def creer_et_enregistrer_classeur(
             document = bureau.loadComponentFromURL(
                 "private:factory/scalc", "_blank", 0, ()
             )
-            feuilles = document.getSheets()
 
             # Création de la feuille d'entêtes EJ
             print(f"Création de la feuille d'entêtes EJ pour la boutique {boutique}...")
-            feuille = feuilles.getByIndex(0)
-            feuille.setName(nom_feuille)
-            plage_entete = feuille.getCellRangeByPosition(
-                0, 0, len(COLONNES_ENTETES) - 1, 0
-            )
-            plage_entete.setDataArray((COLONNES_ENTETES,))
-            plage_entete.CharWeight = 150
-            formats = document.getNumberFormats()
-            ecrire_tableau(
-                feuille,
-                rows,
-                COLONNES_ENTETES,
-                formats,
-                colonnes_texte=COLONNES_TEXTE,
-                colonne_date=COLONNE_DATE,
-                format_date=FORMAT_DATE,
-            )
+            ajouter_entetes_0(document, nom_feuille, chemin_csv)
             # Création de la feuille d'entêtes EJ triée par E_NUM_INTERNE
-            ajouter_TriCrstNumInterne(
-                document,
-                nom_feuille_source=nom_feuille,
-                boutique=boutique,
-            )
+            ajouter_TriCrstNumInterne(document, nom_feuille_source=nom_feuille, boutique=boutique,)
             # Création de la feuille d'entêtes EJ avec calculs de cohérence
             print(
                 f"Ajout des calculs de cohérence d'entête pour la boutique {boutique}..."
@@ -578,55 +514,39 @@ def creer_et_enregistrer_classeur(
 
 
 def generer_classeurs(
-    chemin_base: Path,
+    repertoire_staging: Path,
     repertoire_sortie: Path,
     uno: Any,
     soffice: str = "soffice",
 ) -> dict[str, Path]:
-    """Génère uniquement les deux classeurs d'entêtes EJ et leur feuille *_0."""
+    """Génère les deux classeurs d'entêtes EJ depuis les CSV préparatoires."""
     repertoire_sortie.mkdir(parents=True, exist_ok=True)
     resultats: dict[str, Path] = {}
-    with sqlite3.connect(chemin_base) as connection:
-        connection.row_factory = sqlite3.Row
-        for boutique in BOUTIQUES:
-            nom_feuille = FeuilleEjEntetes.ENTETES.pour(boutique)
-            rows = charger_entetes(connection, boutique)
-            destination = repertoire_sortie / f"EJ_ENTETES_TICKETS_{boutique}.ods"
-            creer_et_enregistrer_classeur(
-                uno,
-                soffice,
-                destination,
-                nom_feuille,
-                rows,
-                boutique=boutique,
-            )
-            resultats[boutique] = destination
+    for boutique in BOUTIQUES:
+        nom_feuille = FeuilleEjEntetes.ENTETES.pour(boutique)
+        chemin_csv = repertoire_staging / f"EJ_ENTETES_TICKETS_{boutique}.csv"
+        if not chemin_csv.is_file():
+            raise FileNotFoundError(f"CSV préparatoire introuvable : {chemin_csv}")
+        destination = repertoire_sortie / f"TTS_EJ_ENTETES_TICKETS_{boutique}.ods"
+        creer_et_enregistrer_classeur(
+            uno,
+            soffice,
+            destination,
+            nom_feuille,
+            chemin_csv,
+            boutique=boutique,
+        )
+        resultats[boutique] = destination
     return resultats
-
-
-def pyuno_disponible() -> Any | None:
-    try:
-        import uno
-    except ModuleNotFoundError:
-        return None
-    return uno
-
-
-def python_pyuno_defaut() -> Path:
-    chemin = os.environ.get("LIBREOFFICE_PYTHON")
-    if chemin:
-        return Path(chemin)
-    candidat_macos = Path("/Applications/LibreOffice.app/Contents/Resources/python")
-    if candidat_macos.is_file():
-        return candidat_macos
-    raise FileNotFoundError(
-        "Interpréteur Python PyUNO introuvable : indiquez --python-uno ou LIBREOFFICE_PYTHON."
-    )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", type=Path, default=Path(CHEMIN_DB))
+    parser.add_argument(
+        "--staging",
+        type=Path,
+        default=Path("output/travaux_preliminaires"),
+    )
     parser.add_argument("--sortie", type=Path, required=True)
     parser.add_argument("--soffice", default="soffice")
     parser.add_argument("--python-uno", type=Path, default=None)
@@ -649,7 +569,7 @@ def main(argv: list[str] | None = None) -> int:
             env=environnement,
         )
         return resultat.returncode
-    resultats = generer_classeurs(args.base, args.sortie, uno, args.soffice)
+    resultats = generer_classeurs(args.staging, args.sortie, uno, args.soffice)
     for boutique, chemin in resultats.items():
         print(f"{boutique} : {chemin}")
     return 0

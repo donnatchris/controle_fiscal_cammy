@@ -27,7 +27,12 @@ def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
     monkeypatch.setattr(
         traitement.db_ej_entetes_vers_ods,
         "main",
-        lambda arguments: appels.append(("ods", arguments)) or 0,
+        lambda arguments: appels.append(("ods_entetes", arguments)) or 0,
+    )
+    monkeypatch.setattr(
+        traitement.db_ej_tickets_vers_ods,
+        "main",
+        lambda arguments: appels.append(("ods_tickets", arguments)) or 0,
     )
 
     assert traitement.executer_traitements(
@@ -44,7 +49,8 @@ def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
         ("csv", [
             "--base", str(base), "--staging", str(staging),
         ]),
-        ("ods", ["--base", str(base), "--sortie", str(libreoffice)]),
+        ("ods_entetes", ["--staging", str(staging), "--sortie", str(libreoffice)]),
+        ("ods_tickets", ["--staging", str(staging), "--sortie", str(libreoffice)]),
     ]
     assert staging.is_dir()
     assert libreoffice.is_dir()
@@ -62,6 +68,11 @@ def test_executer_traitements_sarrete_si_reconstruction_echoue(
     )
     monkeypatch.setattr(
         traitement.db_ej_entetes_vers_ods,
+        "main",
+        lambda _: pytest.fail("Les ODS ne doivent pas être générés"),
+    )
+    monkeypatch.setattr(
+        traitement.db_ej_tickets_vers_ods,
         "main",
         lambda _: pytest.fail("Les ODS ne doivent pas être générés"),
     )

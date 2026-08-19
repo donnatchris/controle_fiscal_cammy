@@ -5,7 +5,14 @@ from __future__ import annotations
 from collections.abc import Collection, Mapping, Sequence
 from datetime import date
 from decimal import Decimal
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import time
 from typing import Any
+
+from shared.constantes import LARGEUR_COLONNE_DEFAUT
 
 
 def obtenir_format(formats: Any, format_chaine: str) -> int:
@@ -21,11 +28,15 @@ def obtenir_format(formats: Any, format_chaine: str) -> int:
     return cle
 
 
-def optimiser_largeur_colonnes(feuille: Any) -> None:
-    """Optimise la largeur de toutes les colonnes d'une feuille Calc."""
+def definir_largeur_colonnes(
+    feuille: Any,
+    nombre_colonnes: int,
+    largeur: int = LARGEUR_COLONNE_DEFAUT,
+) -> None:
+    """Applique une largeur fixe aux colonnes utilisées."""
     colonnes = feuille.getColumns()
-    for index in range(colonnes.getCount()):
-        colonnes.getByIndex(index).OptimalWidth = True
+    for index in range(nombre_colonnes):
+        colonnes.getByIndex(index).Width = largeur
 
 
 def copier_feuille(document: Any, nom_source: str, nom_destination: str) -> Any:
@@ -33,6 +44,33 @@ def copier_feuille(document: Any, nom_source: str, nom_destination: str) -> Any:
     feuilles = document.getSheets()
     feuilles.copyByName(nom_source, nom_destination, feuilles.getCount())
     return feuilles.getByName(nom_destination)
+
+
+def copier_valeurs_feuille(document: Any, nom_source: str, nom_destination: str) -> Any:
+    """Copie les seules valeurs utilisées d'une feuille vers une nouvelle feuille."""
+    feuilles = document.getSheets()
+    feuille_source = feuilles.getByName(nom_source)
+    curseur = feuille_source.createCursor()
+    curseur.gotoEndOfUsedArea(True)
+    adresse = curseur.getRangeAddress()
+    valeurs = feuille_source.getCellRangeByPosition(
+        adresse.StartColumn,
+        adresse.StartRow,
+        adresse.EndColumn,
+        adresse.EndRow,
+    ).getDataArray()
+
+    if feuilles.hasByName(nom_destination):
+        feuilles.removeByName(nom_destination)
+    feuilles.insertNewByName(nom_destination, feuilles.getCount())
+    feuille_destination = feuilles.getByName(nom_destination)
+    feuille_destination.getCellRangeByPosition(
+        0,
+        0,
+        adresse.EndColumn - adresse.StartColumn,
+        adresse.EndRow - adresse.StartRow,
+    ).setDataArray(valeurs)
+    return feuille_destination
 
 
 def convertir_valeur_tableau(
@@ -126,3 +164,81 @@ def ecrire_tableau(
             colonne_depart + index_date,
             derniere_ligne,
         ).NumberFormat = obtenir_format(formats, format_date)
+
+
+def proprietes(uno: Any, **valeurs: object) -> tuple[Any, ...]:
+    """Crée un tuple de PropertyValue UNO à partir d'un dictionnaire de valeurs."""
+    resultat = []
+    for nom, valeur in valeurs.items():
+        propriete = uno.createUnoStruct("com.sun.star.beans.PropertyValue")
+        propriete.Name = nom
+        propriete.Value = valeur
+        resultat.append(propriete)
+    return tuple(resultat)
+
+
+def demarrer_libreoffice(
+    soffice: str,
+    profil: Path,
+    *,
+    port_uno: int = 2002,
+) -> subprocess.Popen[str]:
+    """Démarre une instance Calc isolée, pilotée exclusivement par PyUNO."""
+    executable = shutil.which(soffice) if Path(soffice).name == soffice else soffice
+    if not executable:
+        raise FileNotFoundError(
+            "LibreOffice introuvable : installez ou indiquez soffice."
+        )
+    return subprocess.Popen(
+        [
+            executable,
+            "--headless",
+            "--nologo",
+            "--nodefault",
+            "--nofirststartwizard",
+            "--norestore",
+            f"--accept=socket,host=127.0.0.1,port={port_uno};urp;StarOffice.ComponentContext",
+            f"-env:UserInstallation={profil.as_uri()}",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+
+def connecter_uno(uno: Any, delai_secondes: float = 15, *, port_uno: int = 2002) -> Any:
+    """Se connecte à l'instance LibreOffice via PyUNO."""
+    contexte_local = uno.getComponentContext()
+    resolveur = contexte_local.ServiceManager.createInstanceWithContext(
+        "com.sun.star.bridge.UnoUrlResolver", contexte_local
+    )
+    url = f"uno:socket,host=127.0.0.1,port={port_uno};urp;StarOffice.ComponentContext"
+    fin = time.monotonic() + delai_secondes
+    while time.monotonic() < fin:
+        try:
+            return resolveur.resolve(url)
+        except Exception:
+            time.sleep(0.1)
+    raise RuntimeError("Impossible de se connecter à LibreOffice via PyUNO.")
+
+
+def pyuno_disponible() -> Any | None:
+    """Retourne le module PyUNO lorsqu'il est disponible."""
+    try:
+        import uno
+    except ModuleNotFoundError:
+        return None
+    return uno
+
+
+def python_pyuno_defaut() -> Path:
+    """Retourne l'interpréteur Python fourni avec LibreOffice."""
+    chemin = os.environ.get("LIBREOFFICE_PYTHON")
+    if chemin:
+        return Path(chemin)
+    candidat_macos = Path("/Applications/LibreOffice.app/Contents/Resources/python")
+    if candidat_macos.is_file():
+        return candidat_macos
+    raise FileNotFoundError(
+        "Interpréteur Python PyUNO introuvable : indiquez --python-uno ou LIBREOFFICE_PYTHON."
+    )

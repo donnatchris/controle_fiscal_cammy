@@ -14,7 +14,7 @@ SEPARATEUR_CSV = "|"
 REPERTOIRE_SORTIE = Path("output")
 CHEMIN_DB = Path(REPERTOIRE_SORTIE / "database" / "db.sqlite")
 REPERTOIRE_SOURCE = Path("fichiers_sources")
-LARGEUR_COLONNE_DEFAUT = 4000
+LARGEUR_COLONNE_DEFAUT = 5000
 
 
 class FeuilleEjEntetes(Enum):
@@ -31,6 +31,19 @@ class FeuilleEjEntetes(Enum):
     ENCT_MENSUELS = "enct_mensuels_{boutique}_232425"
     TD_TOTAL_HT_TVA_TTC = "TD_TotalHtTvaTtc_ParAnneeMois"
     RECETTES_MENSUELLES = "recettes_mensuelles_{boutique}_232425"
+
+    def pour(self, boutique: str) -> str:
+        return self.value.format(boutique=boutique)
+
+
+class FeuilleEjTickets(Enum):
+    TICKETS = "LIGNES_TICKETS_{boutique}_0"
+    TRI_NUM_INTERNE = "LIGNES_TICKETS_{boutique}_TriCrstNumInterne"
+    CTRL_COHERENCE = "LIGNES_TICKETS_{boutique}_CtrlCoherenceLigne"
+    TD_TOTAL_LIGNES = "TD_TotalLignesParNumTicket"
+    CONTROLE_COHERENCE = "CtrlCoherence_EnteteLigne"
+    TD_OCCURENCE_ARTICLE = "TD_OccurenceLibelleArticle"
+    TD_OCCURRENCE_TVA = "TD_OccurenceTxTvaArticle"
 
     def pour(self, boutique: str) -> str:
         return self.value.format(boutique=boutique)

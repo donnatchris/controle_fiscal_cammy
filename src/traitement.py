@@ -1,7 +1,12 @@
 import argparse
 from pathlib import Path
 
-from scripts import db_ej_entetes_vers_ods, db_vers_csv_751, reconstruire_base_751
+from scripts import (
+    db_ej_entetes_vers_ods,
+    db_ej_tickets_vers_ods,
+    db_vers_csv_751,
+    reconstruire_base_751,
+)
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
 
 RACINE_PROJET = Path(__file__).resolve().parents[1]
@@ -18,7 +23,7 @@ def executer_traitements(
     repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
     repertoire_libreoffice: Path = REPERTOIRE_LIBREOFFICE_PAR_DEFAUT,
 ) -> bool:
-    """Reconstruit la base, exporte les CSV et les deux feuilles ODS d'entrée EJ."""
+    """Reconstruit la base, exporte les CSV et les classeurs ODS EJ."""
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
@@ -49,12 +54,24 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 3/3 Génération des feuilles ODS d'entêtes EJ ===")
+    print("\n=== 3/3 Génération des feuilles ODS EJ ===")
     if (
         db_ej_entetes_vers_ods.main(
             [
-                "--base",
-                str(chemin_base),
+                "--staging",
+                str(repertoire_staging),
+                "--sortie",
+                str(repertoire_libreoffice),
+            ]
+        )
+        != 0
+    ):
+        return False
+    if (
+        db_ej_tickets_vers_ods.main(
+            [
+                "--staging",
+                str(repertoire_staging),
                 "--sortie",
                 str(repertoire_libreoffice),
             ]
