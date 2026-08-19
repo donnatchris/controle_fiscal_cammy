@@ -32,6 +32,7 @@ def test_ajouter_tri_construit_le_nom_de_feuille_depuis_la_boutique(
         "copier_feuille",
         lambda _document, _source, destination: destinations.append(destination) or FausseFeuille(),
     )
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
     monkeypatch.setitem(
         __import__("sys").modules,
         "com.sun.star.util",
@@ -79,6 +80,44 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
         def getCellByPosition(self, colonne: int, ligne: int) -> FausseCellule:
             return self.cellules.setdefault((colonne, ligne), FausseCellule())
 
+        def getCellRangeByPosition(
+            self, debut_colonne: int, debut_ligne: int, fin_colonne: int, fin_ligne: int
+        ) -> SimpleNamespace:
+            def set_data_array(donnees: tuple[tuple[object, ...], ...]) -> None:
+                for decalage_ligne, valeurs in enumerate(donnees):
+                    for decalage_colonne, valeur in enumerate(valeurs):
+                        self.getCellByPosition(
+                            debut_colonne + decalage_colonne, debut_ligne + decalage_ligne
+                        ).String = str(valeur)
+
+            def set_formula_array(formules: tuple[tuple[str, ...], ...]) -> None:
+                for decalage_ligne, valeurs in enumerate(formules):
+                    for decalage_colonne, valeur in enumerate(valeurs):
+                        self.getCellByPosition(
+                            debut_colonne + decalage_colonne, debut_ligne + decalage_ligne
+                        ).Formula = valeur
+
+            feuille = self
+
+            class FaussePlage:
+                def setDataArray(self, donnees: tuple[tuple[object, ...], ...]) -> None:
+                    set_data_array(donnees)
+
+                def setFormulaArray(self, formules: tuple[tuple[str, ...], ...]) -> None:
+                    set_formula_array(formules)
+
+                @property
+                def NumberFormat(self) -> None:
+                    return None
+
+                @NumberFormat.setter
+                def NumberFormat(self, valeur: int) -> None:
+                    for ligne in range(debut_ligne, fin_ligne + 1):
+                        for colonne in range(debut_colonne, fin_colonne + 1):
+                            feuille.getCellByPosition(colonne, ligne).NumberFormat = valeur
+
+            return FaussePlage()
+
     feuille = FausseFeuille()
     monkeypatch.setattr(
         db_ej_entetes_vers_ods,
@@ -86,6 +125,7 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
         lambda _document, source, destination: destinations.append((source, destination)) or feuille,
     )
     monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
 
     db_ej_entetes_vers_ods.ajouter_CtrlCoherenceEntete(
         document=SimpleNamespace(getNumberFormats=lambda: object()),
@@ -136,6 +176,65 @@ def test_ajouter_sequentialite_copie_uniquement_les_colonnes_demandees_en_valeur
         def getCellByPosition(self, colonne: int, ligne: int) -> FausseCellule:
             return self.cellules.setdefault((colonne, ligne), FausseCellule())
 
+        def getCellRangeByPosition(
+            self, debut_colonne: int, debut_ligne: int, fin_colonne: int, fin_ligne: int
+        ) -> SimpleNamespace:
+            def set_data_array(donnees: tuple[tuple[object, ...], ...]) -> None:
+                for decalage_ligne, valeurs in enumerate(donnees):
+                    for decalage_colonne, valeur in enumerate(valeurs):
+                        cellule = self.getCellByPosition(
+                            debut_colonne + decalage_colonne, debut_ligne + decalage_ligne
+                        )
+                        if isinstance(valeur, str):
+                            cellule.String = valeur
+                        else:
+                            cellule.Value = valeur
+
+            def get_data_array() -> tuple[tuple[object, ...], ...]:
+                return tuple(
+                    tuple(
+                        cellule.String if cellule.String else cellule.Value
+                        for cellule in (
+                            self.getCellByPosition(colonne, ligne)
+                            for colonne in range(debut_colonne, fin_colonne + 1)
+                        )
+                    )
+                    for ligne in range(debut_ligne, fin_ligne + 1)
+                )
+
+            def set_formula_array(formules: tuple[tuple[str, ...], ...]) -> None:
+                for decalage_ligne, valeurs in enumerate(formules):
+                    for decalage_colonne, valeur in enumerate(valeurs):
+                        self.getCellByPosition(
+                            debut_colonne + decalage_colonne, debut_ligne + decalage_ligne
+                        ).Formula = valeur
+
+            feuille = self
+
+            class FaussePlage:
+                CharWeight = 0
+
+                def setDataArray(self, donnees: tuple[tuple[object, ...], ...]) -> None:
+                    set_data_array(donnees)
+
+                def getDataArray(self) -> tuple[tuple[object, ...], ...]:
+                    return get_data_array()
+
+                def setFormulaArray(self, formules: tuple[tuple[str, ...], ...]) -> None:
+                    set_formula_array(formules)
+
+                @property
+                def NumberFormat(self) -> None:
+                    return None
+
+                @NumberFormat.setter
+                def NumberFormat(self, valeur: int) -> None:
+                    for ligne in range(debut_ligne, fin_ligne + 1):
+                        for colonne in range(debut_colonne, fin_colonne + 1):
+                            feuille.getCellByPosition(colonne, ligne).NumberFormat = valeur
+
+            return FaussePlage()
+
     class FaussesFeuilles:
         def __init__(self, source: FausseFeuille) -> None:
             self.feuilles = {"ENTETES_TICKETS_MASSENA_CtrlCoherenceEntete": source}
@@ -162,6 +261,7 @@ def test_ajouter_sequentialite_copie_uniquement_les_colonnes_demandees_en_valeur
     feuilles = FaussesFeuilles(source)
     document = SimpleNamespace(getSheets=lambda: feuilles, getNumberFormats=lambda: object())
     monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
 
     db_ej_entetes_vers_ods.ajouter_sequentialite(document, "MASSENA")
 
@@ -209,6 +309,9 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
 
         def setSourceRange(self, source: object) -> None:
             self.source = source
+
+        def setPropertyValue(self, _: str, __: object) -> None:
+            pass
 
         def getDataPilotFields(self) -> SimpleNamespace:
             return SimpleNamespace(getByIndex=lambda _: self.champ)
@@ -274,6 +377,7 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, value: f"{enum}.{value}"),
     )
     feuilles = FaussesFeuilles()
+    monkeypatch.setattr(db_ej_entetes_vers_ods, "optimiser_largeur_colonnes", lambda _: None)
     db_ej_entetes_vers_ods.ajouter_TD_OccurenceNumInterne(
         SimpleNamespace(getSheets=lambda: feuilles), "MASSENA"
     )

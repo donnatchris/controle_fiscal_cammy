@@ -8,14 +8,12 @@ import os
 import shutil
 import sqlite3
 import uuid
-
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
 from scripts import ej_vers_db, z1_vers_db, z2_vers_db
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
-
 
 ATTENDUS = {
     "blocs_ej": 2_511,
@@ -45,7 +43,7 @@ def empreintes_sources(repertoire: Path) -> dict[str, str]:
 def somme_decimal(rows: list[sqlite3.Row], colonne: str) -> Decimal:
     return sum(
         (Decimal(row[colonne]) for row in rows if row[colonne] is not None),
-        start=Decimal("0"),
+        start=Decimal(0),
     )
 
 
@@ -54,7 +52,7 @@ def valider_base(chemin_base: Path) -> None:
     with sqlite3.connect(chemin_base) as connection:
         connection.row_factory = sqlite3.Row
         compte = lambda table: connection.execute(
-            f"SELECT COUNT(*) AS n FROM {table}"  # noqa: S608 - tables internes fixes
+            f"SELECT COUNT(*) AS n FROM {table}"
         ).fetchone()["n"]
 
         inventaire = {
@@ -99,7 +97,9 @@ def valider_base(chemin_base: Path) -> None:
             "z1_lignes": compte("z1_lignes"),
             "z2_fichiers": compte("z2_entetes"),
             "z2_lignes": compte("z2_lignes"),
-            "foreign_key_errors": len(connection.execute("PRAGMA foreign_key_check").fetchall()),
+            "foreign_key_errors": len(
+                connection.execute("PRAGMA foreign_key_check").fetchall()
+            ),
         }
 
     erreurs = []
@@ -112,7 +112,9 @@ def valider_base(chemin_base: Path) -> None:
     if validation["foreign_key_errors"] != 0:
         erreurs.append(f"foreign_key_errors: {validation['foreign_key_errors']}")
     if erreurs:
-        raise RuntimeError("Validation de reconstruction échouée : " + "; ".join(erreurs))
+        raise RuntimeError(
+            "Validation de reconstruction échouée : " + "; ".join(erreurs)
+        )
 
 
 def reconstruire(repertoire_sources: Path, chemin_temporaire: Path) -> None:

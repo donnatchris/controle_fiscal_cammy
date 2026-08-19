@@ -1,13 +1,11 @@
 import re
-
-
 from dataclasses import dataclass, field
-from decimal import Decimal
 from datetime import date, datetime
+from decimal import Decimal
 
-
-from shared.constantes import SEPARATEUR_TICKET, SEPARATEUR_SIGNATURE
+from shared.constantes import SEPARATEUR_SIGNATURE, SEPARATEUR_TICKET
 from shared.parse_money import parse_money
+
 
 @dataclass
 class EjLigneTicket:
@@ -17,6 +15,7 @@ class EjLigneTicket:
     D_MONTANT_ARTICLE: Decimal | None = None
     D_CORRECTION: Decimal | None = None
     D_AUTRE_INFO: str | None = None
+
 
 @dataclass
 class EjEnteteTicket:
@@ -49,6 +48,7 @@ class EjEnteteTicket:
     E_MDP_ESPECES: Decimal | None = None
     E_MDP_CHEQUES: Decimal | None = None
 
+
 @dataclass
 class EjTicket:
     entete: EjEnteteTicket
@@ -67,12 +67,14 @@ class EjTicket:
     def _parse_header(cls, header: list[str]) -> tuple[str, date, str, str]:
         """Parse le header du ticket et retourne le type, la date, l'heure et le numéro interne."""
         if not header:
-            raise ValueError("Le ticket ne contient pas d'entête après la ligne de démarcation")
+            raise ValueError(
+                "Le ticket ne contient pas d'entête après la ligne de démarcation"
+            )
         header_line = header.pop(0).strip()
         match = re.fullmatch(EjTicket._PATTERN_ENTETE, header_line)
         if not match:
             raise ValueError(f"Entête de ticket invalide : {header_line!r}")
-        
+
         type, date_str, heure_str = match.groups()
 
         E_DATE_TICKET = datetime.strptime(
@@ -85,21 +87,15 @@ class EjTicket:
         try:
             datetime.strptime(heure_str, "%H:%M")
         except ValueError as exc:
-            raise ValueError(
-                f"Heure de ticket invalide : {heure_str!r}"
-            ) from exc
+            raise ValueError(f"Heure de ticket invalide : {heure_str!r}") from exc
 
         if not header:
-            raise ValueError(
-                "Le ticket ne contient pas de numéro interne"
-            )
+            raise ValueError("Le ticket ne contient pas de numéro interne")
 
         E_NUM_INTERNE = header.pop(0).strip()
 
         if not E_NUM_INTERNE:
-            raise ValueError(
-                "Le ticket ne contient pas de numéro interne"
-            )
+            raise ValueError("Le ticket ne contient pas de numéro interne")
 
         return type, E_DATE_TICKET, E_HEURE_TICKET, E_NUM_INTERNE
 
@@ -112,13 +108,19 @@ class EjTicket:
         if signature_lines[0].strip().startswith(EjTicket._ENDING_LINE):
             signature_lines.pop(0)
         if not signature_lines:
-            raise ValueError("Le ticket ne contient pas de signature après la ligne de démarcation")
+            raise ValueError(
+                "Le ticket ne contient pas de signature après la ligne de démarcation"
+            )
         for line in signature_lines:
             line = line.strip()
             if not line:
                 continue
-            if line.startswith(EjTicket._STARTING_LINE) or line.startswith(EjTicket._ENDING_LINE):
-                raise ValueError("Le ticket contient une ligne de démarcation inattendue dans la signature")
+            if line.startswith(EjTicket._STARTING_LINE) or line.startswith(
+                EjTicket._ENDING_LINE
+            ):
+                raise ValueError(
+                    "Le ticket contient une ligne de démarcation inattendue dans la signature"
+                )
             signature += line + "\n"
         return signature.strip()
 
@@ -170,7 +172,6 @@ class EjTicket:
             D_TAUX_TVA_ARTICLE=match.group("taux"),
             D_MONTANT_ARTICLE=montant,
         )
-        
 
     @staticmethod
     def from_raw_data(*, nom_fichier: str, boutique: str, raw_data: str) -> "EjTicket":
@@ -221,7 +222,9 @@ class EjTicket:
             lines.pop(0)
 
         # Parse the header
-        type, E_DATE_TICKET, E_HEURE_TICKET, E_NUM_INTERNE = EjTicket._parse_header(lines)
+        type, E_DATE_TICKET, E_HEURE_TICKET, E_NUM_INTERNE = EjTicket._parse_header(
+            lines
+        )
 
         # Parse the remaining lines as ticket lines
         while lines:
@@ -231,7 +234,9 @@ class EjTicket:
 
             # Check for starting and ending lines and raise an error if found in the middle of the ticket
             if line.startswith(EjTicket._STARTING_LINE):
-                raise ValueError("Le ticket contient une ligne de démarcation inattendue")
+                raise ValueError(
+                    "Le ticket contient une ligne de démarcation inattendue"
+                )
 
             # Check for the ending line and parse the signature if found
             if line.startswith(EjTicket._ENDING_LINE):
@@ -266,29 +271,38 @@ class EjTicket:
                 if len(tokens) < 4:
                     raise ValueError(f"Ligne de ticket HORS TAXE invalide : {line!r}")
 
-                    
                 tva_code = tokens[2]
                 montant_str = tokens[3]
                 montant = parse_money(montant_str)
                 match tva_code:
                     case "1":
                         if E_HT1 is not None:
-                            raise ValueError(f"HORS TAXE {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"HORS TAXE {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_HT1 = montant
                     case "2":
                         if E_HT2 is not None:
-                            raise ValueError(f"HORS TAXE {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"HORS TAXE {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_HT2 = montant
                     case "3":
                         if E_HT3 is not None:
-                            raise ValueError(f"HORS TAXE {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"HORS TAXE {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_HT3 = montant
                     case "4":
                         if E_HT4 is not None:
-                            raise ValueError(f"HORS TAXE {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"HORS TAXE {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_HT4 = montant
                     case _:
-                        raise ValueError(f"HORS TAXE {tva_code!r} non géré dans le ticket")
+                        raise ValueError(
+                            f"HORS TAXE {tva_code!r} non géré dans le ticket"
+                        )
                 continue
 
             # Check for the "TVA" line and parse the TVA code and amount if found
@@ -302,19 +316,27 @@ class EjTicket:
                 match tva_code:
                     case "1":
                         if E_TVA1 is not None:
-                            raise ValueError(f"TVA {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"TVA {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_TVA1 = montant
                     case "2":
                         if E_TVA2 is not None:
-                            raise ValueError(f"TVA {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"TVA {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_TVA2 = montant
                     case "3":
                         if E_TVA3 is not None:
-                            raise ValueError(f"TVA {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"TVA {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_TVA3 = montant
                     case "4":
                         if E_TVA4 is not None:
-                            raise ValueError(f"TVA {tva_code!r} déjà présent dans le ticket")
+                            raise ValueError(
+                                f"TVA {tva_code!r} déjà présent dans le ticket"
+                            )
                         E_TVA4 = montant
                     case _:
                         raise ValueError(f"TVA {tva_code!r} non géré dans le ticket")
@@ -347,7 +369,9 @@ class EjTicket:
                         ),
                     )
                 if E_HT_NON_TAXABLE is not None:
-                    raise ValueError(f"NON TAXABLE déjà présent dans le ticket: {line!r}")
+                    raise ValueError(
+                        f"NON TAXABLE déjà présent dans le ticket: {line!r}"
+                    )
                 E_HT_NON_TAXABLE = parse_money(montant_str)
 
             # Check for the payment method lines and parse the amounts if found

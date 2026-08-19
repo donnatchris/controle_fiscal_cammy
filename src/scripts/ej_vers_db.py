@@ -1,14 +1,12 @@
 import argparse
 import sqlite3
-
 from decimal import Decimal
 from pathlib import Path
 
 # À adapter selon le nom réel de ton fichier
 from classes.ticket import EjTicket
-from shared.constantes import BOUTIQUES, SEPARATEUR_TICKET, CHEMIN_DB
+from shared.constantes import BOUTIQUES, CHEMIN_DB, SEPARATEUR_TICKET
 from shared.database import ouvrir_base_existante
-
 
 tickets_ignores: dict[str, int] = {}
 TABLES_GEREES = ("tickets", "lignes_ticket")
@@ -33,11 +31,7 @@ def trouver_tables_gerees(
         TABLES_GEREES,
     ).fetchall()
     tables_trouvees = {row[0] for row in rows}
-    return [
-        table
-        for table in TABLES_GEREES
-        if table in tables_trouvees
-    ]
+    return [table for table in TABLES_GEREES if table in tables_trouvees]
 
 
 def supprimer_tables_gerees(
@@ -192,26 +186,20 @@ def inserer_ticket(
             ticket.entete.type,
             ticket.entete.evenement,
             ticket.entete.signature,
-
             ticket.entete.E_NUM_INTERNE,
             ticket.entete.E_NUM_TICKET,
             ticket.entete.E_DATE_TICKET.isoformat(),
             ticket.entete.E_HEURE_TICKET,
-
             decimal_vers_db(ticket.entete.E_HT1),
             decimal_vers_db(ticket.entete.E_HT2),
             decimal_vers_db(ticket.entete.E_HT3),
             decimal_vers_db(ticket.entete.E_HT4),
-
             decimal_vers_db(ticket.entete.E_TVA1),
             decimal_vers_db(ticket.entete.E_TVA2),
             decimal_vers_db(ticket.entete.E_TVA3),
             decimal_vers_db(ticket.entete.E_TVA4),
-
             decimal_vers_db(ticket.entete.E_HT_NON_TAXABLE),
-
             decimal_vers_db(ticket.entete.E_TTC),
-
             decimal_vers_db(ticket.entete.E_MDP_CB),
             decimal_vers_db(ticket.entete.E_MDP_ESPECES),
             decimal_vers_db(ticket.entete.E_MDP_CHEQUES),
@@ -221,9 +209,7 @@ def inserer_ticket(
     ticket_id = curseur.lastrowid
 
     if ticket_id is None:
-        raise RuntimeError(
-            "Impossible de récupérer l'identifiant du ticket"
-        )
+        raise RuntimeError("Impossible de récupérer l'identifiant du ticket")
 
     connection.executemany(
         """
@@ -243,17 +229,11 @@ def inserer_ticket(
         [
             (
                 ticket_id,
-
                 ligne.D_QUANTITE_ARTICLE,
                 ligne.D_LIBELLE_ARTICLE,
                 ligne.D_TAUX_TVA_ARTICLE,
-                decimal_vers_db(
-                    ligne.D_MONTANT_ARTICLE
-                ),
-
-                decimal_vers_db(
-                    ligne.D_CORRECTION
-                ),
+                decimal_vers_db(ligne.D_MONTANT_ARTICLE),
+                decimal_vers_db(ligne.D_CORRECTION),
                 ligne.D_AUTRE_INFO,
             )
             for ligne in ticket.lignes_articles
@@ -288,10 +268,7 @@ def traiter_fichier(
     nombre_ignores = 0
 
     for bloc in blocs[1:]:
-        raw_ticket = (
-            f"{SEPARATEUR_TICKET}"
-            f"{bloc}"
-        )
+        raw_ticket = f"{SEPARATEUR_TICKET}{bloc}"
 
         ticket = EjTicket.from_raw_data(
             nom_fichier=chemin_fichier.name,
@@ -315,9 +292,7 @@ def traiter_repertoire(
     connection: sqlite3.Connection,
     chemin_repertoire: Path,
 ) -> None:
-    fichiers = sorted(
-        chemin_repertoire.rglob("EJ*.TXT")
-    )
+    fichiers = sorted(chemin_repertoire.rglob("EJ*.TXT"))
 
     fichiers_ignores = 0
     fichiers_traites = 0
@@ -329,14 +304,10 @@ def traiter_repertoire(
         boutiques_trouvees = [
             boutique
             for boutique in BOUTIQUES
-            if boutique
-            in str(chemin_fichier).upper()
+            if boutique in str(chemin_fichier).upper()
         ]
 
-        if (
-            not boutiques_trouvees
-            or len(boutiques_trouvees) > 1
-        ):
+        if not boutiques_trouvees or len(boutiques_trouvees) > 1:
             print(
                 f"[EJ] Ignoré : {chemin_fichier} "
                 f"(boutiques trouvées : {boutiques_trouvees})"
@@ -347,17 +318,13 @@ def traiter_repertoire(
 
         boutique = boutiques_trouvees[0]
 
-        nombre_enregistres, nombre_ignores = (
-            traiter_fichier(
-                connection=connection,
-                boutique=boutique,
-                chemin_fichier=chemin_fichier,
-            )
+        nombre_enregistres, nombre_ignores = traiter_fichier(
+            connection=connection,
+            boutique=boutique,
+            chemin_fichier=chemin_fichier,
         )
 
-        total_tickets_enregistres += (
-            nombre_enregistres
-        )
+        total_tickets_enregistres += nombre_enregistres
         total_tickets_ignores += nombre_ignores
 
         fichiers_traites += 1
@@ -391,10 +358,7 @@ def main(argv: list[str] | None = None) -> bool:
 
     parser.add_argument(
         "chemin_repertoire",
-        help=(
-            "Chemin vers le répertoire "
-            "contenant les fichiers EJ"
-        ),
+        help=("Chemin vers le répertoire contenant les fichiers EJ"),
     )
 
     parser.add_argument(
@@ -406,26 +370,18 @@ def main(argv: list[str] | None = None) -> bool:
 
     args = parser.parse_args(argv)
 
-    chemin_repertoire = Path(
-        args.chemin_repertoire
-    )
+    chemin_repertoire = Path(args.chemin_repertoire)
 
-    chemin_base = Path(
-        args.chemin_base
-    )
+    chemin_base = Path(args.chemin_base)
 
     # --------------------------------------------------------
     # UNE SEULE CONNEXION
     # --------------------------------------------------------
 
     with ouvrir_base_existante(chemin_base) as connection:
-        connection.execute(
-            "PRAGMA foreign_keys = ON"
-        )
+        connection.execute("PRAGMA foreign_keys = ON")
 
-        tables_existantes = trouver_tables_gerees(
-            connection
-        )
+        tables_existantes = trouver_tables_gerees(connection)
 
         if tables_existantes:
             print(
@@ -434,10 +390,7 @@ def main(argv: list[str] | None = None) -> bool:
                 f"{', '.join(tables_existantes)}."
             )
 
-            confirmation = input(
-                "Voulez-vous supprimer et recréer ces "
-                "tables ? (o/N) "
-            )
+            confirmation = input("Voulez-vous supprimer et recréer ces tables ? (o/N) ")
 
             if confirmation.lower() != "o":
                 print("Abandon du traitement.")

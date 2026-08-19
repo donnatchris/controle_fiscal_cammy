@@ -1,12 +1,9 @@
-import re
 import csv
-
-
+import re
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal
 from io import StringIO
-
 
 from shared.parse_money import parse_money
 
@@ -33,7 +30,6 @@ class ZHeader:
         "HEURE": "E_HEURE",
     }
 
-
     @staticmethod
     def from_raw(*, nom_fichier: str, raw: str) -> "ZHeader":
         lines = raw.splitlines()
@@ -41,13 +37,17 @@ class ZHeader:
             raise ValueError("Le header doit contenir au moins 8 lignes.")
 
         values = {}
-        
+
         for i, (key, attr) in enumerate(ZHeader._CLES.items()):
             tokens = lines[i].split(",")
             if len(tokens) != 2:
-                raise ValueError(f"La ligne {i+1} du header ne contient pas exactement 2 tokens séparés par une virgule.")
+                raise ValueError(
+                    f"La ligne {i + 1} du header ne contient pas exactement 2 tokens séparés par une virgule."
+                )
             if tokens[0].strip(' "') != key:
-                raise ValueError(f"La ligne {i+1} du header ne commence pas par la clé attendue '{key}'.")
+                raise ValueError(
+                    f"La ligne {i + 1} du header ne commence pas par la clé attendue '{key}'."
+                )
             value = tokens[1].strip(' "')
             values[attr] = value
 
@@ -58,7 +58,6 @@ class ZHeader:
         ).date()
 
         return ZHeader(nom_fichier=nom_fichier, **values)
-
 
 
 @dataclass
@@ -72,9 +71,7 @@ class ZLine:
     @staticmethod
     def from_row(row: list[str]) -> "ZLine":
         if len(row) != 4:
-            raise ValueError(
-                "La ligne ne contient pas exactement 4 colonnes."
-            )
+            raise ValueError("La ligne ne contient pas exactement 4 colonnes.")
 
         return ZLine(
             D_ENREGISTREMENT=row[0].strip(),

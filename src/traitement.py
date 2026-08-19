@@ -4,7 +4,6 @@ from pathlib import Path
 from scripts import db_ej_entetes_vers_ods, db_vers_csv_751, reconstruire_base_751
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
 
-
 RACINE_PROJET = Path(__file__).resolve().parents[1]
 REPERTOIRE_SORTIE_PAR_DEFAUT = RACINE_PROJET / "output"
 REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT = (
@@ -24,26 +23,44 @@ def executer_traitements(
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
     print("\n=== 1/3 Reconstruction et validation de la base ===")
-    code_reconstruction = reconstruire_base_751.main([
-        "--sources", str(chemin_repertoire),
-        "--base", str(chemin_base),
-        "--publier",
-    ])
+    code_reconstruction = reconstruire_base_751.main(
+        [
+            "--sources",
+            str(chemin_repertoire),
+            "--base",
+            str(chemin_base),
+            "--publier",
+        ]
+    )
     if code_reconstruction != 0:
         return False
 
     print("\n=== 2/3 Génération des CSV ===")
-    if db_vers_csv_751.main([
-        "--base", str(chemin_base),
-        "--staging", str(repertoire_staging),
-    ]) != 0:
+    if (
+        db_vers_csv_751.main(
+            [
+                "--base",
+                str(chemin_base),
+                "--staging",
+                str(repertoire_staging),
+            ]
+        )
+        != 0
+    ):
         return False
 
     print("\n=== 3/3 Génération des feuilles ODS d'entêtes EJ ===")
-    if db_ej_entetes_vers_ods.main([
-        "--base", str(chemin_base),
-        "--sortie", str(repertoire_libreoffice),
-    ]) != 0:
+    if (
+        db_ej_entetes_vers_ods.main(
+            [
+                "--base",
+                str(chemin_base),
+                "--sortie",
+                str(repertoire_libreoffice),
+            ]
+        )
+        != 0
+    ):
         return False
 
     print("\nTraitement terminé avec succès.")

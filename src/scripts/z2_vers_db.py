@@ -1,6 +1,5 @@
 import argparse
 import sqlite3
-
 from decimal import Decimal
 from pathlib import Path
 
@@ -11,7 +10,6 @@ from shared.constantes import (
     PREFIXES_FICHIERS_Z2,
 )
 from shared.database import ouvrir_base_existante
-
 
 TABLES_GEREES = ("z2_entetes", "z2_lignes")
 
@@ -35,11 +33,7 @@ def trouver_tables_gerees(
         TABLES_GEREES,
     ).fetchall()
     tables_trouvees = {row[0] for row in rows}
-    return [
-        table
-        for table in TABLES_GEREES
-        if table in tables_trouvees
-    ]
+    return [table for table in TABLES_GEREES if table in tables_trouvees]
 
 
 def supprimer_tables_gerees(
@@ -137,9 +131,7 @@ def inserer_z2(
 
     z2_entete_id = curseur.lastrowid
     if z2_entete_id is None:
-        raise RuntimeError(
-            "Impossible de recuperer l'identifiant de l'entete Z2"
-        )
+        raise RuntimeError("Impossible de recuperer l'identifiant de l'entete Z2")
 
     connection.executemany(
         """
@@ -185,9 +177,7 @@ def est_fichier_z2(chemin_fichier: Path) -> bool:
 def determiner_boutique(chemin_fichier: Path) -> str:
     """Determine l'unique boutique presente dans le chemin du fichier."""
     boutiques_trouvees = [
-        boutique
-        for boutique in BOUTIQUES
-        if boutique in str(chemin_fichier).upper()
+        boutique for boutique in BOUTIQUES if boutique in str(chemin_fichier).upper()
     ]
     if len(boutiques_trouvees) != 1:
         raise ValueError(
@@ -221,9 +211,7 @@ def traiter_repertoire(
 ) -> int:
     """Explore recursivement un repertoire et enregistre ses fichiers Z2."""
     fichiers = sorted(
-        chemin
-        for chemin in chemin_repertoire.rglob("*")
-        if est_fichier_z2(chemin)
+        chemin for chemin in chemin_repertoire.rglob("*") if est_fichier_z2(chemin)
     )
 
     for chemin_fichier in fichiers:
@@ -268,9 +256,7 @@ def main(argv: list[str] | None = None) -> bool:
                 "ATTENTION : les tables suivantes existent deja "
                 f"dans la base : {', '.join(tables_existantes)}."
             )
-            confirmation = input(
-                "Voulez-vous supprimer et recreer ces tables ? (o/N) "
-            )
+            confirmation = input("Voulez-vous supprimer et recreer ces tables ? (o/N) ")
             if confirmation.strip().lower() != "o":
                 print("Abandon du traitement.")
                 return False

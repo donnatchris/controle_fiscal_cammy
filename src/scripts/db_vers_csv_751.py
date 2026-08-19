@@ -5,42 +5,81 @@ from __future__ import annotations
 import argparse
 import csv
 import sqlite3
-
+from collections.abc import Iterable, Mapping, Sequence
 from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
-from typing import Iterable, Mapping, Sequence
 
 from shared.constantes import CHEMIN_DB, SEPARATEUR_CSV
-
 
 BOUTIQUES = ("MASSENA", "MATURIN")
 ANNEES = (2023, 2024, 2025)
 COLONNES_EJ = [
-    "nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_DATE_TICKET", "E_HEURE_TICKET",
-    "E_HT1", "E_HT2", "E_HT3", "E_HT4", "E_TVA1", "E_TVA2", "E_TVA3", "E_TVA4",
-    "E_HT_NON_TAXABLE", "E_TTC", "E_MDP_CB", "E_MDP_ESPECES", "E_MDP_CHEQUES",
+    "nomfichier",
+    "E_NUM_INTERNE",
+    "E_NUM_TICKET",
+    "E_DATE_TICKET",
+    "E_HEURE_TICKET",
+    "E_HT1",
+    "E_HT2",
+    "E_HT3",
+    "E_HT4",
+    "E_TVA1",
+    "E_TVA2",
+    "E_TVA3",
+    "E_TVA4",
+    "E_HT_NON_TAXABLE",
+    "E_TTC",
+    "E_MDP_CB",
+    "E_MDP_ESPECES",
+    "E_MDP_CHEQUES",
 ]
 COLONNES_LIGNES = COLONNES_EJ + [
-    "D_QUANTITE_ARTICLE", "D_LIBELLE_ARTICLE", "D_TAUX_TVA_ARTICLE",
-    "D_MONTANT_ARTICLE", "D_CORRECTION", "D_AUTRE_INFO",
+    "D_QUANTITE_ARTICLE",
+    "D_LIBELLE_ARTICLE",
+    "D_TAUX_TVA_ARTICLE",
+    "D_MONTANT_ARTICLE",
+    "D_CORRECTION",
+    "D_AUTRE_INFO",
 ]
 COLONNES_Z = [
-    "nomfichier", "E_MODELE", "E_MACHINE", "E_RAPPORT", "E_FICHIER", "E_MODE",
-    "E_COMPTEUR_Z", "E_DATE", "E_HEURE", "D_ENREGISTREMENT", "D_DESIGNATION",
-    "D_QUANTITE", "D_MONTANT",
+    "nomfichier",
+    "E_MODELE",
+    "E_MACHINE",
+    "E_RAPPORT",
+    "E_FICHIER",
+    "E_MODE",
+    "E_COMPTEUR_Z",
+    "E_DATE",
+    "E_HEURE",
+    "D_ENREGISTREMENT",
+    "D_DESIGNATION",
+    "D_QUANTITE",
+    "D_MONTANT",
 ]
 CHAMPS_MONETAIRES_EJ = {
-    "E_HT1", "E_HT2", "E_HT3", "E_HT4", "E_TVA1", "E_TVA2", "E_TVA3", "E_TVA4",
-    "E_HT_NON_TAXABLE", "E_TTC", "E_MDP_CB", "E_MDP_ESPECES", "E_MDP_CHEQUES",
-    "D_MONTANT_ARTICLE", "D_CORRECTION",
+    "E_HT1",
+    "E_HT2",
+    "E_HT3",
+    "E_HT4",
+    "E_TVA1",
+    "E_TVA2",
+    "E_TVA3",
+    "E_TVA4",
+    "E_HT_NON_TAXABLE",
+    "E_TTC",
+    "E_MDP_CB",
+    "E_MDP_ESPECES",
+    "E_MDP_CHEQUES",
+    "D_MONTANT_ARTICLE",
+    "D_CORRECTION",
 }
 CHAMPS_IDENTIFIANTS_EJ = {"E_NUM_INTERNE", "E_NUM_TICKET"}
 CHAMPS_IDENTIFIANTS_Z = {"E_COMPTEUR_Z", "D_ENREGISTREMENT"}
 
 
 def decimal(value: object | None) -> Decimal:
-    return Decimal(str(value)) if value not in (None, "") else Decimal("0")
+    return Decimal(str(value)) if value not in (None, "") else Decimal(0)
 
 
 def format_decimal(value: object | None) -> str:
@@ -54,7 +93,9 @@ def format_entier(value: object | None) -> str:
     nombre = Decimal(str(value))
     entier = nombre.to_integral_value()
     if not nombre.is_finite() or nombre != entier:
-        raise ValueError(f"Quantité non entière impossible à exporter sans perte : {value!r}")
+        raise ValueError(
+            f"Quantité non entière impossible à exporter sans perte : {value!r}"
+        )
     return format(entier, "f")
 
 
@@ -86,7 +127,9 @@ def verifier_identifiants_textuels(
             raise TypeError(f"{champ} doit rester du texte, valeur reçue : {valeur!r}")
 
 
-def ecrire_csv(chemin: Path, colonnes: Sequence[str], rows: Iterable[Mapping[str, object]]) -> None:
+def ecrire_csv(
+    chemin: Path, colonnes: Sequence[str], rows: Iterable[Mapping[str, object]]
+) -> None:
     chemin.parent.mkdir(parents=True, exist_ok=True)
     with chemin.open("w", encoding="utf-8-sig", newline="") as fichier:
         writer = csv.DictWriter(
@@ -97,10 +140,17 @@ def ecrire_csv(chemin: Path, colonnes: Sequence[str], rows: Iterable[Mapping[str
         )
         writer.writeheader()
         for row in rows:
-            writer.writerow({colonne: "" if row.get(colonne) is None else row.get(colonne) for colonne in colonnes})
+            writer.writerow(
+                {
+                    colonne: "" if row.get(colonne) is None else row.get(colonne)
+                    for colonne in colonnes
+                }
+            )
 
 
-def rows_dict(connection: sqlite3.Connection, query: str, params: tuple = ()) -> list[dict[str, object]]:
+def rows_dict(
+    connection: sqlite3.Connection, query: str, params: tuple = ()
+) -> list[dict[str, object]]:
     return [dict(row) for row in connection.execute(query, params)]
 
 
@@ -160,7 +210,9 @@ def exporter_ej(connection: sqlite3.Connection, staging: Path) -> dict[str, int]
         normaliser_ej(entetes)
         normaliser_ej(lignes)
         ecrire_csv(staging / f"EJ_ENTETES_TICKETS_{boutique}.csv", COLONNES_EJ, entetes)
-        ecrire_csv(staging / f"EJ_LIGNES_TICKETS_{boutique}.csv", COLONNES_LIGNES, lignes)
+        ecrire_csv(
+            staging / f"EJ_LIGNES_TICKETS_{boutique}.csv", COLONNES_LIGNES, lignes
+        )
         compteurs[f"entetes_{boutique}"] = len(entetes)
         compteurs[f"lignes_{boutique}"] = len(lignes)
     return compteurs
@@ -188,11 +240,19 @@ def exporter_z(connection: sqlite3.Connection, staging: Path) -> None:
         for boutique in BOUTIQUES:
             for annee in ANNEES:
                 selection = [
-                    row for row in rows
-                    if row["boutique"] == boutique and str(annee) in str(row["nomfichier"])
+                    row
+                    for row in rows
+                    if row["boutique"] == boutique
+                    and str(annee) in str(row["nomfichier"])
                 ]
-                prefixe = "Z1_SyntheseMois_TOUS" if niveau == 1 else "Z2_TransactionsMois_TOUS"
-                ecrire_csv(staging / f"{prefixe}_{annee}_{boutique}.csv", COLONNES_Z, selection)
+                prefixe = (
+                    "Z1_SyntheseMois_TOUS"
+                    if niveau == 1
+                    else "Z2_TransactionsMois_TOUS"
+                )
+                ecrire_csv(
+                    staging / f"{prefixe}_{annee}_{boutique}.csv", COLONNES_Z, selection
+                )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -206,9 +266,16 @@ def main(argv: list[str] | None = None) -> int:
         compteurs = exporter_ej(connection, args.staging)
         exporter_z(connection, args.staging)
 
-    attendu = {"entetes_MASSENA": 1_153, "entetes_MATURIN": 722, "lignes_MASSENA": 2_521, "lignes_MATURIN": 1_610}
+    attendu = {
+        "entetes_MASSENA": 1_153,
+        "entetes_MATURIN": 722,
+        "lignes_MASSENA": 2_521,
+        "lignes_MATURIN": 1_610,
+    }
     if compteurs != attendu:
-        raise RuntimeError(f"Volumes EJ inattendus : attendu={attendu}, obtenu={compteurs}")
+        raise RuntimeError(
+            f"Volumes EJ inattendus : attendu={attendu}, obtenu={compteurs}"
+        )
     print(compteurs)
     return 0
 
