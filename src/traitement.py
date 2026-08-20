@@ -1,7 +1,9 @@
 import argparse
 import shutil
+import tempfile
 from datetime import datetime
 from pathlib import Path
+from collections.abc import Callable
 
 from scripts import (
     compare_ca_gesco_ca3,
@@ -16,6 +18,7 @@ from scripts import (
     reconstruire_base_751,
 )
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
+from shared.rapport_execution import JournalExecution
 
 RACINE_PROJET = Path(__file__).resolve().parents[1]
 REPERTOIRE_SORTIE_PAR_DEFAUT = RACINE_PROJET / "output"
@@ -37,7 +40,7 @@ def sauvegarder_repertoire_sortie(repertoire_sortie: Path) -> Path | None:
         return None
 
     horodatage = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    sauvegarde = repertoire_sortie / f"sauvegarde_{horodatage}"
+    sauvegarde = repertoire_sortie / f"_sauvegarde_{horodatage}"
     sauvegarde.mkdir()
     for element in repertoire_sortie.iterdir():
         if element == sauvegarde:
@@ -64,8 +67,24 @@ def executer_traitements(
         sauvegarder_repertoire_sortie(repertoire_sortie)
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
+    journal_execution = JournalExecution(repertoire_staging)
+    with tempfile.NamedTemporaryFile(
+        prefix="rapport-execution-",
+        suffix=".jsonl",
+        delete=False,
+    ) as fichier_mesures:
+        chemin_mesures_execution = Path(fichier_mesures.name)
 
-    print("\n=== 1/9 Reconstruction et validation de la base ===")
+    def executer_etape(traitement: Callable[[], int]) -> bool:
+        """Exécute une étape puis fige ses mesures dans le journal d'exécution."""
+        etat_avant = journal_execution.capturer_etat(repertoire_libreoffice)
+        if traitement() != 0:
+            return False
+        journal_execution.charger_compteurs_traitement(chemin_mesures_execution)
+        journal_execution.collecter_etape(repertoire_libreoffice, etat_avant)
+        return True
+
+    print("\n=== 1/10 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main(
         [
             "--sources",
@@ -78,7 +97,7 @@ def executer_traitements(
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/9 Génération des CSV ===")
+    print("\n=== 2/10 Génération des CSV ===")
     if (
         db_vers_csv_751.main(
             [
@@ -92,80 +111,96 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 3/9 Génération des feuilles ODS EJ ===")
-    if (
-        ods_ej_entetes.main(
+    print("\n=== 3/10 Génération des feuilles ODS EJ ===")
+    if not executer_etape(
+        lambda: ods_ej_entetes.main(
             [
                 "--staging",
                 str(repertoire_staging),
                 "--sortie",
                 str(repertoire_libreoffice),
             ]
-        )
-        != 0
+        ),
     ):
         return False
-    if (
-        ods_ej_tickets.main(
+    if not executer_etape(
+        lambda: ods_ej_tickets.main(
             [
                 "--staging",
                 str(repertoire_staging),
                 "--sortie",
                 str(repertoire_libreoffice),
             ]
-        )
-        != 0
+        ),
     ):
         return False
 
-    print("\n=== 4/9 Génération des feuilles ODS Z2 ===")
-    if (
-        ods_z2.main(
+    print("\n=== 4/10 Génération des feuilles ODS Z2 ===")
+    if not executer_etape(
+        lambda: ods_z2.main(
             [
                 "--staging",
                 str(repertoire_staging),
                 "--sortie",
                 str(repertoire_libreoffice),
+                "--mesures-execution",
+                str(chemin_mesures_execution),
             ]
-        )
-        != 0
+        ),
     ):
         return False
 
-    print("\n=== 5/9 Génération des comparaisons Z2 ===")
-    if compare_1.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+    print("\n=== 5/10 Génération des comparaisons Z2 ===")
+    if not executer_etape(
+        lambda: compare_1.main(["--sortie", str(repertoire_libreoffice)]),
+    ):
         return False
 
-    print("\n=== 6/9 Génération des feuilles ODS Z1 ===")
-    if (
-        ods_z1.main(
+    print("\n=== 6/10 Génération des feuilles ODS Z1 ===")
+    if not executer_etape(
+        lambda: ods_z1.main(
             [
                 "--staging",
                 str(repertoire_staging),
                 "--sortie",
                 str(repertoire_libreoffice),
+                "--mesures-execution",
+                str(chemin_mesures_execution),
             ]
-        )
-        != 0
+        ),
     ):
         return False
 
-    print("\n=== 7/9 Génération des comparaisons Z1 ===")
-    if compare_2.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+    print("\n=== 7/10 Génération des comparaisons Z1 ===")
+    if not executer_etape(
+        lambda: compare_2.main(["--sortie", str(repertoire_libreoffice)]),
+    ):
         return False
 
-    print("\n=== 8/9 Consolidation des recettes mensuelles toutes boutiques ===")
-    if recettes_mensuelles.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+    print("\n=== 8/10 Consolidation des recettes mensuelles toutes boutiques ===")
+    if not executer_etape(
+        lambda: recettes_mensuelles.main(["--sortie", str(repertoire_libreoffice)]),
+    ):
         return False
 
-    print("\n=== 9/9 Comparaison des recettes reconstituées avec les CA3 ===")
-    if compare_ca_gesco_ca3.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+    print("\n=== 9/10 Comparaison des recettes reconstituées avec les CA3 ===")
+    if not executer_etape(
+        lambda: compare_ca_gesco_ca3.main(["--sortie", str(repertoire_libreoffice)]),
+    ):
         return False
+
+    print("\n=== 10/10 Génération du rapport d'exécution ===")
+    destination_rapport = journal_execution.ecrire_rapport(
+        repertoire_sortie or repertoire_libreoffice.parent,
+        repertoire_libreoffice,
+    )
+    chemin_mesures_execution.unlink(missing_ok=True)
 
     print("\nTraitement terminé avec succès.")
     print(f"Base SQLite : {chemin_base}")
     print(f"CSV : {repertoire_staging}")
     print(f"Classeurs LibreOffice : {repertoire_libreoffice}")
+    print(f"Rapport d'exécution : {destination_rapport}")
     return True
 
 

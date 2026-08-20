@@ -114,6 +114,43 @@ def test_periode_cloture_depuis_nom_fichier_refuse_un_nom_sans_periode() -> None
         raise AssertionError("Le nom de fichier sans période doit être refusé")
 
 
+def test_compter_lignes_cplte_retenues_compte_avant_agregation() -> None:
+    class FausseFeuille:
+        def createCursor(self) -> SimpleNamespace:
+            return SimpleNamespace(
+                gotoEndOfUsedArea=lambda _: None,
+                getRangeAddress=lambda: SimpleNamespace(
+                    StartColumn=0,
+                    StartRow=0,
+                    EndColumn=1,
+                    EndRow=3,
+                ),
+            )
+
+        def getCellRangeByPosition(self, *_: int) -> SimpleNamespace:
+            return SimpleNamespace(
+                getDataArray=lambda: (
+                    ("E_MODE", "D_DESIGNATION"),
+                    ("ZZ1", "CA BRUT"),
+                    ("ZZ1", "AUTRE"),
+                    ("Z", "CA NET"),
+                )
+            )
+
+    document = SimpleNamespace(
+        getSheets=lambda: SimpleNamespace(getByName=lambda _: FausseFeuille())
+    )
+
+    assert ods_z1.compter_lignes_cplte_retenues(document, "MASSENA", 2023) == 3
+    assert ods_z1.compter_lignes_cplte_retenues(
+        document,
+        "MASSENA",
+        2023,
+        mode="ZZ1",
+        designations=("CA BRUT",),
+    ) == 1
+
+
 def test_ajouter_TD_OccurenceEfichier_cree_un_veritable_datapilot(monkeypatch) -> None:
     class FauxChamp:
         def __init__(self) -> None:

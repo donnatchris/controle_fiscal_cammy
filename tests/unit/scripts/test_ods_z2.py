@@ -60,12 +60,23 @@ def test_ajouter_transactions_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypa
     }]
 
 
-def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_ajoute_les_formules(
+def test_periode_cloture_depuis_nom_fichier_extrait_le_mois_independamment_de_E_DATE() -> None:
+    assert ods_z2.periode_cloture_depuis_nom_fichier(
+        "Z102_02_082025_MASSENA.CSV"
+    ) == ("2025", "2025-08")
+
+
+def test_periode_cloture_depuis_nom_fichier_rejette_un_nom_sans_periode() -> None:
+    with pytest.raises(ValueError, match="Période de clôture absente"):
+        ods_z2.periode_cloture_depuis_nom_fichier("Z102_MASSENA.CSV")
+
+
+def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_utilise_nomfichier(
     monkeypatch,
 ) -> None:
     appels: list[tuple[int, int, int, int]] = []
     entetes: list[tuple[object, ...]] = []
-    formules: list[tuple[tuple[str, ...], ...]] = []
+    periodes_ecrites: list[tuple[tuple[object, ...], ...]] = []
 
     class FaussePlage:
         CharWeight = 0
@@ -73,9 +84,6 @@ def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_ajoute_les_formule
 
         def setDataArray(self, valeurs: tuple[tuple[object, ...], ...]) -> None:
             entetes.extend(valeurs)
-
-        def setFormulaArray(self, valeurs: tuple[tuple[str, ...], ...]) -> None:
-            formules.extend(valeurs)
 
     class FausseFeuille:
         def createCursor(self) -> SimpleNamespace:
@@ -92,6 +100,22 @@ def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_ajoute_les_formule
             ligne_fin: int,
         ) -> FaussePlage:
             appels.append((colonne_debut, ligne_debut, colonne_fin, ligne_fin))
+            if (colonne_debut, ligne_debut, colonne_fin, ligne_fin) == (0, 0, 12, 2):
+                return SimpleNamespace(getDataArray=lambda: (
+                    ods_z2.COLONNES_Z2,
+                    (
+                        "Z102_02_082025_MASSENA.CSV", "", "", "", "", "", "",
+                        "2025-09-02", "", "", "", "", "",
+                    ),
+                    (
+                        "Z102_01_052024_MASSENA.CSV", "", "", "", "", "", "",
+                        "2024-06-01", "", "", "", "", "",
+                    ),
+                ))
+            if (colonne_debut, ligne_debut, colonne_fin, ligne_fin) == (13, 1, 14, 2):
+                return SimpleNamespace(
+                    setDataArray=lambda valeurs: periodes_ecrites.append(valeurs)
+                )
             return FaussePlage()
 
     feuille = FausseFeuille()
@@ -112,11 +136,8 @@ def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_ajoute_les_formule
         "Z2_TransactionsMois_TOUS_2024_MASSENA_CplteAnneeMoisZ",
     )]
     assert entetes == [("AJ_Année_Z", "AJ_Mois_Z")]
-    assert formules == [
-        ('=IF(H2="";"";YEAR(H2))', '=IF(H2="";"";TEXT(H2;"YYYY-MM"))'),
-        ('=IF(H3="";"";YEAR(H3))', '=IF(H3="";"";TEXT(H3;"YYYY-MM"))'),
-    ]
-    assert appels == [(13, 0, 14, 0), (13, 1, 14, 2), (13, 1, 13, 2)]
+    assert periodes_ecrites == [((2025, "2025-08"), (2024, "2024-05"))]
+    assert appels == [(13, 0, 14, 0), (0, 0, 12, 2), (13, 1, 14, 2), (13, 1, 13, 2)]
 
 
 @pytest.mark.parametrize(

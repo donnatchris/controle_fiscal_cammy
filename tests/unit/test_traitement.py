@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest.mock import ANY
 
 import pytest
 
@@ -81,9 +82,15 @@ def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
         ]),
         ("ods_entetes", ["--staging", str(staging), "--sortie", str(libreoffice)]),
         ("ods_tickets", ["--staging", str(staging), "--sortie", str(libreoffice)]),
-        ("ods_z2", ["--staging", str(staging), "--sortie", str(libreoffice)]),
+        ("ods_z2", [
+            "--staging", str(staging), "--sortie", str(libreoffice),
+            "--mesures-execution", ANY,
+        ]),
         ("ods_entetes_enrichi", ["--sortie", str(libreoffice)]),
-        ("ods_z1", ["--staging", str(staging), "--sortie", str(libreoffice)]),
+        ("ods_z1", [
+            "--staging", str(staging), "--sortie", str(libreoffice),
+            "--mesures-execution", ANY,
+        ]),
         ("ods_entetes_recettes", ["--sortie", str(libreoffice)]),
         ("recettes_mensuelles", ["--sortie", str(libreoffice)]),
         ("compare_ca3", ["--sortie", str(libreoffice)]),
@@ -124,7 +131,7 @@ def test_executer_traitements_sauvegarde_la_sortie_existante(
 
     assert repertoire_sortie.is_dir()
     assert (repertoire_sortie / "ancien_livrable.txt").read_text() == "à conserver"
-    sauvegardes = list(repertoire_sortie.glob("sauvegarde_*"))
+    sauvegardes = list(repertoire_sortie.glob("_sauvegarde_*"))
     assert len(sauvegardes) == 1
     assert (sauvegardes[0] / "ancien_livrable.txt").read_text() == "à conserver"
 

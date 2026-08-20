@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -26,6 +27,7 @@ from shared.ods_helpers import (
     python_pyuno_defaut,
     pyuno_disponible,
 )
+from shared.rapport_execution import enregistrer_compteur_traitement
 
 COLONNES_Z2 = (
     "nomfichier",
@@ -59,9 +61,9 @@ COLONNE_MONTANT = "D_MONTANT"
 FORMAT_DATE = "YYYY-MM-DD"
 FORMAT_MONTANT = "0.00"
 COLONNES_CPLTE_ANNEE_MOIS_Z = ("AJ_Année_Z", "AJ_Mois_Z")
-FORMULES_CPLTE_ANNEE_MOIS_Z = (
-    '=IF(H{ligne}="";"";YEAR(H{ligne}))',
-    '=IF(H{ligne}="";"";TEXT(H{ligne};"YYYY-MM"))',
+MOTIF_PERIODE_NOM_FICHIER = re.compile(
+    r"_(?P<mois>0[1-9]|1[0-2])(?P<annee>\d{4})(?:_|\s*\.)",
+    re.IGNORECASE,
 )
 NATURES_TRANSACTION = (
     "CARTES",
@@ -106,6 +108,15 @@ EXCEPTIONS_MODES_Z2 = frozenset(
 LIGNE_NATURES_TOTAL_MONTANT_MODE_ZZ1 = 0
 LIGNE_ENTETES_TOTAL_MONTANT_MODE_ZZ1 = 1
 LIGNE_DONNEES_TOTAL_MONTANT_MODE_ZZ1 = 2
+
+
+def periode_cloture_depuis_nom_fichier(nom_fichier: object) -> tuple[str, str]:
+    """Extrait la période de clôture Z2 portée par le nom du fichier source."""
+    correspondance = MOTIF_PERIODE_NOM_FICHIER.search(str(nom_fichier))
+    if correspondance is None:
+        raise ValueError(f"Période de clôture absente du nom de fichier : {nom_fichier}")
+    annee = correspondance.group("annee")
+    return annee, f"{annee}-{correspondance.group('mois')}"
 
 
 def resoudre_mode_z2(mode_demande: str, boutique: str, annee: int) -> str:
@@ -220,16 +231,27 @@ def ajouter_CplteAnneeMoisZ(document: Any, boutique: str, annee: int) -> None:
     plage_entetes.CharWeight = 150
 
     if derniere_ligne >= 1:
-        formules = tuple(
-            tuple(formule.format(ligne=index_ligne + 1) for formule in FORMULES_CPLTE_ANNEE_MOIS_Z)
-            for index_ligne in range(1, derniere_ligne + 1)
+        donnees = feuille.getCellRangeByPosition(
+            0,
+            0,
+            colonne_debut - 1,
+            derniere_ligne,
+        ).getDataArray()
+        entetes_source = tuple(str(entete) for entete in donnees[0])
+        try:
+            index_nom_fichier = entetes_source.index("nomfichier")
+        except ValueError as erreur:
+            raise ValueError("Colonne nomfichier absente de la feuille Z2 source") from erreur
+        periodes = tuple(
+            periode_cloture_depuis_nom_fichier(ligne[index_nom_fichier])
+            for ligne in donnees[1:]
         )
         feuille.getCellRangeByPosition(
             colonne_debut,
             1,
             colonne_debut + len(COLONNES_CPLTE_ANNEE_MOIS_Z) - 1,
             derniere_ligne,
-        ).setFormulaArray(formules)
+        ).setDataArray(tuple((int(annee), mois) for annee, mois in periodes))
         feuille.getCellRangeByPosition(
             colonne_debut,
             1,
@@ -611,6 +633,84 @@ def ajouter_TotalMontant_ModeZ(document: Any, boutique: str, annee: int) -> None
     ajouter_TotalMontant_Mode(document, boutique, annee, "Z")
 
 
+def compter_lignes_cplte_retenues(
+    document: Any,
+    boutique: str,
+    annee: int,
+    *,
+    mode: str | None = None,
+    natures: Sequence[str] | None = None,
+) -> int:
+    """Compte les lignes Z2 lues et retenues avant l'agrégation du TCD."""
+    feuille = document.getSheets().getByName(
+        FeuilleZ2Transactions.CPLTE_ANNEE_MOIS.pour(boutique, annee)
+    )
+    curseur = feuille.createCursor()
+    curseur.gotoEndOfUsedArea(True)
+    adresse = curseur.getRangeAddress()
+    donnees = feuille.getCellRangeByPosition(
+        adresse.StartColumn,
+        adresse.StartRow,
+        adresse.EndColumn,
+        adresse.EndRow,
+    ).getDataArray()
+    if not donnees:
+        return 0
+    index = {str(nom): position for position, nom in enumerate(donnees[0])}
+    resultat = 0
+    for ligne in donnees[1:]:
+        if not any(valeur not in (None, "") for valeur in ligne):
+            continue
+        if mode is not None and str(ligne[index["E_MODE"]]) != mode:
+            continue
+        if natures is not None and str(ligne[index["D_DESIGNATION"]]) not in natures:
+            continue
+        resultat += 1
+    return resultat
+
+
+def enregistrer_compteurs_tableaux_tries_z2(
+    document: Any,
+    destination: Path,
+    boutique: str,
+    annee: int,
+    modes: Sequence[str],
+    chemin_mesures_execution: Path | None,
+    chemin_csv: Path,
+) -> None:
+    """Enregistre les compteurs Z2 pendant l'application effective des filtres."""
+    lus = compter_lignes_cplte_retenues(document, boutique, annee)
+    if modes:
+        mode_tcd = resoudre_mode_z2(modes[-1], boutique, annee)
+        enregistrer_compteur_traitement(
+            chemin_mesures_execution,
+            fichier=destination.name,
+            feuille=FeuilleZ2Transactions.TD_TOTAL_MOIS_ANNEE_NATURE.pour(
+                boutique, annee
+            ),
+            lus=lus,
+            selectionnes=compter_lignes_cplte_retenues(
+                document, boutique, annee, mode=mode_tcd
+            ),
+            source_metier=str(chemin_csv),
+        )
+    for mode in modes:
+        enregistrer_compteur_traitement(
+            chemin_mesures_execution,
+            fichier=destination.name,
+            feuille=FEUILLES_TOTAL_MONTANT_PAR_MODE[mode].pour(boutique, annee),
+            lus=lus,
+            selectionnes=compter_lignes_cplte_retenues(
+                document,
+                boutique,
+                annee,
+                mode=resoudre_mode_z2(mode, boutique, annee),
+                natures=NATURES_TRANSACTION,
+            ),
+            source_metier=str(chemin_csv),
+        )
+
+
 def lire_lignes_valeurs_feuille(
     feuille: Any,
     colonnes: Sequence[str],
@@ -750,6 +850,7 @@ def creer_et_enregistrer_classeur(
     *,
     boutique: str,
     annee: int,
+    chemin_mesures_execution: Path | None = None,
 ) -> None:
     """Crée directement le document Calc via PyUNO et enregistre l'ODS."""
     with tempfile.TemporaryDirectory(prefix="libreoffice-751-") as repertoire_temporaire:
@@ -791,6 +892,16 @@ def creer_et_enregistrer_classeur(
                     f"Comparaison ZZ1/ZZ2 non applicable pour {annee} {boutique}."
                 )
 
+            enregistrer_compteurs_tableaux_tries_z2(
+                document,
+                destination,
+                boutique,
+                annee,
+                modes_a_generer,
+                chemin_mesures_execution,
+                chemin_csv,
+            )
+
             temporaire_ods = temporaire / destination.name
             document.storeAsURL(
                 uno.systemPathToFileUrl(str(temporaire_ods)),
@@ -817,6 +928,7 @@ def generer_classeurs(
     repertoire_sortie: Path,
     uno: Any,
     soffice: str = "soffice",
+    chemin_mesures_execution: Path | None = None,
 ) -> dict[tuple[int, str], Path]:
     """Génère les six classeurs Z2 depuis les CSV préparatoires."""
     repertoire_sortie.mkdir(parents=True, exist_ok=True)
@@ -834,6 +946,11 @@ def generer_classeurs(
                 repertoire_sortie
                 / f"TTS_Z2_TransactionsMois_TOUS_{annee}_{boutique}.ods"
             )
+            arguments_mesures = (
+                {"chemin_mesures_execution": chemin_mesures_execution}
+                if chemin_mesures_execution is not None
+                else {}
+            )
             creer_et_enregistrer_classeur(
                 uno,
                 soffice,
@@ -842,6 +959,7 @@ def generer_classeurs(
                 chemin_csv,
                 boutique=boutique,
                 annee=annee,
+                **arguments_mesures,
             )
             resultats[(annee, boutique)] = destination
     return resultats
@@ -857,6 +975,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--sortie", type=Path, required=True)
     parser.add_argument("--soffice", default="soffice")
     parser.add_argument("--python-uno", type=Path, default=None)
+    parser.add_argument("--mesures-execution", type=Path, default=None)
     args = parser.parse_args(argv)
     uno = pyuno_disponible()
     if uno is None:
@@ -877,7 +996,13 @@ def main(argv: list[str] | None = None) -> int:
             check=False,
         )
         return resultat.returncode
-    resultats = generer_classeurs(args.staging, args.sortie, uno, args.soffice)
+    resultats = generer_classeurs(
+        args.staging,
+        args.sortie,
+        uno,
+        args.soffice,
+        chemin_mesures_execution=args.mesures_execution,
+    )
     for (annee, boutique), chemin in resultats.items():
         print(f"{annee} {boutique} : {chemin}")
     return 0
