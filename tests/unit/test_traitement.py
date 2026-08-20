@@ -35,6 +35,11 @@ def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
         lambda arguments: appels.append(("ods_tickets", arguments)) or 0,
     )
     monkeypatch.setattr(
+        traitement.ods_ej_entetes_enrichi,
+        "main",
+        lambda arguments: appels.append(("ods_entetes_enrichi", arguments)) or 0,
+    )
+    monkeypatch.setattr(
         traitement.ods_z2,
         "main",
         lambda arguments: appels.append(("ods_z2", arguments)) or 0,
@@ -57,6 +62,7 @@ def test_executer_traitements_enchaine_reconstruction_csv_et_ods(
         ("ods_entetes", ["--staging", str(staging), "--sortie", str(libreoffice)]),
         ("ods_tickets", ["--staging", str(staging), "--sortie", str(libreoffice)]),
         ("ods_z2", ["--staging", str(staging), "--sortie", str(libreoffice)]),
+        ("ods_entetes_enrichi", ["--sortie", str(libreoffice)]),
     ]
     assert staging.is_dir()
     assert libreoffice.is_dir()
@@ -86,6 +92,11 @@ def test_executer_traitements_sarrete_si_reconstruction_echoue(
         traitement.ods_z2,
         "main",
         lambda _: pytest.fail("Les ODS ne doivent pas être générés"),
+    )
+    monkeypatch.setattr(
+        traitement.ods_ej_entetes_enrichi,
+        "main",
+        lambda _: pytest.fail("Les entêtes enrichies ne doivent pas être générées"),
     )
 
     assert traitement.executer_traitements(

@@ -4,6 +4,7 @@ from pathlib import Path
 from scripts import (
     db_vers_csv_751,
     ods_ej_entetes,
+    ods_ej_entetes_enrichi,
     ods_ej_tickets,
     ods_z2,
     reconstruire_base_751,
@@ -28,7 +29,7 @@ def executer_traitements(
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
-    print("\n=== 1/4 Reconstruction et validation de la base ===")
+    print("\n=== 1/5 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main(
         [
             "--sources",
@@ -41,7 +42,7 @@ def executer_traitements(
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/4 Génération des CSV ===")
+    print("\n=== 2/5 Génération des CSV ===")
     if (
         db_vers_csv_751.main(
             [
@@ -55,7 +56,7 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 3/4 Génération des feuilles ODS EJ ===")
+    print("\n=== 3/5 Génération des feuilles ODS EJ ===")
     if (
         ods_ej_entetes.main(
             [
@@ -81,7 +82,7 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 4/4 Génération des feuilles ODS Z2 ===")
+    print("\n=== 4/5 Génération des feuilles ODS Z2 ===")
     if (
         ods_z2.main(
             [
@@ -93,6 +94,10 @@ def executer_traitements(
         )
         != 0
     ):
+        return False
+
+    print("\n=== 5/5 Enrichissement des feuilles ODS d'entêtes EJ ===")
+    if ods_ej_entetes_enrichi.main(["--sortie", str(repertoire_libreoffice)]) != 0:
         return False
 
     print("\nTraitement terminé avec succès.")
