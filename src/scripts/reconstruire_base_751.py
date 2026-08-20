@@ -5,10 +5,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import os
-import shutil
 import sqlite3
 import uuid
-from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
@@ -151,18 +149,8 @@ def main(argv: list[str] | None = None) -> int:
         if avant != apres:
             raise RuntimeError("Les sources ont changé pendant la reconstruction")
 
-        publication: dict[str, str | None] = {"base_active": None, "sauvegarde": None}
         if args.publier:
-            sauvegarde = None
-            if args.base.exists():
-                horodatage = datetime.now().strftime("%Y%m%d_%H%M%S")
-                sauvegarde = args.base.with_suffix(f".sqlite.bak_{horodatage}")
-                shutil.copy2(args.base, sauvegarde)
             os.replace(chemin_temporaire, args.base)
-            publication = {
-                "base_active": str(args.base.resolve()),
-                "sauvegarde": str(sauvegarde.resolve()) if sauvegarde else None,
-            }
 
         print(f"Base validée à partir de {len(avant)} sources inchangées.")
         if not args.publier:

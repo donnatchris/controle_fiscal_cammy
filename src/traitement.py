@@ -1,12 +1,18 @@
 import argparse
+import shutil
+from datetime import datetime
 from pathlib import Path
 
 from scripts import (
+    compare_ca_gesco_ca3,
     db_vers_csv_751,
     ods_ej_entetes,
-    ods_ej_entetes_enrichi,
+    compare_1,
+    compare_2,
     ods_ej_tickets,
+    ods_z1,
     ods_z2,
+    recettes_mensuelles,
     reconstruire_base_751,
 )
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
@@ -19,17 +25,47 @@ REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT = (
 REPERTOIRE_LIBREOFFICE_PAR_DEFAUT = REPERTOIRE_SORTIE_PAR_DEFAUT / "libreoffice"
 
 
+def sauvegarder_repertoire_sortie(repertoire_sortie: Path) -> Path | None:
+    """Copie une sortie existante non vide dans un sous-répertoire horodaté."""
+    if not repertoire_sortie.exists():
+        return None
+    if not repertoire_sortie.is_dir():
+        raise NotADirectoryError(
+            f"Le chemin de sortie existe mais n'est pas un répertoire : {repertoire_sortie}"
+        )
+    if not any(repertoire_sortie.iterdir()):
+        return None
+
+    horodatage = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    sauvegarde = repertoire_sortie / f"sauvegarde_{horodatage}"
+    sauvegarde.mkdir()
+    for element in repertoire_sortie.iterdir():
+        if element == sauvegarde:
+            continue
+        destination = sauvegarde / element.name
+        if element.is_dir():
+            shutil.copytree(element, destination, symlinks=True)
+        else:
+            shutil.copy2(element, destination, follow_symlinks=False)
+
+    print(f"Répertoire de sortie sauvegardé : {sauvegarde}")
+    return sauvegarde
+
+
 def executer_traitements(
     chemin_repertoire: Path,
     chemin_base: Path,
     repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
     repertoire_libreoffice: Path = REPERTOIRE_LIBREOFFICE_PAR_DEFAUT,
+    repertoire_sortie: Path | None = None,
 ) -> bool:
     """Reconstruit la base, exporte les CSV et les classeurs ODS."""
+    if repertoire_sortie is not None:
+        sauvegarder_repertoire_sortie(repertoire_sortie)
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
-    print("\n=== 1/5 Reconstruction et validation de la base ===")
+    print("\n=== 1/9 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main(
         [
             "--sources",
@@ -42,7 +78,7 @@ def executer_traitements(
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/5 Génération des CSV ===")
+    print("\n=== 2/9 Génération des CSV ===")
     if (
         db_vers_csv_751.main(
             [
@@ -56,7 +92,7 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 3/5 Génération des feuilles ODS EJ ===")
+    print("\n=== 3/9 Génération des feuilles ODS EJ ===")
     if (
         ods_ej_entetes.main(
             [
@@ -82,7 +118,7 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 4/5 Génération des feuilles ODS Z2 ===")
+    print("\n=== 4/9 Génération des feuilles ODS Z2 ===")
     if (
         ods_z2.main(
             [
@@ -96,8 +132,34 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 5/5 Enrichissement des feuilles ODS d'entêtes EJ ===")
-    if ods_ej_entetes_enrichi.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+    print("\n=== 5/9 Génération des comparaisons Z2 ===")
+    if compare_1.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+        return False
+
+    print("\n=== 6/9 Génération des feuilles ODS Z1 ===")
+    if (
+        ods_z1.main(
+            [
+                "--staging",
+                str(repertoire_staging),
+                "--sortie",
+                str(repertoire_libreoffice),
+            ]
+        )
+        != 0
+    ):
+        return False
+
+    print("\n=== 7/9 Génération des comparaisons Z1 ===")
+    if compare_2.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+        return False
+
+    print("\n=== 8/9 Consolidation des recettes mensuelles toutes boutiques ===")
+    if recettes_mensuelles.main(["--sortie", str(repertoire_libreoffice)]) != 0:
+        return False
+
+    print("\n=== 9/9 Comparaison des recettes reconstituées avec les CA3 ===")
+    if compare_ca_gesco_ca3.main(["--sortie", str(repertoire_libreoffice)]) != 0:
         return False
 
     print("\nTraitement terminé avec succès.")
@@ -142,6 +204,7 @@ def main(argv: list[str] | None = None) -> int:
         chemin_base=Path(args.chemin_base),
         repertoire_staging=args.staging,
         repertoire_libreoffice=args.libreoffice,
+        repertoire_sortie=REPERTOIRE_SORTIE_PAR_DEFAUT,
     )
     return 0 if succes else 1
 

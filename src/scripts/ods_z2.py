@@ -95,10 +95,14 @@ FEUILLES_TOTAL_MONTANT_PAR_MODE = {
     "Z": FeuilleZ2Transactions.Z2_TOTAL_MOIS_ANNEE_NATURE_MODE_Z,
 }
 MODES_Z2_PAR_MODE_BOUTIQUE_ANNEE = {
-    ("ZZ1", "MATURIN", 2024): "Z",
-    ("ZZ2", "MATURIN", 2024): "Z",
-    ("Z", "MASSENA", 2024): "ZZ2",
 }
+EXCEPTIONS_MODES_Z2 = frozenset(
+    {
+        ("ZZ1", "MATURIN", 2024),
+        ("ZZ2", "MATURIN", 2024),
+        ("Z", "MASSENA", 2024),
+    }
+)
 LIGNE_NATURES_TOTAL_MONTANT_MODE_ZZ1 = 0
 LIGNE_ENTETES_TOTAL_MONTANT_MODE_ZZ1 = 1
 LIGNE_DONNEES_TOTAL_MONTANT_MODE_ZZ1 = 2
@@ -112,6 +116,42 @@ def resoudre_mode_z2(mode_demande: str, boutique: str, annee: int) -> str:
         (mode_demande, boutique, annee),
         mode_demande,
     )
+
+
+def mode_z2_est_applicable(mode: str, boutique: str, annee: int) -> bool:
+    """Indique si la feuille de totaux demandée doit être produite."""
+    return (mode, boutique, annee) not in EXCEPTIONS_MODES_Z2
+
+
+def appliquer_filtre_mode_data_pilot(
+    tableaux: Any,
+    nom_tableau: str,
+    index_champ_mode: int,
+    mode_selectionne: str,
+) -> None:
+    """Filtre réellement le DataPilot sur le seul mode demandé puis le rafraîchit.
+
+    ``SelectedPage`` n'est pas persisté par certaines versions de Calc pour un
+    descripteur créé par UNO. Masquer les autres éléments du champ de page est
+    l'opération native fiable dans ce cas.
+    """
+    tableau = tableaux.getByName(nom_tableau)
+    champ_mode = tableau.getDataPilotFields().getByIndex(index_champ_mode)
+    filtrer_elements_mode_data_pilot(champ_mode, mode_selectionne)
+    tableau.refresh()
+
+
+def filtrer_elements_mode_data_pilot(champ_mode: Any, mode_selectionne: str) -> None:
+    """Masque tous les éléments du champ de mode sauf celui sélectionné."""
+    elements = champ_mode.getItems()
+    trouve = False
+    for index in range(elements.getCount()):
+        element = elements.getByIndex(index)
+        conserver = element.getName() == mode_selectionne
+        element.setPropertyValue("IsHidden", not conserver)
+        trouve = trouve or conserver
+    if not trouve:
+        raise ValueError(f"Mode Z2 absent de la source du DataPilot : {mode_selectionne}")
 
 
 def ajouter_transactions_0(
@@ -207,7 +247,7 @@ def ajouter_TotalMontant(
     document: Any,
     boutique: str,
     annee: int,
-    mode_demande: str = "ZZ1",
+    mode_demande: str | None = "ZZ1",
 ) -> None:
     """Ajoute le tableau croisé des montants par mois et nature de transaction."""
     import uno
@@ -253,10 +293,13 @@ def ajouter_TotalMontant(
             uno.Enum(orientation, orientation_champ),
         )
         if nom_champ == "E_MODE":
-            champ.setPropertyValue(
-                "SelectedPage",
-                resoudre_mode_z2(mode_demande, boutique, annee),
-            )
+            if mode_demande is not None:
+                # Calc initialise UseSelectedPage avec une page vide : cette
+                # propriété doit donc être posée avant le nom de page sélectionné.
+                mode_selectionne = resoudre_mode_z2(mode_demande, boutique, annee)
+                champ.setPropertyValue("UseSelectedPage", True)
+                champ.setPropertyValue("SelectedPage", mode_selectionne)
+                filtrer_elements_mode_data_pilot(champ, mode_selectionne)
 
     for nom_champ in ("D_QUANTITE", "D_MONTANT"):
         champ = champs.getByIndex(COLONNES_Z2.index(nom_champ))
@@ -271,6 +314,13 @@ def ajouter_TotalMontant(
         feuille_destination.getCellByPosition(0, 0).CellAddress,
         descripteur,
     )
+    if mode_demande is not None:
+        appliquer_filtre_mode_data_pilot(
+            tableaux,
+            nom_destination,
+            COLONNES_Z2.index("E_MODE"),
+            resoudre_mode_z2(mode_demande, boutique, annee),
+        )
     definir_largeur_colonnes(feuille_destination, 12)
 
 
@@ -337,6 +387,96 @@ def extraire_totaux_mensuels_tcd(
     return tuple(resultats)
 
 
+def verifier_totaux_mode_tcd(
+    totaux_tcd: Sequence[Sequence[object]],
+    totaux_source_mode: Sequence[Sequence[object]],
+    mode_selectionne: str,
+) -> None:
+    """Refuse un TCD de mode dont les montants diffèrent de sa source filtrée.
+
+    Cette garde assure notamment qu'un mois sans ligne ``E_MODE = Z`` ne peut
+    pas récupérer les valeurs ZZ1/ZZ2 si Calc a ignoré le filtre de page.
+    """
+    def indexer(
+        lignes: Sequence[Sequence[object]],
+    ) -> dict[tuple[int, str], tuple[Decimal, ...]]:
+        resultat = {}
+        for ligne in lignes:
+            cle = (int(_valeur_numerique(ligne[0])), str(ligne[1]))
+            valeurs = tuple(Decimal(str(_valeur_numerique(valeur))) for valeur in ligne[2:])
+            if cle in resultat:
+                raise ValueError(f"Période dupliquée dans les totaux du mode {mode_selectionne} : {cle}")
+            resultat[cle] = valeurs
+        return resultat
+
+    tcd_par_periode = indexer(totaux_tcd)
+    source_par_periode = indexer(totaux_source_mode)
+    zeros = (Decimal(),) * (len(COLONNES_TOTAL_MONTANT_MODE) - 2)
+    for periode in set(tcd_par_periode) | set(source_par_periode):
+        tcd = tcd_par_periode.get(periode, zeros)
+        source = source_par_periode.get(periode, zeros)
+        if tcd != source:
+            raise RuntimeError(
+                "Totaux DataPilot incohérents avec les lignes source du mode "
+                f"{mode_selectionne} pour {periode} : TCD={tcd}, source={source}"
+            )
+
+
+def extraire_totaux_mensuels_source_mode(
+    feuille: Any,
+    mode_selectionne: str,
+) -> tuple[tuple[object, ...], ...]:
+    """Agrège la source Cplte pour contrôler le résultat du TCD filtré."""
+    curseur = feuille.createCursor()
+    curseur.gotoEndOfUsedArea(True)
+    adresse = curseur.getRangeAddress()
+    donnees = feuille.getCellRangeByPosition(
+        adresse.StartColumn,
+        adresse.StartRow,
+        adresse.EndColumn,
+        adresse.EndRow,
+    ).getDataArray()
+    entetes = donnees[0] if donnees else ()
+    index_colonnes = {str(nom): index for index, nom in enumerate(entetes)}
+    champs_requis = {"E_MODE", "AJ_Année_Z", "AJ_Mois_Z", "D_DESIGNATION", "D_QUANTITE", "D_MONTANT"}
+    manquants = champs_requis - index_colonnes.keys()
+    if manquants:
+        raise ValueError("Colonnes source Z2 absentes : " + ", ".join(sorted(manquants)))
+
+    totaux: dict[tuple[int, str], dict[str, list[Decimal]]] = {}
+    for ligne in donnees[1:]:
+        if str(ligne[index_colonnes["E_MODE"]]) != mode_selectionne:
+            continue
+        nature = str(ligne[index_colonnes["D_DESIGNATION"]])
+        if nature not in NATURES_TRANSACTION:
+            continue
+        periode = (
+            int(_valeur_numerique(ligne[index_colonnes["AJ_Année_Z"]])),
+            str(ligne[index_colonnes["AJ_Mois_Z"]]),
+        )
+        par_nature = totaux.setdefault(
+            periode,
+            {nature_transaction: [Decimal(), Decimal()] for nature_transaction in NATURES_TRANSACTION},
+        )
+        par_nature[nature][0] += Decimal(str(_valeur_numerique(ligne[index_colonnes["D_QUANTITE"]])))
+        par_nature[nature][1] += Decimal(
+            str(_valeur_numerique(ligne[index_colonnes["D_MONTANT"]]))
+        )
+
+    return tuple(
+        (
+            float(annee),
+            mois,
+            *(
+                float(valeur)
+                for nature in NATURES_TRANSACTION
+                for valeur in totaux[(annee, mois)][nature]
+            ),
+        )
+        for annee, mois in sorted(totaux)
+    )
+
+
 def mettre_en_forme_tableau_natures(
     feuille: Any,
     libelle_quantite: str,
@@ -386,6 +526,8 @@ def ajouter_TotalMontant_Mode(
     mode_demande: str,
 ) -> None:
     """Copie en valeurs les totaux mensuels du TCD dans une feuille de mode."""
+    if not mode_z2_est_applicable(mode_demande, boutique, annee):
+        return
     feuilles = document.getSheets()
     nom_source = FeuilleZ2Transactions.TD_TOTAL_MOIS_ANNEE_NATURE.pour(boutique, annee)
     nom_destination = FEUILLES_TOTAL_MONTANT_PAR_MODE[mode_demande].pour(boutique, annee)
@@ -400,6 +542,16 @@ def ajouter_TotalMontant_Mode(
         adresse.EndRow,
     ).getDataArray()
     lignes = extraire_totaux_mensuels_tcd(donnees_tcd)
+    mode_selectionne = resoudre_mode_z2(mode_demande, boutique, annee)
+    if mode_selectionne == "Z":
+        feuille_cplte = feuilles.getByName(
+            FeuilleZ2Transactions.CPLTE_ANNEE_MOIS.pour(boutique, annee)
+        )
+        verifier_totaux_mode_tcd(
+            lignes,
+            extraire_totaux_mensuels_source_mode(feuille_cplte, mode_selectionne),
+            mode_selectionne,
+        )
 
     if feuilles.hasByName(nom_destination):
         feuilles.removeByName(nom_destination)
@@ -618,19 +770,26 @@ def creer_et_enregistrer_classeur(
             print(f"Ajout de la feuille CplteAnneeMoisZ pour {annee} {boutique}...")
             ajouter_CplteAnneeMoisZ(document, boutique, annee)
             print(f"Ajout du tableau croisé des montants pour {annee} {boutique}...")
-            ajouter_TotalMontant(document, boutique, annee, "ZZ1")
-            print(f"Copie des totaux du mode ZZ1 pour {annee} {boutique}...")
-            ajouter_TotalMontant_ModeZZ1(document, boutique, annee)
-            print(f"Sélection du mode ZZ2 pour {annee} {boutique}...")
-            ajouter_TotalMontant(document, boutique, annee, "ZZ2")
-            print(f"Copie des totaux du mode ZZ2 pour {annee} {boutique}...")
-            ajouter_TotalMontant_ModeZZ2(document, boutique, annee)
-            print(f"Sélection du mode Z pour {annee} {boutique}...")
-            ajouter_TotalMontant(document, boutique, annee, "Z")
-            print(f"Copie des totaux du mode Z pour {annee} {boutique}...")
-            ajouter_TotalMontant_ModeZ(document, boutique, annee)
-            print(f"Comparaison des montants ZZ1 et ZZ2 pour {annee} {boutique}...")
-            ajouter_CompareMontant(document, boutique, annee)
+            modes_a_generer = tuple(
+                mode
+                for mode in FEUILLES_TOTAL_MONTANT_PAR_MODE
+                if mode_z2_est_applicable(mode, boutique, annee)
+            )
+            mode_initial_tcd = modes_a_generer[0] if modes_a_generer else None
+            ajouter_TotalMontant(document, boutique, annee, mode_initial_tcd)
+            for index_mode, mode in enumerate(modes_a_generer):
+                if index_mode:
+                    print(f"Sélection du mode {mode} pour {annee} {boutique}...")
+                    ajouter_TotalMontant(document, boutique, annee, mode)
+                print(f"Copie des totaux du mode {mode} pour {annee} {boutique}...")
+                ajouter_TotalMontant_Mode(document, boutique, annee, mode)
+            if {"ZZ1", "ZZ2"}.issubset(modes_a_generer):
+                print(f"Comparaison des montants ZZ1 et ZZ2 pour {annee} {boutique}...")
+                ajouter_CompareMontant(document, boutique, annee)
+            else:
+                print(
+                    f"Comparaison ZZ1/ZZ2 non applicable pour {annee} {boutique}."
+                )
 
             temporaire_ods = temporaire / destination.name
             document.storeAsURL(

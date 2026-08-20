@@ -29,11 +29,17 @@ class FeuilleEjEntetes(Enum):
     CPLTE_ANNEE_MOIS = "ENTETES_TICKETS_{boutique}_CplteAnneeMoisTotalHT"
     TD_TOTAL_ENCT = "TD_TotalEnctTtc_ParAnneeMois"
     ENCT_MENSUELS = "enct_mensuels_{boutique}_232425"
+    COMPARE_Z2_MODE_ZZ1_VS_EJ = (
+        "Compare_Montant_{boutique}_Z2ModeZZ1vsEJ_{annee}"
+    )
+    COMPARE_Z2_MODE_Z_VS_EJ = (
+        "Compare_Montant_{boutique}_Z2ModeZVsEJ_{annee}"
+    )
     TD_TOTAL_HT_TVA_TTC = "TD_TotalHtTvaTtc_ParAnneeMois"
     RECETTES_MENSUELLES = "recettes_mensuelles_{boutique}_232425"
 
-    def pour(self, boutique: str) -> str:
-        return self.value.format(boutique=boutique)
+    def pour(self, boutique: str, annee: int | None = None) -> str:
+        return self.value.format(boutique=boutique, annee=annee)
 
 
 class FeuilleEjTickets(Enum):
@@ -60,4 +66,24 @@ class FeuilleZ2Transactions(Enum):
 
     def pour(self, boutique: str, annee: int) -> str:
         return self.value.format(boutique=boutique, annee=annee)
-    
+
+
+class FeuilleZ1SyntheseMois(Enum):
+    FICHIER_ODS = "TTS_Z1_SyntheseMois_TOUS_{annee}_{boutique}.ods"
+    FICHIER_ODS_EJ_ENTETES = "TTS_EJ_ENTETES_TICKETS_{boutique}.ods"
+    SYNTHESE_MOIS = "Z1_SyntheseMois_TOUS_{annee}_{boutique}_0"
+    CPLTE_ANNEE_MOIS = "Z1_SyntheseMois_TOUS_{annee}_{boutique}_CplteAnneeMoisZ"
+    TD_OCCURENCE_E_FICHIER_E_MODE = "TD_OccurenceEfichierEmodeParMoisAnnée_{annee}"
+    TD_TOTAL_MONTANT_PAR_MOIS_ANNEE = "TD_Z1_TotalMontantParMoisAnnee_{annee}"
+    Z1_TOTAL_MOIS_ANNEE_NATURE_MODE_ZZ1 = "Z1_TotalMontantParMoisAnnee_{annee}_ModeZZ1"
+    Z1_TOTAL_MOIS_ANNEE_NATURE_MODE_ZZ2 = "Z1_TotalMontantParMoisAnnee_{annee}_ModeZZ2"
+    Z1_TOTAL_MOIS_ANNEE_NATURE_MODE_Z = "Z1_TotalMontantParMoisAnnee_{annee}_ModeZ"
+    COMPARE_MONTANT_Z1_MODE_ZZ1_VS_EJ = (
+        "Compare_Montant_{boutique}_Z1ModeZZ1vsEJ_{annee}"
+    )
+    COMPARE_MONTANT_Z1_MODE_Z_VS_EJ = (
+        "Compare_Montant_{boutique}_Z1ModeZvsEJ_{annee}"
+    )
+
+    def pour(self, boutique: str, annee: int) -> str:
+        return self.value.format(boutique=boutique, annee=annee)

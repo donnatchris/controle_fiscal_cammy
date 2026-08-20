@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from scripts import ods_ej_entetes_enrichi
+from scripts import compare_1
 from scripts.ods_ej_entetes import COLONNES_ENTETES
 
 
@@ -49,19 +49,24 @@ def test_ajouter_CplteAnneeMoisTotal_copie_la_feuille_triee_et_ajoute_les_colonn
     entetes: list[tuple[object, ...]] = []
     formules: list[tuple[str, ...]] = []
     periodes: list[tuple[object, ...]] = []
+    formats_demandes: list[str] = []
     dates = {
         1: SimpleNamespace(String="2024-01-01", Value=45292),
         2: SimpleNamespace(String="", Value=0),
     }
     monkeypatch.setattr(
-        ods_ej_entetes_enrichi,
+        compare_1,
         "copier_feuille",
         lambda _document, source, destination: copies.append((source, destination)) or feuille,
     )
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "obtenir_format", lambda *_: 42)
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(
+        compare_1,
+        "obtenir_format",
+        lambda _formats, format_chaine: formats_demandes.append(format_chaine) or 42,
+    )
+    monkeypatch.setattr(compare_1, "definir_largeur_colonnes", lambda *_: None)
 
-    ods_ej_entetes_enrichi.ajouter_CplteAnneeMoisTotal(
+    compare_1.ajouter_CplteAnneeMoisTotal(
         SimpleNamespace(getNumberFormats=lambda: object()), "MASSENA"
     )
 
@@ -83,6 +88,7 @@ def test_ajouter_CplteAnneeMoisTotal_copie_la_feuille_triee_et_ajoute_les_colonn
         ),
     ]
     assert periodes == [("2024", "2024-01"), ("", "")]
+    assert formats_demandes == ["0,00"]
     assert appels == [
         (0, 0, 17, 0),
         (18, 0, 21, 0),
@@ -105,10 +111,10 @@ def test_ajouter_CplteAnneeMoisTotal_refuse_une_feuille_source_incomplete(
         def getCellRangeByPosition(self, *_: int) -> SimpleNamespace:
             return SimpleNamespace(getDataArray=lambda: (("E_HT1",),))
 
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "copier_feuille", lambda *_: FausseFeuille())
+    monkeypatch.setattr(compare_1, "copier_feuille", lambda *_: FausseFeuille())
 
     with pytest.raises(ValueError, match="E_DATE_TICKET"):
-        ods_ej_entetes_enrichi.ajouter_CplteAnneeMoisTotal(object(), "MASSENA")
+        compare_1.ajouter_CplteAnneeMoisTotal(object(), "MASSENA")
 
 
 def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
@@ -131,6 +137,7 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
     class FauxDescripteur:
         def __init__(self, champs: list[FauxChamp]) -> None:
             self.champs = champs
+            self.champ_disposition_donnees = FauxChamp()
             self.proprietes: list[tuple[str, object]] = []
             self.source: object | None = None
 
@@ -142,6 +149,9 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
 
         def getDataPilotFields(self) -> SimpleNamespace:
             return SimpleNamespace(getByIndex=lambda index: self.champs[index])
+
+        def getDataLayoutField(self) -> FauxChamp:
+            return self.champ_disposition_donnees
 
     class FauxTableaux:
         def __init__(self, descripteur: FauxDescripteur) -> None:
@@ -161,7 +171,7 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
         def getCellRangeByPosition(self, *_: int) -> SimpleNamespace:
             return SimpleNamespace(getDataArray=lambda: ((
                 *COLONNES_ENTETES,
-                *ods_ej_entetes_enrichi.COLONNES_CPLTE_ANNEE_MOIS_TOTAL_HT,
+                *compare_1.COLONNES_CPLTE_ANNEE_MOIS_TOTAL_HT,
             ),))
 
     class FausseFeuilleDestination:
@@ -203,9 +213,9 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
         "uno",
         SimpleNamespace(Enum=lambda enum, valeur: f"{enum}.{valeur}"),
     )
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(compare_1, "definir_largeur_colonnes", lambda *_: None)
 
-    ods_ej_entetes_enrichi.ajouter_TotalEnctTtc(
+    compare_1.ajouter_TotalEnctTtc(
         SimpleNamespace(getSheets=lambda: feuilles), "MASSENA"
     )
 
@@ -216,22 +226,26 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
         ("RowGrand", False), ("ColumnGrand", False), ("ShowFilterButton", False),
     ]
     assert champs[20].proprietes == [
-        ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW")
+        ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
+        ("RepeatItemLabels", True),
     ]
     assert champs[21].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW")
     ]
-    for nom_champ in ods_ej_entetes_enrichi.CHAMPS_DONNEES_TOTAL_ENCT_TTC:
+    for nom_champ in compare_1.CHAMPS_DONNEES_TOTAL_ENCT_TTC:
         champ = champs[COLONNES_ENTETES.index(nom_champ)]
         assert champ.proprietes == [
             ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.DATA"),
             ("Function", "com.sun.star.sheet.GeneralFunction.SUM"),
             ("Name", f"Somme - {nom_champ}"),
         ]
+    assert descripteur.champ_disposition_donnees.proprietes == [
+        ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.COLUMN")
+    ]
     indexes_configures = {
         20,
         21,
-        *(COLONNES_ENTETES.index(nom) for nom in ods_ej_entetes_enrichi.CHAMPS_DONNEES_TOTAL_ENCT_TTC),
+        *(COLONNES_ENTETES.index(nom) for nom in compare_1.CHAMPS_DONNEES_TOTAL_ENCT_TTC),
     }
     assert all(
         not champ.proprietes
@@ -243,89 +257,196 @@ def test_ajouter_TotalEnctTtc_cree_un_datapilot_par_annee_et_mois(
     ]
 
 
-def test_extraire_encts_mensuels_tcd_aplatit_les_quatre_sommes_par_mois() -> None:
-    donnees_tcd = (
-        ("AJ_ANNEE", "AJ_MOIS", "Data", "Résultat"),
-        ("2024", "2024-01", "Somme - E_TTC", 120.0),
-        ("", "", "Somme - E_MDP_CB", 100.0),
-        ("", "", "Somme - E_MDP_CHEQUES", ""),
-        ("", "", "Somme - E_MDP_ESPECES", 20.0),
-        ("", "2024-02", "Somme - E_TTC", 60.0),
-        ("", "", "Somme - E_MDP_CB", 50.0),
-        ("", "", "Somme - E_MDP_CHEQUES", 10.0),
-        ("", "", "Somme - E_MDP_ESPECES", ""),
-        ("Résultat", "", "", 180.0),
+def test_ajouter_encts_mensuels_copie_les_valeurs_du_tcd(monkeypatch) -> None:
+    class FausseCellule:
+        def __init__(self) -> None:
+            self.String = ""
+
+    class FausseFeuille:
+        def __init__(self) -> None:
+            self.cellules: dict[tuple[int, int], FausseCellule] = {}
+            self.lignes_supprimees: list[tuple[int, int]] = []
+
+        def createCursor(self) -> SimpleNamespace:
+            return SimpleNamespace(
+                gotoEndOfUsedArea=lambda _: None,
+                getRangeAddress=lambda: SimpleNamespace(StartColumn=0, StartRow=0, EndColumn=5, EndRow=1),
+            )
+
+        def getCellRangeByPosition(self, *_: int) -> SimpleNamespace:
+            return SimpleNamespace(getDataArray=lambda: (
+                ("", "", "Data", "", "", ""),
+                ("AJ_ANNEE", "AJ_MOIS", "", "Somme - E_TTC", "Somme - E_MDP_CB", "Somme - E_MDP_CHEQUES"),
+                ("2024", "2024-01", "", 120.0, 100.0, 0.0),
+            ))
+
+        def getCellByPosition(self, colonne: int, ligne: int) -> FausseCellule:
+            return self.cellules.setdefault((colonne, ligne), FausseCellule())
+
+        def getRows(self) -> SimpleNamespace:
+            return SimpleNamespace(
+                removeByIndex=lambda index, nombre: self.lignes_supprimees.append((index, nombre))
+            )
+
+    destination = FausseFeuille()
+    copies: list[tuple[str, str]] = []
+    monkeypatch.setattr(
+        compare_1,
+        "copier_valeurs_feuille",
+        lambda _document, source, cible: copies.append((source, cible)) or destination,
+    )
+    monkeypatch.setattr(compare_1, "definir_largeur_colonnes", lambda *_: None)
+
+    compare_1.ajouter_encts_mensuels(object(), "MASSENA")
+
+    assert copies == [
+        ("TD_TotalEnctTtc_ParAnneeMois", "enct_mensuels_MASSENA_232425")
+    ]
+    assert destination.getCellByPosition(2, 0).String == ""
+    assert destination.lignes_supprimees == [(0, 1)]
+
+
+def test_comparer_z2_mode_retenu_et_ej_par_periode_rapproche_par_mois_et_conserve_les_absents() -> None:
+    lignes_z2 = (
+        {
+            "AJ_Année_Z": 2024.0,
+            "AJ_Mois_Z": "2024-02",
+            "CARTES_D_MONTANT": 100.0,
+            "CHEQUES_D_MONTANT": 20.0,
+            "ESPECES_D_MONTANT": 30.0,
+        },
+        {
+            "AJ_Année_Z": 2023.0,
+            "AJ_Mois_Z": "2023-12",
+            "CARTES_D_MONTANT": 999.0,
+        },
+        {
+            "AJ_Année_Z": 2024.0,
+            "AJ_Mois_Z": "2024-03",
+            "CARTES_D_MONTANT": 5.0,
+        },
+    )
+    lignes_ej = (
+        {
+            "AJ_ANNEE": "2024",
+            "AJ_MOIS": "2024-01",
+            "Somme - E_MDP_CB": 10.0,
+            "Somme - E_MDP_CHEQUES": 2.0,
+            "Somme - E_MDP_ESPECES": 3.0,
+        },
+        {
+            "AJ_ANNEE": "2024",
+            "AJ_MOIS": "2024-02",
+            "Somme - E_MDP_CB": 40.0,
+            "Somme - E_MDP_CHEQUES": "",
+            "Somme - E_MDP_ESPECES": 45.0,
+        },
     )
 
-    assert ods_ej_entetes_enrichi.extraire_encts_mensuels_tcd(donnees_tcd) == (
-        ("2024", "2024-01", 120.0, 100.0, 0.0, 20.0),
-        ("2024", "2024-02", 60.0, 50.0, 10.0, 0.0),
+    assert compare_1.comparer_z2_mode_retenu_et_ej_par_periode(
+        lignes_z2, lignes_ej, 2024
+    ) == (
+        (2024.0, "2024-01", "", -10.0, "", -2.0, "", -3.0),
+        (2024.0, "2024-02", "", 60.0, "", 20.0, "", -15.0),
+        (2024.0, "2024-03", "", 5.0, "", 0.0, "", 0.0),
     )
 
 
-def test_ajouter_encts_mensuels_cree_une_feuille_de_valeurs_aplatie(monkeypatch) -> None:
-    donnees_tcd = (
-        ("AJ_ANNEE", "AJ_MOIS", "Data", "Résultat"),
-        ("2024", "2024-01", "Somme - E_TTC", 120.0),
-        ("", "", "Somme - E_MDP_CB", 100.0),
-        ("", "", "Somme - E_MDP_CHEQUES", 0.0),
-        ("", "", "Somme - E_MDP_ESPECES", 20.0),
+@pytest.mark.parametrize(
+    ("boutique", "mode", "nom_attendu"),
+    [
+        ("MASSENA", "ZZ1", "Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2024"),
+        ("MATURIN", "Z", "Compare_Montant_MATURIN_Z2ModeZVsEJ_2024"),
+    ],
+)
+def test_ajouter_comparaison_z2_ej_ecrit_une_feuille_autonome(
+    monkeypatch, boutique: str, mode: str, nom_attendu: str
+) -> None:
+    ecritures: list[tuple[tuple[object, ...], ...]] = []
+    assert compare_1.COLONNES_COMPARE_MONTANT_Z2_EJ == (
+        "AJ_Année_Z",
+        "AJ_Mois_Z",
+        "CARTES_AJ_ECART_QTE",
+        "CARTES_AJ_ECART_MONTANT",
+        "CHEQUES_AJ_ECART_QTE",
+        "CHEQUES_AJ_ECART_MONTANT",
+        "ESPECES_AJ_ECART_QTE",
+        "ESPECES_AJ_ECART_MONTANT",
     )
-    ecritures: list[tuple[int, int, int, int, tuple[tuple[object, ...], ...]]] = []
 
     class FaussePlage:
         CharWeight = 0
         NumberFormat = 0
 
-        def getDataArray(self) -> tuple[tuple[object, ...], ...]:
-            return donnees_tcd
-
         def setDataArray(self, valeurs: tuple[tuple[object, ...], ...]) -> None:
-            ecritures.append((*coordonnees_courantes, valeurs))
+            ecritures.append(valeurs)
 
     class FausseFeuille:
-        def createCursor(self) -> SimpleNamespace:
-            return SimpleNamespace(
-                gotoEndOfUsedArea=lambda _: None,
-                getRangeAddress=lambda: SimpleNamespace(StartColumn=0, StartRow=0, EndColumn=3, EndRow=4),
-            )
+        nom = "Feuille1"
 
-        def getCellRangeByPosition(self, *coordonnees: int) -> FaussePlage:
-            nonlocal coordonnees_courantes
-            coordonnees_courantes = coordonnees
+        def setName(self, nom: str) -> None:
+            self.nom = nom
+
+        def getCellRangeByPosition(self, *_: int) -> FaussePlage:
             return FaussePlage()
 
-    source = FausseFeuille()
     destination = FausseFeuille()
-    coordonnees_courantes = (0, 0, 0, 0)
 
-    class FaussesFeuilles:
-        def __init__(self) -> None:
-            self.feuilles = {"TD_TotalEnctTtc_ParAnneeMois": source}
+    feuilles_ej = SimpleNamespace(
+        getByName=lambda nom: object()
+        if nom == f"enct_mensuels_{boutique}_232425"
+        else pytest.fail(f"Feuille EJ inattendue : {nom}")
+    )
+    nom_source = (
+        f"Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_Mode{mode}"
+    )
+    feuilles_z2 = SimpleNamespace(
+        hasByName=lambda nom: nom == nom_source,
+        getByName=lambda nom: object()
+        if nom == nom_source
+        else pytest.fail(f"Feuille Z2 inattendue : {nom}")
+    )
+    monkeypatch.setattr(
+        compare_1,
+        "lire_lignes_valeurs_feuille",
+        lambda *_: ({"AJ_Année_Z": 2024.0, "AJ_Mois_Z": "2024-02", "CARTES_D_MONTANT": 8.0},),
+    )
+    monkeypatch.setattr(
+        compare_1,
+        "_lire_lignes_encts_mensuels",
+        lambda *_: ({"AJ_ANNEE": "2024", "AJ_MOIS": "2024-02", "Somme - E_MDP_CB": 3.0},),
+    )
+    monkeypatch.setattr(compare_1, "obtenir_format", lambda *_: 42)
+    monkeypatch.setattr(compare_1, "definir_largeur_colonnes", lambda *_: None)
 
-        def getByName(self, nom: str) -> FausseFeuille:
-            return self.feuilles[nom]
-
-        def hasByName(self, _: str) -> bool:
-            return False
-
-        def getCount(self) -> int:
-            return len(self.feuilles)
-
-        def insertNewByName(self, nom: str, _: int) -> None:
-            self.feuilles[nom] = destination
-
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "obtenir_format", lambda *_: 42)
-    monkeypatch.setattr(ods_ej_entetes_enrichi, "definir_largeur_colonnes", lambda *_: None)
-    ods_ej_entetes_enrichi.ajouter_encts_mensuels(
-        SimpleNamespace(getSheets=lambda: FaussesFeuilles(), getNumberFormats=lambda: object()),
-        "MASSENA",
+    document_destination = SimpleNamespace(
+        getSheets=lambda: SimpleNamespace(getByIndex=lambda _: destination),
+        getNumberFormats=lambda: object(),
+    )
+    compare_1.ajouter_comparaison_z2_ej(
+        document_destination,
+        SimpleNamespace(getSheets=lambda: feuilles_ej),
+        SimpleNamespace(getSheets=lambda: feuilles_z2),
+        boutique,
+        2024,
     )
 
+    assert destination.nom == nom_attendu
     assert ecritures == [
-        (0, 0, 5, 0, (ods_ej_entetes_enrichi.COLONNES_ENCTS_MENSUELS,)),
-        (0, 1, 5, 1, (("2024", "2024-01", 120.0, 100.0, 0.0, 20.0),)),
+        (compare_1.COLONNES_COMPARE_MONTANT_Z2_EJ,),
+        ((2024.0, "2024-02", "", 5.0, "", 0.0, "", 0.0),),
     ]
+
+
+def test_noms_des_six_classeurs_z2_ej_sont_les_noms_des_feuilles() -> None:
+    assert {
+        f"{compare_1._nom_comparaison_z2_ej(boutique, annee)}.ods"
+        for boutique in ("MASSENA", "MATURIN")
+        for annee in (2023, 2024, 2025)
+    } == {
+        *(f"Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_{annee}.ods" for annee in (2023, 2024, 2025)),
+        *(f"Compare_Montant_MATURIN_Z2ModeZVsEJ_{annee}.ods" for annee in (2023, 2024, 2025)),
+    }
 
 
 def test_enrichir_classeurs_applique_l_enrichissement_aux_deux_boutiques(
@@ -333,14 +454,14 @@ def test_enrichir_classeurs_applique_l_enrichissement_aux_deux_boutiques(
 ) -> None:
     appels: list[tuple[object, str, Path, str]] = []
     monkeypatch.setattr(
-        ods_ej_entetes_enrichi,
+        compare_1,
         "enrichir_et_enregistrer_classeur",
         lambda uno, soffice, destination, *, boutique: appels.append(
             (uno, soffice, destination, boutique)
         ),
     )
 
-    resultats = ods_ej_entetes_enrichi.enrichir_classeurs(tmp_path, uno=object())
+    resultats = compare_1.enrichir_classeurs(tmp_path, uno=object())
 
     assert [appel[2].name for appel in appels] == [
         "TTS_EJ_ENTETES_TICKETS_MASSENA.ods",

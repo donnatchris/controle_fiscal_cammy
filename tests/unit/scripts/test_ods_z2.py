@@ -121,12 +121,12 @@ def test_ajouter_CplteAnneeMoisZ_copie_la_feuille_initiale_et_ajoute_les_formule
 
 @pytest.mark.parametrize(
     ("mode_demande", "mode_selectionne"),
-    (("ZZ1", "ZZ1"), ("ZZ2", "ZZ2"), ("Z", "ZZ2")),
+    (("ZZ1", "ZZ1"), ("ZZ2", "ZZ2"), ("Z", "Z"), (None, None)),
 )
 def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
     monkeypatch,
-    mode_demande: str,
-    mode_selectionne: str,
+    mode_demande: str | None,
+    mode_selectionne: str | None,
 ) -> None:
     class FauxCurseur:
         def gotoEndOfUsedArea(self, _: bool) -> None:
@@ -161,6 +161,7 @@ def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
         def __init__(self, descripteur: FauxDescripteur) -> None:
             self.descripteur = descripteur
             self.insertions: list[tuple[str, object, object]] = []
+            self.rafraichissements: list[str] = []
 
         def createDataPilotDescriptor(self) -> FauxDescripteur:
             return self.descripteur
@@ -173,6 +174,9 @@ def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
 
         def insertNewByName(self, nom: str, adresse: object, descripteur: object) -> None:
             self.insertions.append((nom, adresse, descripteur))
+
+        def getByName(self, nom: str) -> SimpleNamespace:
+            return SimpleNamespace(refresh=lambda: self.rafraichissements.append(nom))
 
     class FausseFeuille:
         def __init__(self, tableaux: FauxTableaux | None = None) -> None:
@@ -220,6 +224,13 @@ def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
         SimpleNamespace(Enum=lambda enum, value: f"{enum}.{value}"),
     )
     monkeypatch.setattr(ods_z2, "definir_largeur_colonnes", lambda *_: None)
+    filtrages: list[tuple[object, str, int, str]] = []
+    monkeypatch.setattr(
+        ods_z2,
+        "appliquer_filtre_mode_data_pilot",
+        lambda *arguments: filtrages.append(arguments),
+    )
+    monkeypatch.setattr(ods_z2, "filtrer_elements_mode_data_pilot", lambda *_: None)
     ods_z2.ajouter_TotalMontant(
         SimpleNamespace(getSheets=lambda: FaussesFeuilles()),
         "MASSENA",
@@ -242,7 +253,11 @@ def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
     ]
     assert champs[5].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.PAGE"),
-        ("SelectedPage", mode_selectionne),
+        *(
+            (("UseSelectedPage", True), ("SelectedPage", mode_selectionne))
+            if mode_selectionne is not None
+            else ()
+        ),
     ]
     assert champs[4].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.PAGE")
@@ -260,15 +275,72 @@ def test_ajouter_TotalMontant_cree_un_datapilot_natif_avec_filtres_de_page(
     assert feuille_destination.tableaux.insertions == [
         ("TD_TotalMontant_parMoisAnnee_parNatureTransaction", "A1", descripteur)
     ]
+    assert filtrages == (
+        [
+            (
+                feuille_destination.tableaux,
+                "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+                5,
+                mode_selectionne,
+            )
+        ]
+        if mode_selectionne is not None
+        else []
+    )
 
 
-def test_resoudre_mode_z2_isole_l_exception_maturin_2024() -> None:
+def test_exceptions_des_modes_z2_limitees_a_maturin_2024() -> None:
     assert ods_z2.resoudre_mode_z2("ZZ1", "MASSENA", 2024) == "ZZ1"
     assert ods_z2.resoudre_mode_z2("ZZ2", "MASSENA", 2024) == "ZZ2"
-    assert ods_z2.resoudre_mode_z2("ZZ1", "MATURIN", 2024) == "Z"
-    assert ods_z2.resoudre_mode_z2("ZZ2", "MATURIN", 2024) == "Z"
-    assert ods_z2.resoudre_mode_z2("Z", "MATURIN", 2024) == "Z"
-    assert ods_z2.resoudre_mode_z2("Z", "MASSENA", 2024) == "ZZ2"
+    assert ods_z2.resoudre_mode_z2("Z", "MASSENA", 2024) == "Z"
+    assert not ods_z2.mode_z2_est_applicable("ZZ1", "MATURIN", 2024)
+    assert not ods_z2.mode_z2_est_applicable("ZZ2", "MATURIN", 2024)
+    assert ods_z2.mode_z2_est_applicable("Z", "MATURIN", 2024)
+    assert ods_z2.mode_z2_est_applicable("ZZ1", "MASSENA", 2024)
+    assert ods_z2.mode_z2_est_applicable("ZZ2", "MASSENA", 2024)
+    assert not ods_z2.mode_z2_est_applicable("Z", "MASSENA", 2024)
+
+
+def test_appliquer_filtre_mode_data_pilot_masque_zz1_et_zz2_pour_le_mode_z() -> None:
+    class FauxElement:
+        def __init__(self, nom: str) -> None:
+            self.nom = nom
+            self.proprietes: list[tuple[str, bool]] = []
+
+        def getName(self) -> str:
+            return self.nom
+
+        def setPropertyValue(self, nom: str, valeur: bool) -> None:
+            self.proprietes.append((nom, valeur))
+
+    elements = [FauxElement("Z"), FauxElement("ZZ1"), FauxElement("ZZ2")]
+    tableau = SimpleNamespace(
+        getDataPilotFields=lambda: SimpleNamespace(
+            getByIndex=lambda index: SimpleNamespace(
+                getItems=lambda: SimpleNamespace(
+                    getCount=lambda: len(elements),
+                    getByIndex=lambda index: elements[index],
+                )
+            )
+        ),
+        refresh=lambda: rafraichissements.append(True),
+    )
+    rafraichissements: list[bool] = []
+    tableaux = SimpleNamespace(getByName=lambda nom: tableau)
+
+    ods_z2.appliquer_filtre_mode_data_pilot(
+        tableaux,
+        "TD_TotalMontant_parMoisAnnee_parNatureTransaction",
+        5,
+        "Z",
+    )
+
+    assert [element.proprietes for element in elements] == [
+        [("IsHidden", False)],
+        [("IsHidden", True)],
+        [("IsHidden", True)],
+    ]
+    assert rafraichissements == [True]
 
 
 def test_extraire_totaux_mensuels_tcd_reorganise_les_valeurs_du_tcd() -> None:
@@ -293,6 +365,21 @@ def test_extraire_totaux_mensuels_tcd_reorganise_les_valeurs_du_tcd() -> None:
     assert ods_z2.extraire_totaux_mensuels_tcd(donnees_tcd) == (
         (2024.0, "2024-01", 1.0, 10.5, 2.0, 20.5, 3.0, 30.5, 4.0, 40.5, 5.0, 50.5),
         (2024.0, "2024-02", 6.0, 60.5, 7.0, 70.5, 8.0, 80.5, 9.0, 90.5, 10.0, 100.5),
+    )
+
+
+def test_verifier_totaux_mode_tcd_refuse_juin_2025_sans_ligne_source_z() -> None:
+    totaux_tcd = (
+        (2025.0, "2025-06", 512.0, 5369.03, 2.0, 0.80, 0.0, 0.0, 238.0, 1316.15, 0.0, 0.0),
+    )
+
+    with pytest.raises(RuntimeError, match="mode Z.*2025-06"):
+        ods_z2.verifier_totaux_mode_tcd(totaux_tcd, (), "Z")
+
+    ods_z2.verifier_totaux_mode_tcd(
+        ((2025.0, "2025-06", *(0.0 for _ in range(10))),),
+        (),
+        "Z",
     )
 
 
@@ -517,9 +604,9 @@ def test_ajouter_TotalMontant_ModeZZ1_copie_uniquement_des_valeurs_du_tcd(
         ),),
         ((2024.0, "2024-01", 1.0, 10.0, 2.0, 20.0, 3.0, 30.0, 4.0, 40.0, 5.0, 50.0),),
     ]
-    assert ecritures == ecritures_attendues * 3
+    assert ecritures == ecritures_attendues * 2
     assert "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ2" in feuilles.feuilles
-    assert "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ" in feuilles.feuilles
+    assert "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ" not in feuilles.feuilles
 
 
 def test_generer_classeurs_utilise_les_csv_z2_et_les_noms_contractuels(
