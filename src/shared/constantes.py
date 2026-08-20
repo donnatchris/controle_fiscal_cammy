@@ -47,3 +47,17 @@ class FeuilleEjTickets(Enum):
 
     def pour(self, boutique: str) -> str:
         return self.value.format(boutique=boutique)
+
+
+class FeuilleZ2Transactions(Enum):
+    TRANSACTIONS = "Z2_TransactionsMois_TOUS_{annee}_{boutique}_0"
+    CPLTE_ANNEE_MOIS = "Z2_TransactionsMois_TOUS_{annee}_{boutique}_CplteAnneeMoisZ"
+    TD_TOTAL_MOIS_ANNEE_NATURE = "TD_TotalMontant_parMoisAnnee_parNatureTransaction"
+    Z2_TOTAL_MOIS_ANNEE_NATURE_MODE_ZZ1 = "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_{annee}_ModeZZ1"
+    Z2_TOTAL_MOIS_ANNEE_NATURE_MODE_ZZ2 = "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_{annee}_ModeZZ2"
+    Z2_TOTAL_MOIS_ANNEE_NATURE_MODE_Z = "Z2_TotalMontant_parMoisAnnee_parNatureTransaction_{annee}_ModeZ"
+    COMPARE_MONTANT_ZZ1_VS_ZZ2 = "Compare_Montant_{boutique}_Z2_ModeZZ1vsModeZZ2_{annee}"
+
+    def pour(self, boutique: str, annee: int) -> str:
+        return self.value.format(boutique=boutique, annee=annee)
+    

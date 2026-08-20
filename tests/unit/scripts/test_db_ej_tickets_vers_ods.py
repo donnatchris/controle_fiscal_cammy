@@ -1,11 +1,11 @@
 from pathlib import Path
 from types import SimpleNamespace
 
-from scripts import db_ej_tickets_vers_ods
+from scripts import ods_ej_tickets
 
 
 def test_position_entete_tcd_accepte_la_ligne_data_et_le_formatage_calc() -> None:
-    assert db_ej_tickets_vers_ods._position_entete_tcd(
+    assert ods_ej_tickets._position_entete_tcd(
         (
             ("E_NUM_TICKET", "E_TTC", "Data", "", ""),
             ("", "", "Compter", "Somme - D_MONTANT ARTICLE", "Somme - D_CORRECTION"),
@@ -38,7 +38,7 @@ def test_supprimer_ligne_data_tcd_fusionne_les_entetes_avant_suppression() -> No
         ),
     )
 
-    supprimee = db_ej_tickets_vers_ods._supprimer_ligne_data_tcd(feuille, valeurs)
+    supprimee = ods_ej_tickets._supprimer_ligne_data_tcd(feuille, valeurs)
 
     assert supprimee is True
     assert cellules[(0, 1)].String == "E_NUM_TICKET"
@@ -66,12 +66,12 @@ def test_ajouter_tri_copie_la_feuille_0_dans_la_feuille_de_controle(
             return FauxCurseur()
 
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "copier_feuille",
         lambda _document, _source, destination: destinations.append(destination) or FausseFeuille(),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
@@ -81,7 +81,7 @@ def test_ajouter_tri_copie_la_feuille_0_dans_la_feuille_de_controle(
         SimpleNamespace(SortField=lambda: SimpleNamespace(Field=None, SortAscending=None)),
     )
 
-    db_ej_tickets_vers_ods.ajouter_TriCrstNumInterne(
+    ods_ej_tickets.ajouter_TriCrstNumInterne(
         document=object(),
         nom_feuille_source="LIGNES_TICKETS_MASSENA_0",
         boutique="MASSENA",
@@ -96,17 +96,17 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_lignes_triee(
     destinations: list[tuple[str, str]] = []
 
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "copier_feuille",
         lambda _document, source, destination: destinations.append((source, destination)) or object(),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
 
-    db_ej_tickets_vers_ods.ajouter_CtrlCoherenceEntete(
+    ods_ej_tickets.ajouter_CtrlCoherenceEntete(
         document=object(),
         boutique="MASSENA",
     )
@@ -130,7 +130,7 @@ def test_ajouter_total_ligne_par_num_tickets_cree_un_datapilot_natif(
     class FauxDescripteur:
         def __init__(self) -> None:
             self.proprietes: list[tuple[str, object]] = []
-            self.champs = [FauxChamp() for _ in db_ej_tickets_vers_ods.COLONNES_TICKETS]
+            self.champs = [FauxChamp() for _ in ods_ej_tickets.COLONNES_TICKETS]
             self.champ_disposition_donnees = FauxChamp()
             self.plage_source = None
 
@@ -195,34 +195,34 @@ def test_ajouter_total_ligne_par_num_tickets_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, valeur: f"{enum}.{valeur}"),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
 
-    db_ej_tickets_vers_ods.ajouter_TotalLigneParNumTickets(
+    ods_ej_tickets.ajouter_TotalLigneParNumTickets(
         SimpleNamespace(getSheets=lambda: feuilles),
         "MASSENA",
     )
 
     champs = destination.tableaux.descripteur.champs
-    assert champs[db_ej_tickets_vers_ods.COLONNES_TICKETS.index("E_NUM_TICKET")].proprietes == [
+    assert champs[ods_ej_tickets.COLONNES_TICKETS.index("E_NUM_TICKET")].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
     ]
-    assert champs[db_ej_tickets_vers_ods.COLONNES_TICKETS.index("E_TTC")].proprietes == [
+    assert champs[ods_ej_tickets.COLONNES_TICKETS.index("E_TTC")].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
     ]
-    assert champs[db_ej_tickets_vers_ods.COLONNES_TICKETS.index("D_LIBELLE_ARTICLE")].proprietes == [
+    assert champs[ods_ej_tickets.COLONNES_TICKETS.index("D_LIBELLE_ARTICLE")].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.DATA"),
         ("Function", "com.sun.star.sheet.GeneralFunction.COUNT"),
         ("Name", "Compter - D_LIBELLE_ARTICLE"),
     ]
-    assert champs[db_ej_tickets_vers_ods.COLONNES_TICKETS.index("D_MONTANT_ARTICLE")].proprietes == [
+    assert champs[ods_ej_tickets.COLONNES_TICKETS.index("D_MONTANT_ARTICLE")].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.DATA"),
         ("Function", "com.sun.star.sheet.GeneralFunction.SUM"),
         ("Name", "Somme - D_MONTANT_ARTICLE"),
     ]
-    assert champs[db_ej_tickets_vers_ods.COLONNES_TICKETS.index("D_CORRECTION")].proprietes == [
+    assert champs[ods_ej_tickets.COLONNES_TICKETS.index("D_CORRECTION")].proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.DATA"),
         ("Function", "com.sun.star.sheet.GeneralFunction.SUM"),
         ("Name", "Somme - D_CORRECTION"),
@@ -244,7 +244,7 @@ def test_ajouter_occurrence_libelle_article_cree_un_datapilot_natif(
 
     class FauxDescripteur:
         def __init__(self) -> None:
-            self.champs = [FauxChamp() for _ in db_ej_tickets_vers_ods.COLONNES_TICKETS]
+            self.champs = [FauxChamp() for _ in ods_ej_tickets.COLONNES_TICKETS]
 
         def setPropertyValue(self, _: str, __: object) -> None:
             pass
@@ -304,18 +304,18 @@ def test_ajouter_occurrence_libelle_article_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, valeur: f"{enum}.{valeur}"),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
 
-    db_ej_tickets_vers_ods.ajouter_OccurenceLibelleArticle(
+    ods_ej_tickets.ajouter_OccurenceLibelleArticle(
         SimpleNamespace(getSheets=lambda: feuilles),
         "MASSENA",
     )
 
     champ = destination.tableaux.descripteur.champs[
-        db_ej_tickets_vers_ods.COLONNES_TICKETS.index("D_LIBELLE_ARTICLE")
+        ods_ej_tickets.COLONNES_TICKETS.index("D_LIBELLE_ARTICLE")
     ]
     assert champ.proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
@@ -340,7 +340,7 @@ def test_ajouter_occurrence_tx_tva_article_cree_un_datapilot_natif(
 
     class FauxDescripteur:
         def __init__(self) -> None:
-            self.champs = [FauxChamp() for _ in db_ej_tickets_vers_ods.COLONNES_TICKETS]
+            self.champs = [FauxChamp() for _ in ods_ej_tickets.COLONNES_TICKETS]
 
         def setPropertyValue(self, _: str, __: object) -> None:
             pass
@@ -400,18 +400,18 @@ def test_ajouter_occurrence_tx_tva_article_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, valeur: f"{enum}.{valeur}"),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
 
-    db_ej_tickets_vers_ods.ajouter_OccurenceTxTvaArticle(
+    ods_ej_tickets.ajouter_OccurenceTxTvaArticle(
         SimpleNamespace(getSheets=lambda: feuilles),
         "MASSENA",
     )
 
     champ = destination.tableaux.descripteur.champs[
-        db_ej_tickets_vers_ods.COLONNES_TICKETS.index("D_TAUX_TVA_ARTICLE")
+        ods_ej_tickets.COLONNES_TICKETS.index("D_TAUX_TVA_ARTICLE")
     ]
     assert champ.proprietes == [
         ("Orientation", "com.sun.star.sheet.DataPilotFieldOrientation.ROW"),
@@ -463,17 +463,17 @@ def test_ajouter_ctrl_coherence_entete_ligne_copie_les_valeurs_et_ajoute_les_eca
 
     feuille = FausseFeuille()
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "copier_valeurs_feuille",
         lambda _document, source, destination: copies.append((source, destination)) or feuille,
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "definir_largeur_colonnes",
         lambda *_: None,
     )
 
-    db_ej_tickets_vers_ods.ajouter_CtrlCoherenceEnteteLigne(object(), "MASSENA")
+    ods_ej_tickets.ajouter_CtrlCoherenceEnteteLigne(object(), "MASSENA")
 
     assert copies == [(
         "TD_TotalLignesParNumTicket",
@@ -487,7 +487,7 @@ def test_ajouter_ctrl_coherence_entete_ligne_copie_les_valeurs_et_ajoute_les_eca
 def test_ajouter_tickets_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypatch) -> None:
     chemin_csv = tmp_path / "EJ_LIGNES_TICKETS_MASSENA.csv"
     chemin_csv.write_text(
-        "|".join(db_ej_tickets_vers_ods.COLONNES_TICKETS)
+        "|".join(ods_ej_tickets.COLONNES_TICKETS)
         + "\nEJ010123.TXT|000001|000010|2023-01-02|11:25|100.00||||20.00|||||120.00|120.00|||1|ARTICLE|T1|100.00||\n",
         encoding="utf-8-sig",
     )
@@ -506,13 +506,13 @@ def test_ajouter_tickets_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypatch) 
         getNumberFormats=lambda: object(),
     )
     monkeypatch.setattr(
-        db_ej_tickets_vers_ods,
+        ods_ej_tickets,
         "ecrire_tableau",
         lambda _feuille, lignes, *_args, **_kwargs: rows.extend(lignes),
     )
-    monkeypatch.setattr(db_ej_tickets_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(ods_ej_tickets, "definir_largeur_colonnes", lambda *_: None)
 
-    db_ej_tickets_vers_ods.ajouter_tickets_0(
+    ods_ej_tickets.ajouter_tickets_0(
         document,
         "LIGNES_TICKETS_MASSENA_0",
         chemin_csv,
@@ -527,7 +527,7 @@ def test_generer_classeurs_utilise_les_csv_lignes(tmp_path: Path, monkeypatch) -
     staging.mkdir()
     for boutique in ("MASSENA", "MATURIN"):
         (staging / f"EJ_LIGNES_TICKETS_{boutique}.csv").write_text(
-            "|".join(db_ej_tickets_vers_ods.COLONNES_TICKETS) + "\n",
+            "|".join(ods_ej_tickets.COLONNES_TICKETS) + "\n",
             encoding="utf-8-sig",
         )
 
@@ -544,8 +544,8 @@ def test_generer_classeurs_utilise_les_csv_lignes(tmp_path: Path, monkeypatch) -
         assert chemin_csv == staging / f"EJ_LIGNES_TICKETS_{destination.stem.split('_')[-1]}.csv"
         destination.write_bytes(b"ods")
 
-    monkeypatch.setattr(db_ej_tickets_vers_ods, "creer_et_enregistrer_classeur", creer)
-    resultats = db_ej_tickets_vers_ods.generer_classeurs(
+    monkeypatch.setattr(ods_ej_tickets, "creer_et_enregistrer_classeur", creer)
+    resultats = ods_ej_tickets.generer_classeurs(
         staging, tmp_path / "sortie", uno=object()
     )
 

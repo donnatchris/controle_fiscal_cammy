@@ -1,7 +1,7 @@
 from pathlib import Path
 from types import SimpleNamespace
 
-from scripts import db_ej_entetes_vers_ods
+from scripts import ods_ej_entetes
 
 
 def test_ajouter_tri_construit_le_nom_de_feuille_depuis_la_boutique(
@@ -24,18 +24,18 @@ def test_ajouter_tri_construit_le_nom_de_feuille_depuis_la_boutique(
             return FauxCurseur()
 
     monkeypatch.setattr(
-        db_ej_entetes_vers_ods,
+        ods_ej_entetes,
         "copier_feuille",
         lambda _document, _source, destination: destinations.append(destination) or FausseFeuille(),
     )
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
     monkeypatch.setitem(
         __import__("sys").modules,
         "com.sun.star.util",
         SimpleNamespace(SortField=lambda: SimpleNamespace(Field=None, SortAscending=None)),
     )
 
-    db_ej_entetes_vers_ods.ajouter_TriCrstNumInterne(
+    ods_ej_entetes.ajouter_TriCrstNumInterne(
         document=object(),
         nom_feuille_source="ENTETES_TICKETS_MASSENA_0",
         boutique="MASSENA",
@@ -116,14 +116,14 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
 
     feuille = FausseFeuille()
     monkeypatch.setattr(
-        db_ej_entetes_vers_ods,
+        ods_ej_entetes,
         "copier_feuille",
         lambda _document, source, destination: destinations.append((source, destination)) or feuille,
     )
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(ods_ej_entetes, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
 
-    db_ej_entetes_vers_ods.ajouter_CtrlCoherenceEntete(
+    ods_ej_entetes.ajouter_CtrlCoherenceEntete(
         document=SimpleNamespace(getNumberFormats=lambda: object()),
         boutique="MASSENA",
     )
@@ -133,7 +133,7 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
         "ENTETES_TICKETS_MASSENA_CtrlCoherenceEntete",
     )]
     assert [feuille.getCellByPosition(index, 0).String for index in range(18, 23)] == list(
-        db_ej_entetes_vers_ods.COLONNES_CTRL_COHERENCE_ENTETE
+        ods_ej_entetes.COLONNES_CTRL_COHERENCE_ENTETE
     )
     assert [feuille.getCellByPosition(index, 1).Formula for index in range(18, 23)] == [
         "=F2*20%", "=J2-S2", "=F2+J2", "=O2-U2", "=O2-(P2+R2)",
@@ -256,14 +256,14 @@ def test_ajouter_sequentialite_copie_uniquement_les_colonnes_demandees_en_valeur
         source.getCellByPosition(4, ligne).String = "11:25"
     feuilles = FaussesFeuilles(source)
     document = SimpleNamespace(getSheets=lambda: feuilles, getNumberFormats=lambda: object())
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "obtenir_format", lambda _formats, _format: 42)
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(ods_ej_entetes, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
 
-    db_ej_entetes_vers_ods.ajouter_sequentialite(document, "MASSENA")
+    ods_ej_entetes.ajouter_sequentialite(document, "MASSENA")
 
     destination = feuilles.getByName("ENTETES_TICKETS_MASSENA_sequentialite")
     assert [destination.getCellByPosition(index, 0).String for index in range(6)] == list(
-        db_ej_entetes_vers_ods.COLONNES_SEQUENTIALITE
+        ods_ej_entetes.COLONNES_SEQUENTIALITE
     )
     assert destination.getCellByPosition(2, 1).String == "000010"
     assert destination.getCellByPosition(3, 1).Value == 45_001
@@ -373,8 +373,8 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
         SimpleNamespace(Enum=lambda enum, value: f"{enum}.{value}"),
     )
     feuilles = FaussesFeuilles()
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
-    db_ej_entetes_vers_ods.ajouter_TD_OccurenceNumInterne(
+    monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
+    ods_ej_entetes.ajouter_TD_OccurenceNumInterne(
         SimpleNamespace(getSheets=lambda: feuilles), "MASSENA"
     )
 
@@ -395,7 +395,7 @@ def test_ajouter_td_occurrence_num_interne_cree_un_datapilot_natif(
 def test_ajouter_entetes_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypatch) -> None:
     chemin_csv = tmp_path / "EJ_ENTETES_TICKETS_MASSENA.csv"
     chemin_csv.write_text(
-        "|".join(db_ej_entetes_vers_ods.COLONNES_ENTETES)
+        "|".join(ods_ej_entetes.COLONNES_ENTETES)
         + "\nEJ010123.TXT|000001|000010|2023-01-02|11:25|100.00||||20.00|||||120.00|120.00||\n",
         encoding="utf-8-sig",
     )
@@ -414,13 +414,13 @@ def test_ajouter_entetes_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypatch) 
         getNumberFormats=lambda: object(),
     )
     monkeypatch.setattr(
-        db_ej_entetes_vers_ods,
+        ods_ej_entetes,
         "ecrire_tableau",
         lambda _feuille, lignes, *_args, **_kwargs: rows.extend(lignes),
     )
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "definir_largeur_colonnes", lambda *_: None)
+    monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
 
-    db_ej_entetes_vers_ods.ajouter_entetes_0(
+    ods_ej_entetes.ajouter_entetes_0(
         document,
         "ENTETES_TICKETS_MASSENA_0",
         chemin_csv,
@@ -455,7 +455,7 @@ def test_generer_classeurs_produit_uniquement_les_deux_ods_depuis_les_csv(
     staging.mkdir()
     for boutique in ("MASSENA", "MATURIN"):
         (staging / f"EJ_ENTETES_TICKETS_{boutique}.csv").write_text(
-            "|".join(db_ej_entetes_vers_ods.COLONNES_ENTETES) + "\n",
+            "|".join(ods_ej_entetes.COLONNES_ENTETES) + "\n",
             encoding="utf-8-sig",
         )
 
@@ -472,8 +472,8 @@ def test_generer_classeurs_produit_uniquement_les_deux_ods_depuis_les_csv(
         assert chemin_csv == staging / f"EJ_ENTETES_TICKETS_{boutique}.csv"
         destination.write_bytes(b"ods")
 
-    monkeypatch.setattr(db_ej_entetes_vers_ods, "creer_et_enregistrer_classeur", creer)
-    resultats = db_ej_entetes_vers_ods.generer_classeurs(
+    monkeypatch.setattr(ods_ej_entetes, "creer_et_enregistrer_classeur", creer)
+    resultats = ods_ej_entetes.generer_classeurs(
         staging, tmp_path / "sortie", uno=object()
     )
     assert {chemin.name for chemin in resultats.values()} == {

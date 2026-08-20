@@ -2,9 +2,10 @@ import argparse
 from pathlib import Path
 
 from scripts import (
-    db_ej_entetes_vers_ods,
-    db_ej_tickets_vers_ods,
     db_vers_csv_751,
+    ods_ej_entetes,
+    ods_ej_tickets,
+    ods_z2,
     reconstruire_base_751,
 )
 from shared.constantes import CHEMIN_DB, REPERTOIRE_SOURCE
@@ -23,11 +24,11 @@ def executer_traitements(
     repertoire_staging: Path = REPERTOIRE_TRAVAUX_PRELIMINAIRES_PAR_DEFAUT,
     repertoire_libreoffice: Path = REPERTOIRE_LIBREOFFICE_PAR_DEFAUT,
 ) -> bool:
-    """Reconstruit la base, exporte les CSV et les classeurs ODS EJ."""
+    """Reconstruit la base, exporte les CSV et les classeurs ODS."""
     repertoire_staging.mkdir(parents=True, exist_ok=True)
     repertoire_libreoffice.mkdir(parents=True, exist_ok=True)
 
-    print("\n=== 1/3 Reconstruction et validation de la base ===")
+    print("\n=== 1/4 Reconstruction et validation de la base ===")
     code_reconstruction = reconstruire_base_751.main(
         [
             "--sources",
@@ -40,7 +41,7 @@ def executer_traitements(
     if code_reconstruction != 0:
         return False
 
-    print("\n=== 2/3 Génération des CSV ===")
+    print("\n=== 2/4 Génération des CSV ===")
     if (
         db_vers_csv_751.main(
             [
@@ -54,9 +55,9 @@ def executer_traitements(
     ):
         return False
 
-    print("\n=== 3/3 Génération des feuilles ODS EJ ===")
+    print("\n=== 3/4 Génération des feuilles ODS EJ ===")
     if (
-        db_ej_entetes_vers_ods.main(
+        ods_ej_entetes.main(
             [
                 "--staging",
                 str(repertoire_staging),
@@ -68,7 +69,21 @@ def executer_traitements(
     ):
         return False
     if (
-        db_ej_tickets_vers_ods.main(
+        ods_ej_tickets.main(
+            [
+                "--staging",
+                str(repertoire_staging),
+                "--sortie",
+                str(repertoire_libreoffice),
+            ]
+        )
+        != 0
+    ):
+        return False
+
+    print("\n=== 4/4 Génération des feuilles ODS Z2 ===")
+    if (
+        ods_z2.main(
             [
                 "--staging",
                 str(repertoire_staging),
