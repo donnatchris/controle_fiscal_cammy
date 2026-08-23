@@ -47,6 +47,26 @@ Il impose en revanche, à plusieurs endroits, des noms de feuilles très longs, 
 
 Le format **ODS**, utilisé notamment par LibreOffice Calc, a donc été retenu afin de pouvoir conserver les noms demandés par le cahier des charges sans les tronquer ni les remplacer par des alias.
 
+### Exécution dans un environnement Docker
+
+La génération des classeurs repose sur LibreOffice et son interface Python UNO (PyUNO).
+
+L'utilisation directe de PyUNO depuis l'environnement Python installé sur la machine hôte peut poser des problèmes de compatibilité selon le système d'exploitation et la manière dont Python et LibreOffice ont été installés. LibreOffice embarque notamment ses propres composants et bibliothèques Python/UNO, qui ne sont pas nécessairement accessibles ou compatibles avec l'interpréteur Python utilisé par le projet.
+
+Afin d'éviter que le résultat du traitement dépende de la configuration locale de la machine, le choix a donc été fait d'utiliser Docker comme environnement d'exécution de référence.
+
+L'image Docker fournit notamment :
+
+* une version déterminée de Python ;
+* LibreOffice ;
+* PyUNO et les bibliothèques nécessaires à son fonctionnement ;
+* les dépendances Python du projet ;
+* un environnement identique d'une exécution à l'autre.
+
+Ce choix permet de limiter les problèmes liés aux différences entre systèmes d'exploitation ou installations locales et améliore la reproductibilité du traitement.
+
+L'utilisation de Docker n'est donc pas une exigence du cahier des charges, mais un choix technique destiné à garantir un environnement stable pour la génération automatisée des classeurs LibreOffice.
+
 ### Mise en base des données brutes
 
 Le cahier des charges ne demande pas la création d'une base de données.
