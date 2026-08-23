@@ -44,9 +44,9 @@ Enregistrements lus : 38
 Enregistrements sélectionnés : 14
 Enregistrements écrits : 8
 Totaux des champs numériques :
-- AJ_ECART_CA_TTC: 5435,80
-- AJ_ECART_HORS_TAXE_1: 4529,84
-- AJ_ECART_TVA1: 905,96
+- AJ_ECART_CA_TTC: 10244,20
+- AJ_ECART_HORS_TAXE_1: 8536,82
+- AJ_ECART_TVA1: 1707,38
 
 Fichier de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023.ods
 Onglet de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023
@@ -80,9 +80,9 @@ Enregistrements lus : 38
 Enregistrements sélectionnés : 14
 Enregistrements écrits : 8
 Totaux des champs numériques :
-- CARTES_AJ_ECART_MONTANT: 0,00
+- CARTES_AJ_ECART_MONTANT: 5095,50
 - CHEQUES_AJ_ECART_MONTANT: 0,00
-- ESPECES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 5148,70
 
 Fichier de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2023.ods
 Onglet de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2023
@@ -116,9 +116,9 @@ Enregistrements lus : 37
 Enregistrements sélectionnés : 13
 Enregistrements écrits : 8
 Totaux des champs numériques :
-- AJ_ECART_CA_TTC: 23896,70
-- AJ_ECART_HORS_TAXE_1: 19913,92
-- AJ_ECART_TVA1: 3982,78
+- AJ_ECART_CA_TTC: 19949,60
+- AJ_ECART_HORS_TAXE_1: 16624,65
+- AJ_ECART_TVA1: 3324,95
 
 Fichier de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2023.ods
 Onglet de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2023
@@ -128,9 +128,9 @@ Enregistrements lus : 42
 Enregistrements sélectionnés : 22
 Enregistrements écrits : 12
 Totaux des champs numériques :
-- CARTES_AJ_ECART_MONTANT: -4445,00
+- CARTES_AJ_ECART_MONTANT: 0,00
 - CHEQUES_AJ_ECART_MONTANT: 0,00
-- ESPECES_AJ_ECART_MONTANT: -1324,95
+- ESPECES_AJ_ECART_MONTANT: 0,00
 
 Fichier de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2024.ods
 Onglet de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2024
@@ -152,9 +152,9 @@ Enregistrements lus : 37
 Enregistrements sélectionnés : 13
 Enregistrements écrits : 8
 Totaux des champs numériques :
-- CARTES_AJ_ECART_MONTANT: 0,00
-- CHEQUES_AJ_ECART_MONTANT: 0,00
-- ESPECES_AJ_ECART_MONTANT: 0,00
+- CARTES_AJ_ECART_MONTANT: 7197,60
+- CHEQUES_AJ_ECART_MONTANT: 40,00
+- ESPECES_AJ_ECART_MONTANT: 12712,00
 
 Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
 Onglet de sortie : ENTETES_TICKETS_MASSENA_0

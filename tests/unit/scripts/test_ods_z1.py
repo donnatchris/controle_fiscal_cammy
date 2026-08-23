@@ -114,6 +114,12 @@ def test_periode_cloture_depuis_nom_fichier_refuse_un_nom_sans_periode() -> None
         raise AssertionError("Le nom de fichier sans période doit être refusé")
 
 
+def test_periode_cloture_depuis_nom_fichier_retient_le_dernier_mois_du_lot() -> None:
+    assert ods_z1.periode_cloture_depuis_nom_fichier(
+        "Z101_01_042025_052025_062025_MASSENA.CSV"
+    ) == ("2025", "2025-06")
+
+
 def test_compter_lignes_cplte_retenues_compte_avant_agregation() -> None:
     class FausseFeuille:
         def createCursor(self) -> SimpleNamespace:

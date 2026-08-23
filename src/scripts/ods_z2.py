@@ -62,7 +62,7 @@ FORMAT_DATE = "YYYY-MM-DD"
 FORMAT_MONTANT = "0.00"
 COLONNES_CPLTE_ANNEE_MOIS_Z = ("AJ_Année_Z", "AJ_Mois_Z")
 MOTIF_PERIODE_NOM_FICHIER = re.compile(
-    r"_(?P<mois>0[1-9]|1[0-2])(?P<annee>\d{4})(?:_|\s*\.)",
+    r"_(?P<mois>0[1-9]|1[0-2])(?P<annee>\d{4})(?=_|\s*\.)",
     re.IGNORECASE,
 )
 NATURES_TRANSACTION = (
@@ -112,9 +112,10 @@ LIGNE_DONNEES_TOTAL_MONTANT_MODE_ZZ1 = 2
 
 def periode_cloture_depuis_nom_fichier(nom_fichier: object) -> tuple[str, str]:
     """Extrait la période de clôture Z2 portée par le nom du fichier source."""
-    correspondance = MOTIF_PERIODE_NOM_FICHIER.search(str(nom_fichier))
-    if correspondance is None:
+    correspondances = tuple(MOTIF_PERIODE_NOM_FICHIER.finditer(str(nom_fichier)))
+    if not correspondances:
         raise ValueError(f"Période de clôture absente du nom de fichier : {nom_fichier}")
+    correspondance = correspondances[-1]
     annee = correspondance.group("annee")
     return annee, f"{annee}-{correspondance.group('mois')}"
 

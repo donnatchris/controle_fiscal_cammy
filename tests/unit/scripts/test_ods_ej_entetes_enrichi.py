@@ -306,7 +306,7 @@ def test_ajouter_encts_mensuels_copie_les_valeurs_du_tcd(monkeypatch) -> None:
     assert destination.lignes_supprimees == [(0, 1)]
 
 
-def test_comparer_z2_mode_retenu_et_ej_par_periode_rapproche_par_mois_et_conserve_les_absents() -> None:
+def test_comparer_z2_mode_retenu_et_ej_par_periode_laisse_vides_les_sources_absentes() -> None:
     lignes_z2 = (
         {
             "AJ_Année_Z": 2024.0,
@@ -346,9 +346,9 @@ def test_comparer_z2_mode_retenu_et_ej_par_periode_rapproche_par_mois_et_conserv
     assert compare_1.comparer_z2_mode_retenu_et_ej_par_periode(
         lignes_z2, lignes_ej, 2024
     ) == (
-        (2024.0, "2024-01", "", -10.0, "", -2.0, "", -3.0),
+        (2024.0, "2024-01", "", "", "", "", "", ""),
         (2024.0, "2024-02", "", 60.0, "", 20.0, "", -15.0),
-        (2024.0, "2024-03", "", 5.0, "", 0.0, "", 0.0),
+        (2024.0, "2024-03", "", "", "", "", "", ""),
     )
 
 

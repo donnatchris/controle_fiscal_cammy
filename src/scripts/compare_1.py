@@ -318,7 +318,8 @@ def comparer_z2_mode_retenu_et_ej_par_periode(
     lignes_ej: tuple[dict[str, object], ...],
     annee: int,
 ) -> tuple[tuple[object, ...], ...]:
-    """Compare les montants du mode Z2 retenu et EJ, sans quantité EJ inventée."""
+    """Compare Z2 et EJ sans inventer de valeur si une source est absente."""
+
     def indexer(
         lignes: tuple[dict[str, object], ...], annee_champ: str, mois_champ: str
     ) -> dict[tuple[int, str], dict[str, object]]:
@@ -336,8 +337,11 @@ def comparer_z2_mode_retenu_et_ej_par_periode(
     ej_par_periode = indexer(lignes_ej, "AJ_ANNEE", "AJ_MOIS")
     resultats = []
     for periode in sorted(set(z2_par_periode) | set(ej_par_periode)):
-        z2 = z2_par_periode.get(periode, {})
-        ej = ej_par_periode.get(periode, {})
+        if periode not in z2_par_periode or periode not in ej_par_periode:
+            resultats.append((float(periode[0]), periode[1], *("",) * 6))
+            continue
+        z2 = z2_par_periode[periode]
+        ej = ej_par_periode[periode]
         resultats.append(
             (
                 float(periode[0]),

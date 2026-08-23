@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit conformité CDC 751"
+  short_description: "Auditer SQLite et ODS selon le CDC 751"
+  default_prompt: "Utilise $audit-conformite-cdc-751 pour auditer les livrables du projet et produire le rapport Markdown de conformité."

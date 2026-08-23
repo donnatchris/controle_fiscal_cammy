@@ -66,6 +66,12 @@ def test_periode_cloture_depuis_nom_fichier_extrait_le_mois_independamment_de_E_
     ) == ("2025", "2025-08")
 
 
+def test_periode_cloture_depuis_nom_fichier_retient_le_dernier_mois_du_lot() -> None:
+    assert ods_z2.periode_cloture_depuis_nom_fichier(
+        "Z002_01_062025_072025_MATURIN.CSV"
+    ) == ("2025", "2025-07")
+
+
 def test_periode_cloture_depuis_nom_fichier_rejette_un_nom_sans_periode() -> None:
     with pytest.raises(ValueError, match="Période de clôture absente"):
         ods_z2.periode_cloture_depuis_nom_fichier("Z102_MASSENA.CSV")
