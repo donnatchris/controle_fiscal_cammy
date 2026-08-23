@@ -1,0 +1,2424 @@
+RAPPORT D'EXÉCUTION
+
+Fichier de sortie : CompareCA_Gesco_CA3.ods
+Onglet de sortie : CompareCA_Gesco_CA3
+Source(s) immédiate(s) — fichier / onglet : recettes_mensuelles_tous_boutique_232425.ods / recettes_mensuelles_tous_boutique_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 32
+Enregistrements sélectionnés : 32
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- AJ_TOTAL_TOUS_BOUTIQUE_HT: 1097325,15
+- AJ_TOTAL_TOUS_BOUTIQUE_TVA: 219465,45
+- AJ_TOTAL_TOUS_BOUTIQUE_TTC: 1316790,60
+
+Fichier de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2023.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / Z1_TotalMontantParMoisAnnee_2023_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / recettes_mensuelles_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 0,00
+- AJ_ECART_HORS_TAXE_1: 0,00
+- AJ_ECART_TVA1: 0,00
+
+Fichier de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2024.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / Z1_TotalMontantParMoisAnnee_2024_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / recettes_mensuelles_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 0,00
+- AJ_ECART_HORS_TAXE_1: 0,00
+- AJ_ECART_TVA1: 0,00
+
+Fichier de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2025.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z1ModeZZ1vsEJ_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / Z1_TotalMontantParMoisAnnee_2025_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / recettes_mensuelles_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 38
+Enregistrements sélectionnés : 14
+Enregistrements écrits : 8
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 5435,80
+- AJ_ECART_HORS_TAXE_1: 4529,84
+- AJ_ECART_TVA1: 905,96
+
+Fichier de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / enct_mensuels_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: 0,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2024.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / enct_mensuels_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: 0,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2025.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2ModeZZ1vsEJ_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1; TTS_EJ_ENTETES_TICKETS_MASSENA.ods / enct_mensuels_MASSENA_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 38
+Enregistrements sélectionnés : 14
+Enregistrements écrits : 8
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: 0,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2023.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / Z1_TotalMontantParMoisAnnee_2023_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / recettes_mensuelles_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 42
+Enregistrements sélectionnés : 22
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 0,00
+- AJ_ECART_HORS_TAXE_1: 0,00
+- AJ_ECART_TVA1: 0,00
+
+Fichier de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2024.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods / Z1_TotalMontantParMoisAnnee_2024_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / recettes_mensuelles_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 5769,95
+- AJ_ECART_HORS_TAXE_1: 4808,29
+- AJ_ECART_TVA1: 961,66
+
+Fichier de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2025.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z1ModeZvsEJ_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / Z1_TotalMontantParMoisAnnee_2025_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / recettes_mensuelles_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 37
+Enregistrements sélectionnés : 13
+Enregistrements écrits : 8
+Totaux des champs numériques :
+- AJ_ECART_CA_TTC: 23896,70
+- AJ_ECART_HORS_TAXE_1: 19913,92
+- AJ_ECART_TVA1: 3982,78
+
+Fichier de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2023.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / enct_mensuels_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 42
+Enregistrements sélectionnés : 22
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: -4445,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: -1324,95
+
+Fichier de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2024.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / enct_mensuels_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 44
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: 4445,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 1324,95
+
+Fichier de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2025.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z2ModeZVsEJ_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / enct_mensuels_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 37
+Enregistrements sélectionnés : 13
+Enregistrements écrits : 8
+Totaux des champs numériques :
+- CARTES_AJ_ECART_MONTANT: 0,00
+- CHEQUES_AJ_ECART_MONTANT: 0,00
+- ESPECES_AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : ENTETES_TICKETS_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/EJ_ENTETES_TICKETS_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_HT1: 625407,76
+- E_TVA1: 125081,94
+- E_TTC: 750489,70
+- E_MDP_CB: 260816,50
+- E_MDP_ESPECES: 482644,20
+- E_MDP_CHEQUES: 7029,00
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : ENTETES_TICKETS_MASSENA_TriCrstNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_HT1: 625407,76
+- E_TVA1: 125081,94
+- E_TTC: 750489,70
+- E_MDP_CB: 260816,50
+- E_MDP_ESPECES: 482644,20
+- E_MDP_CHEQUES: 7029,00
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : ENTETES_TICKETS_MASSENA_CtrlCoherenceEntete
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_HT1: 625407,76
+- E_TVA1: 125081,94
+- E_TTC: 750489,70
+- E_MDP_CB: 260816,50
+- E_MDP_ESPECES: 482644,20
+- E_MDP_CHEQUES: 7029,00
+- AJ_TVA1_CALCULE: 125081,55
+- AJ_ECART_TVA1: 0,39
+- AJ_TTC_CALCULE: 750489,70
+- AJ_ECART_TTC: 0,00
+- AJ_SOLDE_DU: 482644,20
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : ENTETES_TICKETS_MASSENA_sequentialite
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_CtrlCoherenceEntete
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_OccurenceNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_sequentialite
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- Compter - E_NUM_INTERNE: 1153
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : DoublonNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / TD_OccurenceNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- Compter - E_NUM_INTERNE: 1153
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_OccurenceNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_sequentialite
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- Compter - E_NUM_TICKET: 1153
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : DoublonNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / TD_OccurenceNumTicket
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- Compter - E_NUM_TICKET: 1153
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : ENTETES_TICKETS_MASSENA_CplteAnneeMoisTotalHT
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_HT1: 625407,76
+- E_TVA1: 125081,94
+- E_TTC: 750489,70
+- E_MDP_CB: 260816,50
+- E_MDP_ESPECES: 482644,20
+- E_MDP_CHEQUES: 7029,00
+- AJ_TOTAL_HT: 625407,76
+- AJ_TOTAL_TVA_20: 125081,94
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_TotalEnctTtc_ParAnneeMois
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_CplteAnneeMoisTotalHT
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Data / Somme - E_TTC: 750489,70
+- Data / Somme - E_MDP_CB: 260816,50
+- Data / Somme - E_MDP_CHEQUES: 7029,00
+- Data / Somme - E_MDP_ESPECES: 482644,20
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : enct_mensuels_MASSENA_232425
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / TD_TotalEnctTtc_ParAnneeMois
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 32
+Enregistrements sélectionnés : 32
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Somme - E_TTC: 750489,70
+- Somme - E_MDP_CB: 260816,50
+- Somme - E_MDP_CHEQUES: 7029,00
+- Somme - E_MDP_ESPECES: 482644,20
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_TotalHtTvaTtc_ParAnneeMois
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / ENTETES_TICKETS_MASSENA_CplteAnneeMoisTotalHT
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Data / Somme - AJ_TOTAL_HT: 625407,76
+- Data / Somme - AJ_TOTAL_TVA_20: 125081,94
+- Data / Somme - E_TTC: 750489,70
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MASSENA.ods
+Onglet de sortie : recettes_mensuelles_MASSENA_232425
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / TD_TotalHtTvaTtc_ParAnneeMois
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 32
+Enregistrements sélectionnés : 32
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Somme - AJ_TOTAL_HT: 625407,76
+- Somme - AJ_TOTAL_TVA_20: 125081,94
+- Somme - E_TTC: 750489,70
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : ENTETES_TICKETS_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/EJ_ENTETES_TICKETS_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_HT1: 471917,39
+- E_TVA1: 94383,51
+- E_TTC: 566300,90
+- E_MDP_CB: 451238,76
+- E_MDP_ESPECES: 114693,14
+- E_MDP_CHEQUES: 369,00
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : ENTETES_TICKETS_MATURIN_TriCrstNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_HT1: 471917,39
+- E_TVA1: 94383,51
+- E_TTC: 566300,90
+- E_MDP_CB: 451238,76
+- E_MDP_ESPECES: 114693,14
+- E_MDP_CHEQUES: 369,00
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : ENTETES_TICKETS_MATURIN_CtrlCoherenceEntete
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_HT1: 471917,39
+- E_TVA1: 94383,51
+- E_TTC: 566300,90
+- E_MDP_CB: 451238,76
+- E_MDP_ESPECES: 114693,14
+- E_MDP_CHEQUES: 369,00
+- AJ_TVA1_CALCULE: 94383,48
+- AJ_ECART_TVA1: 0,03
+- AJ_TTC_CALCULE: 566300,90
+- AJ_ECART_TTC: 0,00
+- AJ_SOLDE_DU: 114693,14
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : ENTETES_TICKETS_MATURIN_sequentialite
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_CtrlCoherenceEntete
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_OccurenceNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_sequentialite
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- Compter - E_NUM_INTERNE: 722
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : DoublonNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / TD_OccurenceNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- Compter - E_NUM_INTERNE: 722
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_OccurenceNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_sequentialite
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- Compter - E_NUM_TICKET: 722
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : DoublonNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / TD_OccurenceNumTicket
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- Compter - E_NUM_TICKET: 722
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : ENTETES_TICKETS_MATURIN_CplteAnneeMoisTotalHT
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_HT1: 471917,39
+- E_TVA1: 94383,51
+- E_TTC: 566300,90
+- E_MDP_CB: 451238,76
+- E_MDP_ESPECES: 114693,14
+- E_MDP_CHEQUES: 369,00
+- AJ_TOTAL_HT: 471917,39
+- AJ_TOTAL_TVA_20: 94383,51
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_TotalEnctTtc_ParAnneeMois
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_CplteAnneeMoisTotalHT
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Data / Somme - E_TTC: 566300,90
+- Data / Somme - E_MDP_CB: 451238,76
+- Data / Somme - E_MDP_CHEQUES: 369,00
+- Data / Somme - E_MDP_ESPECES: 114693,14
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : enct_mensuels_MATURIN_232425
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / TD_TotalEnctTtc_ParAnneeMois
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 32
+Enregistrements sélectionnés : 32
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Somme - E_TTC: 566300,90
+- Somme - E_MDP_CB: 451238,76
+- Somme - E_MDP_CHEQUES: 369,00
+- Somme - E_MDP_ESPECES: 114693,14
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_TotalHtTvaTtc_ParAnneeMois
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / ENTETES_TICKETS_MATURIN_CplteAnneeMoisTotalHT
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Data / Somme - AJ_TOTAL_HT: 471917,39
+- Data / Somme - AJ_TOTAL_TVA_20: 94383,51
+- Data / Somme - E_TTC: 566300,90
+
+Fichier de sortie : TTS_EJ_ENTETES_TICKETS_MATURIN.ods
+Onglet de sortie : recettes_mensuelles_MATURIN_232425
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MATURIN.ods / TD_TotalHtTvaTtc_ParAnneeMois
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 32
+Enregistrements sélectionnés : 32
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- Somme - AJ_TOTAL_HT: 471917,39
+- Somme - AJ_TOTAL_TVA_20: 94383,51
+- Somme - E_TTC: 566300,90
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : LIGNES_TICKETS_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/EJ_LIGNES_TICKETS_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 2521
+Totaux des champs numériques :
+- E_HT1: 2721964,89
+- E_TVA1: 544393,97
+- E_TTC: 3266358,86
+- E_MDP_CB: 1928980,16
+- E_MDP_ESPECES: 1104821,70
+- E_MDP_CHEQUES: 232557,00
+- D_QUANTITE_ARTICLE: 2516
+- D_MONTANT_ARTICLE: 751179,60
+- D_CORRECTION: -689,90
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : LIGNES_TICKETS_MASSENA_TriCrstNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / LIGNES_TICKETS_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 2521
+Totaux des champs numériques :
+- E_HT1: 2721964,89
+- E_TVA1: 544393,97
+- E_TTC: 3266358,86
+- E_MDP_CB: 1928980,16
+- E_MDP_ESPECES: 1104821,70
+- E_MDP_CHEQUES: 232557,00
+- D_QUANTITE_ARTICLE: 2516
+- D_MONTANT_ARTICLE: 751179,60
+- D_CORRECTION: -689,90
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : LIGNES_TICKETS_MASSENA_CtrlCoherenceLigne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / LIGNES_TICKETS_MASSENA_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 2521
+Totaux des champs numériques :
+- E_HT1: 2721964,89
+- E_TVA1: 544393,97
+- E_TTC: 3266358,86
+- E_MDP_CB: 1928980,16
+- E_MDP_ESPECES: 1104821,70
+- E_MDP_CHEQUES: 232557,00
+- D_QUANTITE_ARTICLE: 2516
+- D_MONTANT_ARTICLE: 751179,60
+- D_CORRECTION: -689,90
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_OccurenceLibelleArticle
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / LIGNES_TICKETS_MASSENA_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- Compter - D_LIBELLE_ARTICLE: 2516
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_OccurenceTxTvaArticle
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / LIGNES_TICKETS_MASSENA_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- Compter - D_TAUX_TVA_ARTICLE: 2516
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : TD_TotalLignesParNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / LIGNES_TICKETS_MASSENA_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2521
+Enregistrements sélectionnés : 2521
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_TTC: 750489,70
+- Data / Compter - D_LIBELLE_ARTICLE: 2516
+- Data / Somme - D_MONTANT_ARTICLE: 751179,60
+- Data / Somme - D_CORRECTION: -689,90
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MASSENA.ods
+Onglet de sortie : CtrlCoherence_EnteteLigne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MASSENA.ods / TD_TotalLignesParNumTicket
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1153
+Enregistrements sélectionnés : 1153
+Enregistrements écrits : 1153
+Totaux des champs numériques :
+- E_TTC: 750489,70
+- Compter - D_LIBELLE_ARTICLE: 2516
+- Somme - D_MONTANT_ARTICLE: 751179,60
+- Somme - D_CORRECTION: -689,90
+- AJ_ECART_TTC: 0,00
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : LIGNES_TICKETS_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/EJ_LIGNES_TICKETS_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 1610
+Totaux des champs numériques :
+- E_HT1: 1966354,70
+- E_TVA1: 393271,43
+- E_TTC: 2359626,13
+- E_MDP_CB: 2068772,74
+- E_MDP_ESPECES: 290484,39
+- E_MDP_CHEQUES: 369,00
+- D_QUANTITE_ARTICLE: 1603
+- D_MONTANT_ARTICLE: 570949,64
+- D_CORRECTION: -4648,74
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : LIGNES_TICKETS_MATURIN_TriCrstNumInterne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / LIGNES_TICKETS_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 1610
+Totaux des champs numériques :
+- E_HT1: 1966354,70
+- E_TVA1: 393271,43
+- E_TTC: 2359626,13
+- E_MDP_CB: 2068772,74
+- E_MDP_ESPECES: 290484,39
+- E_MDP_CHEQUES: 369,00
+- D_QUANTITE_ARTICLE: 1603
+- D_MONTANT_ARTICLE: 570949,64
+- D_CORRECTION: -4648,74
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : LIGNES_TICKETS_MATURIN_CtrlCoherenceLigne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / LIGNES_TICKETS_MATURIN_TriCrstNumInterne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 1610
+Totaux des champs numériques :
+- E_HT1: 1966354,70
+- E_TVA1: 393271,43
+- E_TTC: 2359626,13
+- E_MDP_CB: 2068772,74
+- E_MDP_ESPECES: 290484,39
+- E_MDP_CHEQUES: 369,00
+- D_QUANTITE_ARTICLE: 1603
+- D_MONTANT_ARTICLE: 570949,64
+- D_CORRECTION: -4648,74
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_OccurenceLibelleArticle
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / LIGNES_TICKETS_MATURIN_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- Compter - D_LIBELLE_ARTICLE: 1601
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_OccurenceTxTvaArticle
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / LIGNES_TICKETS_MATURIN_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- Compter - D_TAUX_TVA_ARTICLE: 1603
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : TD_TotalLignesParNumTicket
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / LIGNES_TICKETS_MATURIN_CtrlCoherenceLigne
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1610
+Enregistrements sélectionnés : 1610
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_TTC: 566300,90
+- Data / Compter - D_LIBELLE_ARTICLE: 1601
+- Data / Somme - D_MONTANT_ARTICLE: 570949,64
+- Data / Somme - D_CORRECTION: -4648,74
+
+Fichier de sortie : TTS_EJ_LIGNES_TICKETS_MATURIN.ods
+Onglet de sortie : CtrlCoherence_EnteteLigne
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_LIGNES_TICKETS_MATURIN.ods / TD_TotalLignesParNumTicket
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 722
+Enregistrements sélectionnés : 722
+Enregistrements écrits : 722
+Totaux des champs numériques :
+- E_TTC: 566300,90
+- Compter - D_LIBELLE_ARTICLE: 1601
+- Somme - D_MONTANT_ARTICLE: 570949,64
+- Somme - D_CORRECTION: -4648,74
+- AJ_ECART_TTC: 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2023_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 1025
+Enregistrements écrits : 1025
+Totaux des champs numériques :
+- D_QUANTITE: 10160
+- D_MONTANT: 6419210,80
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2023_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / Z1_SyntheseMois_TOUS_2023_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 1025
+Enregistrements écrits : 1025
+Totaux des champs numériques :
+- D_QUANTITE: 10160
+- D_MONTANT: 6419210,80
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / Z1_SyntheseMois_TOUS_2023_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 1025
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / Z1_SyntheseMois_TOUS_2023_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 41
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- Filter / Z / D_DESIGNATION / CA BRUT: 716526,50
+- Filter / Z / D_DESIGNATION / CA NET: 716526,50
+- Filter / Z / D_DESIGNATION / CB.TIROIR: 243418,00
+- Filter / Z / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR: 7029,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CLIENTS: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / Z / D_DESIGNATION / ESP.TIROIR: 466079,50
+- Filter / Z / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 1: 596066,16
+- Filter / Z / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / Z / D_DESIGNATION / NON TAXABLE: 1247,00
+- Filter / Z / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / Z / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR CLE: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / Z / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / Z / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / Z / D_DESIGNATION / TVA 1: 119213,34
+- Filter / Z / D_DESIGNATION / TVA 2: 0,00
+- Filter / Z / D_DESIGNATION / TVA 3: 0,00
+- Filter / Z / D_DESIGNATION / TVA 4: 0,00
+- Filter / Z / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 84
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 444138,10
+- ZZ1 / CA NET: 444138,10
+- ZZ1 / CB.TIROIR: 160041,00
+- ZZ1 / CHQ.TIROIR: 7029,00
+- ZZ1 / ESP.TIROIR: 277068,10
+- ZZ1 / HORS TAXES 1: 370115,07
+- ZZ1 / TVA 1: 74023,03
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 84
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 444138,10
+- ZZ2 / CA NET: 444138,10
+- ZZ2 / CB.TIROIR: 160041,00
+- ZZ2 / CHQ.TIROIR: 7029,00
+- ZZ2 / ESP.TIROIR: 277068,10
+- ZZ2 / HORS TAXES 1: 370115,07
+- ZZ2 / TVA 1: 74023,03
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1025
+Enregistrements sélectionnés : 7
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- Z / CA BRUT: 716526,50
+- Z / CA NET: 716526,50
+- Z / CB.TIROIR: 243418,00
+- Z / CHQ.TIROIR: 7029,00
+- Z / ESP.TIROIR: 466079,50
+- Z / HORS TAXES 1: 596066,16
+- Z / TVA 1: 119213,34
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2023_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 615
+Enregistrements sélectionnés : 615
+Enregistrements écrits : 615
+Totaux des champs numériques :
+- D_QUANTITE: 6120
+- D_MONTANT: 4051393,44
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2023_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / Z1_SyntheseMois_TOUS_2023_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 615
+Enregistrements sélectionnés : 615
+Enregistrements écrits : 615
+Totaux des champs numériques :
+- D_QUANTITE: 6120
+- D_MONTANT: 4051393,44
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / Z1_SyntheseMois_TOUS_2023_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 615
+Enregistrements sélectionnés : 615
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / Z1_SyntheseMois_TOUS_2023_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 615
+Enregistrements sélectionnés : 410
+Enregistrements écrits : 10
+Totaux des champs numériques :
+- Filter / Z / D_DESIGNATION / CA BRUT: 214157,87
+- Filter / Z / D_DESIGNATION / CA NET: 214157,87
+- Filter / Z / D_DESIGNATION / CB.TIROIR: 172689,38
+- Filter / Z / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR: 329,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CLIENTS: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / Z / D_DESIGNATION / ESP.TIROIR: 41139,49
+- Filter / Z / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 1: 178464,86
+- Filter / Z / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / Z / D_DESIGNATION / NON TAXABLE: 0,00
+- Filter / Z / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / Z / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR CLE: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / Z / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / Z / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / Z / D_DESIGNATION / TVA 1: 35693,01
+- Filter / Z / D_DESIGNATION / TVA 2: 0,00
+- Filter / Z / D_DESIGNATION / TVA 3: 0,00
+- Filter / Z / D_DESIGNATION / TVA 4: 0,00
+- Filter / Z / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 615
+Enregistrements sélectionnés : 14
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 325603,82
+- ZZ1 / CA NET: 325603,82
+- ZZ1 / CB.TIROIR: 237812,08
+- ZZ1 / CHQ.TIROIR: 329,00
+- ZZ1 / ESP.TIROIR: 87462,74
+- ZZ1 / HORS TAXES 1: 271087,34
+- ZZ1 / TVA 1: 54217,48
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 615
+Enregistrements sélectionnés : 21
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 462181,92
+- ZZ2 / CA NET: 462181,92
+- ZZ2 / CB.TIROIR: 313242,18
+- ZZ2 / CHQ.TIROIR: 329,00
+- ZZ2 / ESP.TIROIR: 148610,74
+- ZZ2 / HORS TAXES 1: 384902,36
+- ZZ2 / TVA 1: 76980,56
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2023_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2023_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2023
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 615
+Enregistrements sélectionnés : 70
+Enregistrements écrits : 10
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 214157,87
+- Z / CA NET: 214157,87
+- Z / CB.TIROIR: 172689,38
+- Z / CHQ.TIROIR: 329,00
+- Z / ESP.TIROIR: 41139,49
+- Z / HORS TAXES 1: 178464,86
+- Z / TVA 1: 35693,01
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2024_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 984
+Enregistrements sélectionnés : 984
+Enregistrements écrits : 984
+Totaux des champs numériques :
+- D_QUANTITE: 3040
+- D_MONTANT: 1774687,20
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2024_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / Z1_SyntheseMois_TOUS_2024_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 984
+Enregistrements sélectionnés : 984
+Enregistrements écrits : 984
+Totaux des champs numériques :
+- D_QUANTITE: 3040
+- D_MONTANT: 1774687,20
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / Z1_SyntheseMois_TOUS_2024_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 984
+Enregistrements sélectionnés : 984
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / Z1_SyntheseMois_TOUS_2024_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 984
+Enregistrements sélectionnés : 492
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- Filter / ZZ2 / D_DESIGNATION / CA BRUT: 221835,90
+- Filter / ZZ2 / D_DESIGNATION / CA NET: 221835,90
+- Filter / ZZ2 / D_DESIGNATION / CB.TIROIR: 70312,60
+- Filter / ZZ2 / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHQ.TIROIR: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CLIENTS: 0,00
+- Filter / ZZ2 / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / ZZ2 / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / ZZ2 / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / ZZ2 / D_DESIGNATION / ESP.TIROIR: 151523,30
+- Filter / ZZ2 / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / HORS TAXE 1: 184862,95
+- Filter / ZZ2 / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / ZZ2 / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / ZZ2 / D_DESIGNATION / NON TAXABLE: 0,00
+- Filter / ZZ2 / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / ZZ2 / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / ZZ2 / D_DESIGNATION / RETOUR CLE: 0,00
+- Filter / ZZ2 / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / ZZ2 / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / ZZ2 / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / ZZ2 / D_DESIGNATION / TVA 1: 36972,95
+- Filter / ZZ2 / D_DESIGNATION / TVA 2: 0,00
+- Filter / ZZ2 / D_DESIGNATION / TVA 3: 0,00
+- Filter / ZZ2 / D_DESIGNATION / TVA 4: 0,00
+- Filter / ZZ2 / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2024_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2024
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 984
+Enregistrements sélectionnés : 84
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 221835,90
+- ZZ1 / CA NET: 221835,90
+- ZZ1 / CB.TIROIR: 70312,60
+- ZZ1 / CHQ.TIROIR: 0,00
+- ZZ1 / ESP.TIROIR: 151523,30
+- ZZ1 / HORS TAXES 1: 184862,95
+- ZZ1 / TVA 1: 36972,95
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2024_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2024
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 984
+Enregistrements sélectionnés : 84
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 221835,90
+- ZZ2 / CA NET: 221835,90
+- ZZ2 / CB.TIROIR: 70312,60
+- ZZ2 / CHQ.TIROIR: 0,00
+- ZZ2 / ESP.TIROIR: 151523,30
+- ZZ2 / HORS TAXES 1: 184862,95
+- ZZ2 / TVA 1: 36972,95
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2024_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 492
+Enregistrements sélectionnés : 492
+Enregistrements écrits : 492
+Totaux des champs numériques :
+- D_QUANTITE: 1355
+- D_MONTANT: 1230939,52
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2024_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods / Z1_SyntheseMois_TOUS_2024_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 492
+Enregistrements sélectionnés : 492
+Enregistrements écrits : 492
+Totaux des champs numériques :
+- D_QUANTITE: 1355
+- D_MONTANT: 1230939,52
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods / Z1_SyntheseMois_TOUS_2024_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 492
+Enregistrements sélectionnés : 492
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods / Z1_SyntheseMois_TOUS_2024_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MATURIN.csv
+Enregistrements lus : 492
+Enregistrements sélectionnés : 492
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- Filter / - all - / D_DESIGNATION / CA BRUT: 302779,63
+- Filter / - all - / D_DESIGNATION / CA NET: 302779,63
+- Filter / - all - / D_DESIGNATION / CB.TIROIR: 253467,48
+- Filter / - all - / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / - all - / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / - all - / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / - all - / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / - all - / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / - all - / D_DESIGNATION / CHQ.TIROIR: 0,00
+- Filter / - all - / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / - all - / D_DESIGNATION / CLIENTS: 0,00
+- Filter / - all - / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / - all - / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / - all - / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / - all - / D_DESIGNATION / ESP.TIROIR: 49312,15
+- Filter / - all - / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / - all - / D_DESIGNATION / HORS TAXE 1: 252316,34
+- Filter / - all - / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / - all - / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / - all - / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / - all - / D_DESIGNATION / NON TAXABLE: 0,00
+- Filter / - all - / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / - all - / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / - all - / D_DESIGNATION / RETOUR CLE: 19821,00
+- Filter / - all - / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / - all - / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / - all - / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / - all - / D_DESIGNATION / TVA 1: 50463,29
+- Filter / - all - / D_DESIGNATION / TVA 2: 0,00
+- Filter / - all - / D_DESIGNATION / TVA 3: 0,00
+- Filter / - all - / D_DESIGNATION / TVA 4: 0,00
+- Filter / - all - / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2024_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2024_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2024
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2024_MATURIN.csv
+Enregistrements lus : 492
+Enregistrements sélectionnés : 84
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 302779,63
+- Z / CA NET: 302779,63
+- Z / CB.TIROIR: 253467,48
+- Z / CHQ.TIROIR: 0,00
+- Z / ESP.TIROIR: 49312,15
+- Z / HORS TAXES 1: 252316,34
+- Z / TVA 1: 50463,29
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2025_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 533
+Enregistrements sélectionnés : 533
+Enregistrements écrits : 533
+Totaux des champs numériques :
+- D_QUANTITE: 3366
+- D_MONTANT: 1998140,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2025_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / Z1_SyntheseMois_TOUS_2025_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 533
+Enregistrements sélectionnés : 533
+Enregistrements écrits : 533
+Totaux des champs numériques :
+- D_QUANTITE: 3366
+- D_MONTANT: 1998140,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / Z1_SyntheseMois_TOUS_2025_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 533
+Enregistrements sélectionnés : 533
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / Z1_SyntheseMois_TOUS_2025_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 533
+Enregistrements sélectionnés : 41
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- Filter / Z / D_DESIGNATION / CA BRUT: 330503,60
+- Filter / Z / D_DESIGNATION / CA NET: 330503,60
+- Filter / Z / D_DESIGNATION / CB.TIROIR: 108512,50
+- Filter / Z / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR: 0,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CLIENTS: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / Z / D_DESIGNATION / ESP.TIROIR: 221991,10
+- Filter / Z / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 1: 275419,39
+- Filter / Z / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / Z / D_DESIGNATION / NON TAXABLE: 0,00
+- Filter / Z / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / Z / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR CLE: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / Z / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / Z / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / Z / D_DESIGNATION / TVA 1: 55084,21
+- Filter / Z / D_DESIGNATION / TVA 2: 0,00
+- Filter / Z / D_DESIGNATION / TVA 3: 0,00
+- Filter / Z / D_DESIGNATION / TVA 4: 0,00
+- Filter / Z / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 533
+Enregistrements sélectionnés : 42
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 84515,70
+- ZZ1 / CA NET: 84515,70
+- ZZ1 / CB.TIROIR: 30462,90
+- ZZ1 / CHQ.TIROIR: 0,00
+- ZZ1 / ESP.TIROIR: 54052,80
+- ZZ1 / HORS TAXES 1: 70429,74
+- ZZ1 / TVA 1: 14085,96
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 533
+Enregistrements sélectionnés : 42
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 84515,70
+- ZZ2 / CA NET: 84515,70
+- ZZ2 / CB.TIROIR: 30462,90
+- ZZ2 / CHQ.TIROIR: 0,00
+- ZZ2 / ESP.TIROIR: 54052,80
+- ZZ2 / HORS TAXES 1: 70429,74
+- ZZ2 / TVA 1: 14085,96
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MASSENA.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 533
+Enregistrements sélectionnés : 7
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- Z / CA BRUT: 330503,60
+- Z / CA NET: 330503,60
+- Z / CB.TIROIR: 108512,50
+- Z / CHQ.TIROIR: 0,00
+- Z / ESP.TIROIR: 221991,10
+- Z / HORS TAXES 1: 275419,39
+- Z / TVA 1: 55084,21
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2025_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 287
+Enregistrements sélectionnés : 287
+Enregistrements écrits : 287
+Totaux des champs numériques :
+- D_QUANTITE: 3430
+- D_MONTANT: 2871847,04
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z1_SyntheseMois_TOUS_2025_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / Z1_SyntheseMois_TOUS_2025_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 287
+Enregistrements sélectionnés : 287
+Enregistrements écrits : 287
+Totaux des champs numériques :
+- D_QUANTITE: 3430
+- D_MONTANT: 2871847,04
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : TD_OccurenceEfichierEmodeParMoisAnnée_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / Z1_SyntheseMois_TOUS_2025_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 287
+Enregistrements sélectionnés : 287
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- aucun
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : TD_Z1_TotalMontantParMoisAnnee_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / Z1_SyntheseMois_TOUS_2025_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 287
+Enregistrements sélectionnés : 205
+Enregistrements écrits : 5
+Totaux des champs numériques :
+- Filter / Z / D_DESIGNATION / CA BRUT: 49363,40
+- Filter / Z / D_DESIGNATION / CA NET: 49363,40
+- Filter / Z / D_DESIGNATION / CB.TIROIR: 25081,90
+- Filter / Z / D_DESIGNATION / CB.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE CHEQ2: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 1: 0,00
+- Filter / Z / D_DESIGNATION / CHANGE ESP 2: 0,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR: 40,00
+- Filter / Z / D_DESIGNATION / CHQ.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / CLIENTS: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 1: 0,00
+- Filter / Z / D_DESIGNATION / COMMISSION 2: 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROI2(4): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(1): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(2): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(3): 0,00
+- Filter / Z / D_DESIGNATION / CR.TIROIR(4): 0,00
+- Filter / Z / D_DESIGNATION / ESP.TIROIR: 24241,50
+- Filter / Z / D_DESIGNATION / ESP.TIROIR2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 1: 41136,19
+- Filter / Z / D_DESIGNATION / HORS TAXE 2: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 3: 0,00
+- Filter / Z / D_DESIGNATION / HORS TAXE 4: 0,00
+- Filter / Z / D_DESIGNATION / NON TAXABLE: 0,00
+- Filter / Z / D_DESIGNATION / NUL TICKET: 0,00
+- Filter / Z / D_DESIGNATION / PANIER MOYEN: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR CLE: 0,00
+- Filter / Z / D_DESIGNATION / RETOUR+ANNUL: 0,00
+- Filter / Z / D_DESIGNATION / TL ARRONDI: 0,00
+- Filter / Z / D_DESIGNATION / TOTAL REMISE: 0,00
+- Filter / Z / D_DESIGNATION / TVA 1: 8227,21
+- Filter / Z / D_DESIGNATION / TVA 2: 0,00
+- Filter / Z / D_DESIGNATION / TVA 3: 0,00
+- Filter / Z / D_DESIGNATION / TVA 4: 0,00
+- Filter / Z / D_DESIGNATION / (empty): 0,00
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 287
+Enregistrements sélectionnés : 7
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- ZZ1 / CA BRUT: 334299,18
+- ZZ1 / CA NET: 334299,18
+- ZZ1 / CB.TIROIR: 268451,48
+- ZZ1 / CHQ.TIROIR: 40,00
+- ZZ1 / ESP.TIROIR: 65807,70
+- ZZ1 / HORS TAXES 1: 278582,64
+- ZZ1 / TVA 1: 55716,54
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 287
+Enregistrements sélectionnés : 7
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- ZZ2 / CA BRUT: 334299,18
+- ZZ2 / CA NET: 334299,18
+- ZZ2 / CB.TIROIR: 268451,48
+- ZZ2 / CHQ.TIROIR: 40,00
+- ZZ2 / ESP.TIROIR: 65807,70
+- ZZ2 / HORS TAXES 1: 278582,64
+- ZZ2 / TVA 1: 55716,54
+
+Fichier de sortie : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z1_TotalMontantParMoisAnnee_2025_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z1_SyntheseMois_TOUS_2025_MATURIN.ods / TD_Z1_TotalMontantParMoisAnnee_2025
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z1_SyntheseMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 287
+Enregistrements sélectionnés : 35
+Enregistrements écrits : 5
+Totaux des champs numériques :
+- E_MODE / CA BRUT: 49363,40
+- Z / CA NET: 49363,40
+- Z / CB.TIROIR: 25081,90
+- Z / CHQ.TIROIR: 40,00
+- Z / ESP.TIROIR: 24241,50
+- Z / HORS TAXES 1: 41136,19
+- Z / TVA 1: 8227,21
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2023_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 1250
+Enregistrements écrits : 1250
+Totaux des champs numériques :
+- D_QUANTITE: 2357
+- D_MONTANT: 1605885,40
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2023_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / Z2_TransactionsMois_TOUS_2023_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 1250
+Enregistrements écrits : 1250
+Totaux des champs numériques :
+- D_QUANTITE: 2357
+- D_MONTANT: 1605885,40
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / Z2_TransactionsMois_TOUS_2023_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 50
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 286
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 2
+- CORRECTION / D_QUANTITE: 4
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 796
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 5
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 243418,00
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 7029,00
+- CORRECTION / D_MONTANT: 360,90
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 466079,50
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 60
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 171
+- CARTES / D_MONTANT: 160041,00
+- CHEQUES / D_QUANTITE: 2
+- CHEQUES / D_MONTANT: 7029,00
+- CORRECTION / D_QUANTITE: 4
+- CORRECTION / D_MONTANT: 360,90
+- ESPECES / D_QUANTITE: 455
+- ESPECES / D_MONTANT: 277068,10
+- REF./TIROIR / D_QUANTITE: 0
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 60
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 171
+- CARTES / D_MONTANT: 160041,00
+- CHEQUES / D_QUANTITE: 2
+- CHEQUES / D_MONTANT: 7029,00
+- CORRECTION / D_QUANTITE: 4
+- CORRECTION / D_MONTANT: 360,90
+- ESPECES / D_QUANTITE: 455
+- ESPECES / D_MONTANT: 277068,10
+- REF./TIROIR / D_QUANTITE: 0
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MASSENA.csv
+Enregistrements lus : 1250
+Enregistrements sélectionnés : 5
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 286
+- CARTES / D_MONTANT: 243418,00
+- CHEQUES / D_QUANTITE: 2
+- CHEQUES / D_MONTANT: 7029,00
+- CORRECTION / D_QUANTITE: 4
+- CORRECTION / D_MONTANT: 360,90
+- ESPECES / D_QUANTITE: 796
+- ESPECES / D_MONTANT: 466079,50
+- REF./TIROIR / D_QUANTITE: 5
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2_ModeZZ1vsModeZZ2_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1; TTS_Z2_TransactionsMois_TOUS_2023_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 24
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / AJ_ECART_QTE: 0
+- CARTES / AJ_ECART_MONTANT: 0,00
+- CHEQUES / AJ_ECART_QTE: 0
+- CHEQUES / AJ_ECART_MONTANT: 0,00
+- CORRECTION / AJ_ECART_QTE: 0
+- CORRECTION / AJ_ECART_MONTANT: 0,00
+- ESPECES / AJ_ECART_QTE: 0
+- ESPECES / AJ_ECART_MONTANT: 0,00
+- REF./TIROIR / AJ_ECART_QTE: 0
+- REF./TIROIR / AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2023_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 750
+Enregistrements sélectionnés : 750
+Enregistrements écrits : 750
+Totaux des champs numériques :
+- D_QUANTITE: 2097
+- D_MONTANT: 1002968,61
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2023_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / Z2_TransactionsMois_TOUS_2023_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 750
+Enregistrements sélectionnés : 750
+Enregistrements écrits : 750
+Totaux des champs numériques :
+- D_QUANTITE: 2097
+- D_MONTANT: 1002968,61
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / Z2_TransactionsMois_TOUS_2023_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 750
+Enregistrements sélectionnés : 500
+Enregistrements écrits : 20
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 195
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 1
+- CORRECTION / D_QUANTITE: 3
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 74
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 113
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 172689,38
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 329,00
+- CORRECTION / D_MONTANT: 332,74
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 41139,49
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 750
+Enregistrements sélectionnés : 10
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 312
+- CARTES / D_MONTANT: 237812,08
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 329,00
+- CORRECTION / D_QUANTITE: 5
+- CORRECTION / D_MONTANT: 346,13
+- ESPECES / D_QUANTITE: 183
+- ESPECES / D_MONTANT: 87462,74
+- REF./TIROIR / D_QUANTITE: 175
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 750
+Enregistrements sélectionnés : 15
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 458
+- CARTES / D_MONTANT: 313242,18
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 329,00
+- CORRECTION / D_QUANTITE: 5
+- CORRECTION / D_MONTANT: 346,13
+- ESPECES / D_QUANTITE: 298
+- ESPECES / D_MONTANT: 148610,74
+- REF./TIROIR / D_QUANTITE: 273
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2023_MATURIN.csv
+Enregistrements lus : 750
+Enregistrements sélectionnés : 50
+Enregistrements écrits : 10
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 195
+- CARTES / D_MONTANT: 172689,38
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 329,00
+- CORRECTION / D_QUANTITE: 3
+- CORRECTION / D_MONTANT: 332,74
+- ESPECES / D_QUANTITE: 74
+- ESPECES / D_MONTANT: 41139,49
+- REF./TIROIR / D_QUANTITE: 113
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z2_ModeZZ1vsModeZZ2_2023
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ1; TTS_Z2_TransactionsMois_TOUS_2023_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2023_ModeZZ2
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 4
+Enregistrements sélectionnés : 4
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- CARTES / AJ_ECART_QTE: -146
+- CARTES / AJ_ECART_MONTANT: -75430,10
+- CHEQUES / AJ_ECART_QTE: 0
+- CHEQUES / AJ_ECART_MONTANT: 0,00
+- CORRECTION / AJ_ECART_QTE: 0
+- CORRECTION / AJ_ECART_MONTANT: 0,00
+- ESPECES / AJ_ECART_QTE: -115
+- ESPECES / AJ_ECART_MONTANT: -61148,00
+- REF./TIROIR / AJ_ECART_QTE: -98
+- REF./TIROIR / AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2024_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1200
+Enregistrements sélectionnés : 1200
+Enregistrements écrits : 1200
+Totaux des champs numériques :
+- D_QUANTITE: 752
+- D_MONTANT: 443671,80
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2024_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / Z2_TransactionsMois_TOUS_2024_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 1200
+Enregistrements sélectionnés : 1200
+Enregistrements écrits : 1200
+Totaux des champs numériques :
+- D_QUANTITE: 752
+- D_MONTANT: 443671,80
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / Z2_TransactionsMois_TOUS_2024_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 1200
+Enregistrements sélectionnés : 600
+Enregistrements écrits : 24
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 93
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 0
+- CORRECTION / D_QUANTITE: 0
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 280
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 3
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 70312,60
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_MONTANT: 0,00
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 151523,30
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 1200
+Enregistrements sélectionnés : 60
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 93
+- CARTES / D_MONTANT: 70312,60
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 0
+- CORRECTION / D_MONTANT: 0,00
+- ESPECES / D_QUANTITE: 280
+- ESPECES / D_MONTANT: 151523,30
+- REF./TIROIR / D_QUANTITE: 3
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MASSENA.csv
+Enregistrements lus : 1200
+Enregistrements sélectionnés : 60
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 93
+- CARTES / D_MONTANT: 70312,60
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 0
+- CORRECTION / D_MONTANT: 0,00
+- ESPECES / D_QUANTITE: 280
+- ESPECES / D_MONTANT: 151523,30
+- REF./TIROIR / D_QUANTITE: 3
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2_ModeZZ1vsModeZZ2_2024
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ1; TTS_Z2_TransactionsMois_TOUS_2024_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZZ2
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 24
+Enregistrements sélectionnés : 24
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / AJ_ECART_QTE: 0
+- CARTES / AJ_ECART_MONTANT: 0,00
+- CHEQUES / AJ_ECART_QTE: 0
+- CHEQUES / AJ_ECART_MONTANT: 0,00
+- CORRECTION / AJ_ECART_QTE: 0
+- CORRECTION / AJ_ECART_MONTANT: 0,00
+- ESPECES / AJ_ECART_QTE: 0
+- ESPECES / AJ_ECART_MONTANT: 0,00
+- REF./TIROIR / AJ_ECART_QTE: 0
+- REF./TIROIR / AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2024_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 600
+Enregistrements sélectionnés : 600
+Enregistrements écrits : 600
+Totaux des champs numériques :
+- D_QUANTITE: 503
+- D_MONTANT: 306766,63
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2024_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods / Z2_TransactionsMois_TOUS_2024_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 600
+Enregistrements sélectionnés : 600
+Enregistrements écrits : 600
+Totaux des champs numériques :
+- D_QUANTITE: 503
+- D_MONTANT: 306766,63
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods / Z2_TransactionsMois_TOUS_2024_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MATURIN.csv
+Enregistrements lus : 600
+Enregistrements sélectionnés : 600
+Enregistrements écrits : 24
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 242
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 0
+- CORRECTION / D_QUANTITE: 3
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 124
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 134
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 253467,48
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_MONTANT: 3987,00
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 49312,15
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2024_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2024_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2024_MATURIN.csv
+Enregistrements lus : 600
+Enregistrements sélectionnés : 60
+Enregistrements écrits : 12
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 242
+- CARTES / D_MONTANT: 253467,48
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 3
+- CORRECTION / D_MONTANT: 3987,00
+- ESPECES / D_QUANTITE: 124
+- ESPECES / D_MONTANT: 49312,15
+- REF./TIROIR / D_QUANTITE: 134
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2025_MASSENA_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MASSENA.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 650
+Enregistrements sélectionnés : 650
+Enregistrements écrits : 650
+Totaux des champs numériques :
+- D_QUANTITE: 865
+- D_MONTANT: 500522,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2025_MASSENA_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / Z2_TransactionsMois_TOUS_2025_MASSENA_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 650
+Enregistrements sélectionnés : 650
+Enregistrements écrits : 650
+Totaux des champs numériques :
+- D_QUANTITE: 865
+- D_MONTANT: 500522,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / Z2_TransactionsMois_TOUS_2025_MASSENA_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 650
+Enregistrements sélectionnés : 50
+Enregistrements écrits : 2
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 150
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 0
+- CORRECTION / D_QUANTITE: 1
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 402
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 4
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 108512,50
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_MONTANT: 329,00
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 221991,10
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 650
+Enregistrements sélectionnés : 30
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 50
+- CARTES / D_MONTANT: 30462,90
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 1
+- CORRECTION / D_MONTANT: 329,00
+- ESPECES / D_QUANTITE: 102
+- ESPECES / D_MONTANT: 54052,80
+- REF./TIROIR / D_QUANTITE: 1
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 650
+Enregistrements sélectionnés : 30
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 50
+- CARTES / D_MONTANT: 30462,90
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 1
+- CORRECTION / D_MONTANT: 329,00
+- ESPECES / D_QUANTITE: 102
+- ESPECES / D_MONTANT: 54052,80
+- REF./TIROIR / D_QUANTITE: 1
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MASSENA.csv
+Enregistrements lus : 650
+Enregistrements sélectionnés : 5
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 150
+- CARTES / D_MONTANT: 108512,50
+- CHEQUES / D_QUANTITE: 0
+- CHEQUES / D_MONTANT: 0,00
+- CORRECTION / D_QUANTITE: 1
+- CORRECTION / D_MONTANT: 329,00
+- ESPECES / D_QUANTITE: 402
+- ESPECES / D_MONTANT: 221991,10
+- REF./TIROIR / D_QUANTITE: 4
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods
+Onglet de sortie : Compare_Montant_MASSENA_Z2_ModeZZ1vsModeZZ2_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1; TTS_Z2_TransactionsMois_TOUS_2025_MASSENA.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 12
+Enregistrements sélectionnés : 12
+Enregistrements écrits : 6
+Totaux des champs numériques :
+- CARTES / AJ_ECART_QTE: 0
+- CARTES / AJ_ECART_MONTANT: 0,00
+- CHEQUES / AJ_ECART_QTE: 0
+- CHEQUES / AJ_ECART_MONTANT: 0,00
+- CORRECTION / AJ_ECART_QTE: 0
+- CORRECTION / AJ_ECART_MONTANT: 0,00
+- ESPECES / AJ_ECART_QTE: 0
+- ESPECES / AJ_ECART_MONTANT: 0,00
+- REF./TIROIR / AJ_ECART_QTE: 0
+- REF./TIROIR / AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2025_MATURIN_0
+Source(s) immédiate(s) — fichier / onglet : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MATURIN.csv
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 350
+Enregistrements sélectionnés : 350
+Enregistrements écrits : 350
+Totaux des champs numériques :
+- D_QUANTITE: 1289
+- D_MONTANT: 726922,76
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z2_TransactionsMois_TOUS_2025_MATURIN_CplteAnneeMoisZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / Z2_TransactionsMois_TOUS_2025_MATURIN_0
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 350
+Enregistrements sélectionnés : 350
+Enregistrements écrits : 350
+Totaux des champs numériques :
+- D_QUANTITE: 1289
+- D_MONTANT: 726922,76
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / Z2_TransactionsMois_TOUS_2025_MATURIN_CplteAnneeMoisZ
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 350
+Enregistrements sélectionnés : 250
+Enregistrements écrits : 10
+Totaux des champs numériques :
+- . / D_QUANTITE: 0
+- 00 / D_QUANTITE: 0
+- AIDE / D_QUANTITE: 0
+- ANNULATION / D_QUANTITE: 0
+- CARTES / D_QUANTITE: 60
+- CHANGE / D_QUANTITE: 0
+- CHEQUES / D_QUANTITE: 1
+- CORRECTION / D_QUANTITE: 1
+- COUPON / D_QUANTITE: 0
+- DWN / D_QUANTITE: 0
+- ESPECES / D_QUANTITE: 46
+- IMPRIME TVA / D_QUANTITE: 0
+- NUM CAISSIER / D_QUANTITE: 0
+- OUVERTURE / D_QUANTITE: 0
+- PLU / D_QUANTITE: 0
+- PRIX / D_QUANTITE: 0
+- RAPPELTICKET / D_QUANTITE: 0
+- REC&ACCOMPTE / D_QUANTITE: 0
+- REF./TIROIR / D_QUANTITE: 63
+- REFERENCE / D_QUANTITE: 0
+- REMISE - / D_QUANTITE: 0
+- REMISE %- / D_QUANTITE: 0
+- RETOUR / D_QUANTITE: 0
+- SHIFT/No / D_QUANTITE: 0
+- SIGN-OFF / D_QUANTITE: 0
+- SORTIECAISSE / D_QUANTITE: 0
+- SOUS-TOTAL / D_QUANTITE: 0
+- TAX PGM / D_QUANTITE: 0
+- TICKETON/OFF / D_QUANTITE: 0
+- TIROIR / D_QUANTITE: 0
+- UP / D_QUANTITE: 0
+- X / D_QUANTITE: 0
+- . / D_MONTANT: 0,00
+- 00 / D_MONTANT: 0,00
+- AIDE / D_MONTANT: 0,00
+- ANNULATION / D_MONTANT: 0,00
+- CARTES / D_MONTANT: 25081,90
+- CHANGE / D_MONTANT: 0,00
+- CHEQUES / D_MONTANT: 40,00
+- CORRECTION / D_MONTANT: 329,00
+- COUPON / D_MONTANT: 0,00
+- DWN / D_MONTANT: 0,00
+- ESPECES / D_MONTANT: 24241,50
+- IMPRIME TVA / D_MONTANT: 0,00
+- NUM CAISSIER / D_MONTANT: 0,00
+- OUVERTURE / D_MONTANT: 0,00
+- PLU / D_MONTANT: 0,00
+- PRIX / D_MONTANT: 0,00
+- RAPPELTICKET / D_MONTANT: 0,00
+- REC&ACCOMPTE / D_MONTANT: 0,00
+- REF./TIROIR / D_MONTANT: 0,00
+- REFERENCE / D_MONTANT: 0,00
+- REMISE - / D_MONTANT: 0,00
+- REMISE %- / D_MONTANT: 0,00
+- RETOUR / D_MONTANT: 0,00
+- SHIFT/No / D_MONTANT: 0,00
+- SIGN-OFF / D_MONTANT: 0,00
+- SORTIECAISSE / D_MONTANT: 0,00
+- SOUS-TOTAL / D_MONTANT: 0,00
+- TAX PGM / D_MONTANT: 0,00
+- TICKETON/OFF / D_MONTANT: 0,00
+- TIROIR / D_MONTANT: 0,00
+- UP / D_MONTANT: 0,00
+- X / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 350
+Enregistrements sélectionnés : 5
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 256
+- CARTES / D_MONTANT: 268451,48
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 40,00
+- CORRECTION / D_QUANTITE: 4
+- CORRECTION / D_MONTANT: 4316,00
+- ESPECES / D_QUANTITE: 119
+- ESPECES / D_MONTANT: 65807,70
+- REF./TIROIR / D_QUANTITE: 179
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 350
+Enregistrements sélectionnés : 5
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 256
+- CARTES / D_MONTANT: 268451,48
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 40,00
+- CORRECTION / D_QUANTITE: 4
+- CORRECTION / D_MONTANT: 4316,00
+- ESPECES / D_QUANTITE: 119
+- ESPECES / D_MONTANT: 65807,70
+- REF./TIROIR / D_QUANTITE: 179
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZ
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / TD_TotalMontant_parMoisAnnee_parNatureTransaction
+Portée des compteurs lus/sélectionnés : source métier/originelle
+Source métier/originelle des compteurs : /app/output/travaux_preliminaires/Z2_TransactionsMois_TOUS_2025_MATURIN.csv
+Enregistrements lus : 350
+Enregistrements sélectionnés : 25
+Enregistrements écrits : 5
+Totaux des champs numériques :
+- CARTES / D_QUANTITE: 60
+- CARTES / D_MONTANT: 25081,90
+- CHEQUES / D_QUANTITE: 1
+- CHEQUES / D_MONTANT: 40,00
+- CORRECTION / D_QUANTITE: 1
+- CORRECTION / D_MONTANT: 329,00
+- ESPECES / D_QUANTITE: 46
+- ESPECES / D_MONTANT: 24241,50
+- REF./TIROIR / D_QUANTITE: 63
+- REF./TIROIR / D_MONTANT: 0,00
+
+Fichier de sortie : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods
+Onglet de sortie : Compare_Montant_MATURIN_Z2_ModeZZ1vsModeZZ2_2025
+Source(s) immédiate(s) — fichier / onglet : TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ1; TTS_Z2_TransactionsMois_TOUS_2025_MATURIN.ods / Z2_TotalMontant_parMoisAnnee_parNatureTransaction_2025_ModeZZ2
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 2
+Enregistrements sélectionnés : 2
+Enregistrements écrits : 1
+Totaux des champs numériques :
+- CARTES / AJ_ECART_QTE: 0
+- CARTES / AJ_ECART_MONTANT: 0,00
+- CHEQUES / AJ_ECART_QTE: 0
+- CHEQUES / AJ_ECART_MONTANT: 0,00
+- CORRECTION / AJ_ECART_QTE: 0
+- CORRECTION / AJ_ECART_MONTANT: 0,00
+- ESPECES / AJ_ECART_QTE: 0
+- ESPECES / AJ_ECART_MONTANT: 0,00
+- REF./TIROIR / AJ_ECART_QTE: 0
+- REF./TIROIR / AJ_ECART_MONTANT: 0,00
+
+Fichier de sortie : recettes_mensuelles_tous_boutique_232425.ods
+Onglet de sortie : recettes_mensuelles_tous_boutique_232425
+Source(s) immédiate(s) — fichier / onglet : TTS_EJ_ENTETES_TICKETS_MASSENA.ods / recettes_mensuelles_MASSENA_232425; TTS_EJ_ENTETES_TICKETS_MATURIN.ods / recettes_mensuelles_MATURIN_232425
+Portée des compteurs lus/sélectionnés : source immédiate
+Enregistrements lus : 64
+Enregistrements sélectionnés : 64
+Enregistrements écrits : 32
+Totaux des champs numériques :
+- MASSENA_SOMME_AJ_TOTAL_HT: 625407,76
+- MASSENA_SOMME_AJ_TOTAL_TVA_20: 125081,94
+- MASSENA_SOMME_E_TTC: 750489,70
+- MATURIN_SOMME_AJ_TOTAL_HT: 471917,39
+- MATURIN_SOMME_AJ_TOTAL_TVA_20: 94383,51
+- MATURIN_SOMME_E_TTC: 566300,90
+- AJ_TOTAL_TOUS_BOUTIQUE_HT: 1097325,15
+- AJ_TOTAL_TOUS_BOUTIQUE_TVA: 219465,45
+- AJ_TOTAL_TOUS_BOUTIQUE_TTC: 1316790,60
+

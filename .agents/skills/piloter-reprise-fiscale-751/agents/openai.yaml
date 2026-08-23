@@ -1,4 +1,0 @@
-interface:
-  display_name: "Piloter la reprise fiscale 751"
-  short_description: "Cadre de conformité du dossier fiscal 751"
-  default_prompt: "Utilise $piloter-reprise-fiscale-751 pour analyser, modifier ou valider le dossier CAMMY 751 sans compromettre la traçabilité."
