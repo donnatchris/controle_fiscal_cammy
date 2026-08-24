@@ -68,6 +68,15 @@ def test_traiter_repertoire_enregistre_recursivement_les_prefixes_retenus(
     assert montant_retour == "-125.50"
 
 
+def test_determiner_boutique_ignore_le_chemin_avant_la_racine_sources(
+    tmp_path: Path,
+) -> None:
+    sources = tmp_path / "MASSENA" / "fichiers_sources"
+    chemin_fichier = sources / "2023_MATURIN" / "Z002.CSV"
+
+    assert z2_vers_db.determiner_boutique(chemin_fichier, sources) == "MATURIN"
+
+
 def test_traiter_repertoire_sarrete_sur_un_fichier_invalide(
     tmp_path: Path,
 ) -> None:

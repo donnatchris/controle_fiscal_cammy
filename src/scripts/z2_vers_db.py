@@ -5,11 +5,11 @@ from pathlib import Path
 
 from classes.z import Z
 from shared.constantes import (
-    BOUTIQUES,
     CHEMIN_DB,
     PREFIXES_FICHIERS_Z2,
 )
 from shared.database import ouvrir_base_existante
+from shared.sources import trouver_boutiques_dans_sources
 
 TABLES_GEREES = ("z2_entetes", "z2_lignes")
 
@@ -174,11 +174,15 @@ def est_fichier_z2(chemin_fichier: Path) -> bool:
     )
 
 
-def determiner_boutique(chemin_fichier: Path) -> str:
-    """Determine l'unique boutique presente dans le chemin du fichier."""
-    boutiques_trouvees = [
-        boutique for boutique in BOUTIQUES if boutique in str(chemin_fichier).upper()
-    ]
+def determiner_boutique(
+    chemin_fichier: Path,
+    chemin_repertoire: Path,
+) -> str:
+    """Determine la boutique depuis la seule arborescence des sources."""
+    boutiques_trouvees = trouver_boutiques_dans_sources(
+        chemin_fichier,
+        chemin_repertoire,
+    )
     if len(boutiques_trouvees) != 1:
         raise ValueError(
             "Impossible de determiner la boutique pour le fichier "
@@ -191,6 +195,7 @@ def determiner_boutique(chemin_fichier: Path) -> str:
 def traiter_fichier(
     connection: sqlite3.Connection,
     chemin_fichier: Path,
+    chemin_repertoire: Path,
 ) -> None:
     """Parse et enregistre un fichier Z2."""
     raw = chemin_fichier.read_text(
@@ -198,7 +203,7 @@ def traiter_fichier(
         errors="replace",
     )
     z2 = Z.from_raw(
-        boutique=determiner_boutique(chemin_fichier),
+        boutique=determiner_boutique(chemin_fichier, chemin_repertoire),
         nom_fichier=chemin_fichier.name,
         raw=raw,
     )
@@ -219,6 +224,7 @@ def traiter_repertoire(
         traiter_fichier(
             connection=connection,
             chemin_fichier=chemin_fichier,
+            chemin_repertoire=chemin_repertoire,
         )
 
     connection.commit()

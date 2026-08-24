@@ -147,3 +147,24 @@ def test_traiter_repertoire_produit_des_logs_compacts(
             "2 tickets enregistrés, 0 ignorés"
         ),
     ]
+
+
+def test_traiter_repertoire_ignore_une_boutique_avant_la_racine_sources(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sources = tmp_path / "MASSENA" / "fichiers_sources"
+    repertoire = sources / "2023_MATURIN"
+    repertoire.mkdir(parents=True)
+    (repertoire / "EJ310123.TXT").write_text("", encoding="cp1252")
+    boutiques: list[str] = []
+    monkeypatch.setattr(
+        ej_vers_db,
+        "traiter_fichier",
+        lambda **kwargs: boutiques.append(kwargs["boutique"]) or (0, 0),
+    )
+
+    with sqlite3.connect(":memory:") as connection:
+        ej_vers_db.traiter_repertoire(connection, sources)
+
+    assert boutiques == ["MATURIN"]

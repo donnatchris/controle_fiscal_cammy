@@ -5,8 +5,9 @@ from pathlib import Path
 
 # À adapter selon le nom réel de ton fichier
 from classes.ticket import EjTicket
-from shared.constantes import BOUTIQUES, CHEMIN_DB, SEPARATEUR_TICKET
+from shared.constantes import CHEMIN_DB, SEPARATEUR_TICKET
 from shared.database import ouvrir_base_existante
+from shared.sources import trouver_boutiques_dans_sources
 
 tickets_ignores: dict[str, int] = {}
 TABLES_GEREES = ("tickets", "lignes_ticket")
@@ -301,11 +302,10 @@ def traiter_repertoire(
     total_tickets_ignores = 0
 
     for chemin_fichier in fichiers:
-        boutiques_trouvees = [
-            boutique
-            for boutique in BOUTIQUES
-            if boutique in str(chemin_fichier).upper()
-        ]
+        boutiques_trouvees = trouver_boutiques_dans_sources(
+            chemin_fichier,
+            chemin_repertoire,
+        )
 
         if not boutiques_trouvees or len(boutiques_trouvees) > 1:
             print(
