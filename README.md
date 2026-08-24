@@ -1,4 +1,4 @@
-# Contrôle fiscal des données de caisse — dossier 751
+# Guide de fonctionnement et choix d’implémentation — CDC 751
 
 Ce programme reconstruit les données de caisse de CAMMY FRANCE DEVELOPPEMENT LTD à partir des journaux électroniques (EJ) et des rapports Z, les centralise dans SQLite, puis génère les tableaux de contrôle au format LibreOffice Calc (`.ods`).
 
@@ -27,6 +27,8 @@ docker compose up --build; docker compose down --rmi local
 ### Récupérer les résultats
 
 Les résultats sont disponibles **dans le dossier local `output/`** après l'arrêt du service.
+
+> Si un dossier `output/` existe déjà, son contenu est copié dans `output/_sauvegarde_<horodatage>/` avant la régénération des fichiers actifs.
 
 Les sources placées dans `fichiers_sources/` ne sont jamais modifiées.
 
@@ -124,6 +126,15 @@ Certaines feuilles demandées par le cahier des charges comparent des données p
 Afin de ne pas rattacher arbitrairement une comparaison à l'une de ses deux sources, le choix a été fait de créer, dans ces situations, **un classeur indépendant contenant la feuille de comparaison**.
 
 Cette organisation permet de distinguer clairement les données sources des résultats issus de leur rapprochement.
+
+---
+
+## Limites du périmètre
+
+- Le workflow traite les sources de caisse EJ/Z présentes pour MASSENA et MATURIN sur 2023, 2024 et 2025.
+- Les seuils de validation sont volontairement liés au jeu de données actuel. Ajouter ou retirer des sources nécessite de mettre à jour ces invariants dans `src/scripts/reconstruire_base_751.py` et les volumes attendus dans `src/scripts/db_vers_csv_751.py`.
+- Les déclarations CA3 ne sont pas incluses dans les sources actuelles ; leur saisie reste externe au programme.
+- Le programme ne traite pas les FEC et ne constitue pas à lui seul une attestation de conformité fiscale ou juridique.
 
 ---
 
@@ -271,6 +282,148 @@ Au début d'une nouvelle exécution, si `output/` n'est pas vide, son contenu es
 
 ---
 
+## Architecture du projet
+
+```text
+├── src/
+│   ├── traitement.py               Orchestration des dix étapes
+│   ├── classes/                    Parseurs et modèles EJ/Z
+│   ├── scripts/                    SQLite, CSV, ODS et rapprochements
+│   └── shared/                     Constantes et fonctions partagées
+├── documentation                   Documentation du projet
+├── tests/unit/                     Tests unitaires et tests d'orchestration
+├── tests/integration/              Tests d'intégration
+├── fichiers_sources/               Sources EJ/Z et documents du dossier 751
+├── output/                         Base, intermédiaires et résultats générés
+├── Dockerfile                      Environnement Python/LibreOffice/PyUNO
+├── docker-compose.yml              Montage du dossier de sortie
+├── pyproject.toml                  Dépendances et commande `traitement`
+└── uv.lock                         Versions verrouillées
+```
+
+Les scripts de `src/scripts/` peuvent être exécutés séparément pour le développement, mais ils ont des dépendances d'ordre entre leurs fichiers d'entrée. Pour une production cohérente, utiliser le point d'entrée `traitement`.
+
+---
+
+## Documentation
+
+Le répertoire `documentation/` contient les documents de référence du projet, notamment :
+
+* `README.pdf` : explique les fonctionnement du projet et les choix d'implémentation ;
+* `RAPPORT_CONFORMITE_CDC_751.pdf` : rapport de conformité au cahier des charges 751, produit par le skill `audit-conformite-cdc-751`, qui vérifie la que le projet respecte les exigences du cahier des charges et que la chaîne sources–SQLite–traitements–ODS est conforme ;
+* `ANALYSE_JUSTIFICATION_CDC_751.pdf` : analyse des écarts et justification des choix d'implémentation pour fournir des éléments de réponse aux questions du cahier des charges 751.
+
+---
+
+## Tests
+
+Lancer la suite complète :
+
+```bash
+uv run python -m pytest -v
+```
+
+La suite couvre les parseurs EJ/Z, la reconstruction SQLite, les contrats CSV, la création et l'enrichissement des feuilles ODS, les rapprochements, la consolidation et le rapport d'exécution.
+
+
+---
+
+## Installation de Docker si pas encore installé
+
+Docker Compose est inclus avec les versions récentes de Docker Desktop. La commande utilisée par le projet est donc :
+
+```bash
+docker compose
+```
+
+et non l'ancienne commande `docker-compose`.
+
+#### Linux
+
+Sur une distribution Debian/Ubuntu, Docker peut être installé avec :
+
+```bash
+sudo apt update
+sudo apt install -y docker.io docker-compose-v2
+```
+
+Démarrer et activer Docker :
+
+```bash
+sudo systemctl enable --now docker
+```
+
+Pour pouvoir utiliser Docker sans `sudo` :
+
+```bash
+sudo usermod -aG docker "$USER"
+```
+
+Il faut ensuite fermer puis rouvrir la session utilisateur.
+
+Vérification :
+
+```bash
+docker --version
+docker compose version
+```
+
+#### macOS
+
+Le moyen le plus simple est d'installer Docker Desktop avec Homebrew :
+
+```bash
+brew install --cask docker
+```
+
+Puis lancer Docker Desktop :
+
+```bash
+open -a Docker
+```
+
+Vérification :
+
+```bash
+docker --version
+docker compose version
+```
+
+Docker Desktop doit être lancé avant d'exécuter le traitement.
+
+#### Windows
+
+Depuis PowerShell, Docker Desktop peut être installé avec `winget` :
+
+```powershell
+winget install -e --id Docker.DockerDesktop
+```
+
+Docker Desktop utilise généralement WSL 2 comme environnement d'exécution. Si WSL n'est pas encore installé :
+
+```powershell
+wsl --install
+```
+
+Un redémarrage de Windows peut être nécessaire.
+
+Docker Desktop peut ensuite être lancé depuis le menu Démarrer ou avec :
+
+```powershell
+Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+```
+
+Vérification :
+
+```powershell
+docker --version
+docker compose version
+```
+
+Docker Desktop doit être lancé avant d'exécuter le traitement.
+
+---
+
 ## Exécution locale
 
 L'exécution hors Docker nécessite :
@@ -316,45 +469,3 @@ Afficher l'aide :
 ```bash
 uv run traitement --help
 ```
-
----
-
-## Architecture du projet
-
-```text
-├── src/
-│   ├── traitement.py              Orchestration des dix étapes
-│   ├── classes/                    Parseurs et modèles EJ/Z
-│   ├── scripts/                    SQLite, CSV, ODS et rapprochements
-│   └── shared/                     Constantes et fonctions partagées
-├── tests/unit/                     Tests unitaires et tests d'orchestration
-├── fichiers_sources/               Sources EJ/Z et documents du dossier 751
-├── output/                          Base, intermédiaires et résultats générés
-├── Dockerfile                       Environnement Python/LibreOffice/PyUNO
-├── docker-compose.yml               Montage du dossier de sortie
-├── pyproject.toml                   Dépendances et commande `traitement`
-└── uv.lock                          Versions verrouillées
-```
-
-Les scripts de `src/scripts/` peuvent être exécutés séparément pour le développement, mais ils ont des dépendances d'ordre entre leurs fichiers d'entrée. Pour une production cohérente, utiliser le point d'entrée `traitement`.
-
----
-
-## Tests
-
-Lancer la suite complète :
-
-```bash
-uv run python -m pytest -v
-```
-
-La suite couvre les parseurs EJ/Z, la reconstruction SQLite, les contrats CSV, la création et l'enrichissement des feuilles ODS, les rapprochements, la consolidation et le rapport d'exécution.
-
----
-
-## Limites du périmètre
-
-- Le workflow traite les sources de caisse EJ/Z présentes pour MASSENA et MATURIN sur 2023, 2024 et 2025.
-- Les seuils de validation sont volontairement liés au jeu de données actuel. Ajouter ou retirer des sources nécessite de mettre à jour ces invariants dans `src/scripts/reconstruire_base_751.py` et les volumes attendus dans `src/scripts/db_vers_csv_751.py`.
-- Les déclarations CA3 ne sont pas incluses dans les sources actuelles ; leur saisie reste externe au programme.
-- Le programme ne traite pas les FEC et ne constitue pas à lui seul une attestation de conformité fiscale ou juridique.

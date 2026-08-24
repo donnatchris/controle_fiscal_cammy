@@ -48,7 +48,9 @@ COLONNES_ENTETES = (
 COLONNES_TEXTE = {"nomfichier", "E_NUM_INTERNE", "E_NUM_TICKET", "E_HEURE_TICKET"}
 COLONNE_DATE = "E_DATE_TICKET"
 FORMAT_DATE = "YYYY-MM-DD"
-FORMAT_NOMBRE = "0.00"
+# Les formats sont créés avec la locale fr-FR : la virgule doit être utilisée
+# comme séparateur décimal, sinon Calc affiche les montants divisés par 100.
+FORMAT_NOMBRE = "0,00"
 
 COLONNES_CTRL_COHERENCE_ENTETE = (
     "AJ_TVA1_CALCULE",

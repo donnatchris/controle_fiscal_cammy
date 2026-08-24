@@ -16,6 +16,7 @@ def test_ajouter_transactions_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypa
         encoding="utf-8-sig",
     )
     rows: list[object] = []
+    formats_demandes: list[str] = []
 
     class FausseFeuille:
         def setName(self, _: str) -> None:
@@ -34,7 +35,11 @@ def test_ajouter_transactions_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypa
         "ecrire_tableau",
         lambda _feuille, lignes, *_args, **_kwargs: rows.extend(lignes),
     )
-    monkeypatch.setattr(ods_z2, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(
+        ods_z2,
+        "obtenir_format",
+        lambda _formats, format_chaine: formats_demandes.append(format_chaine) or 42,
+    )
     monkeypatch.setattr(ods_z2, "definir_largeur_colonnes", lambda *_: None)
 
     ods_z2.ajouter_transactions_0(
@@ -58,6 +63,7 @@ def test_ajouter_transactions_0_lit_le_csv_preparatoire(tmp_path: Path, monkeypa
         "D_QUANTITE": "17",
         "D_MONTANT": "8967.90",
     }]
+    assert formats_demandes == ["0,00"]
 
 
 def test_periode_cloture_depuis_nom_fichier_extrait_le_mois_independamment_de_E_DATE() -> None:

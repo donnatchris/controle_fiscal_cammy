@@ -1,0 +1,4 @@
+interface:
+  display_name: "Justifier les écarts CDC 751"
+  short_description: "Préparer les justifications fiscales des écarts"
+  default_prompt: "Utilise $justifier-ecarts-fisc-cdc-751 pour qualifier les écarts du dossier 751 et préparer les justifications documentées de DEVFRA."

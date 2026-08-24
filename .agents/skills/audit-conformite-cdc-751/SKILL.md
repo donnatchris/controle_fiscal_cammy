@@ -5,7 +5,7 @@ description: Auditer ou réauditer les livrables du projet CAMMY selon le cahier
 
 # Audit de conformité CDC 751
 
-Produire un audit prouvé, feuille par feuille, puis écrire ou actualiser `RAPPORT_CONFORMITE_CDC_751.pdf` à la racine du projet.
+Produire un audit prouvé, feuille par feuille, puis écrire ou actualiser un pdf clair et lisible `RAPPORT_CONFORMITE_CDC_751.pdf` à la racine du projet.
 
 ## Références obligatoires
 

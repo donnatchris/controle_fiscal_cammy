@@ -115,12 +115,17 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
             return FaussePlage()
 
     feuille = FausseFeuille()
+    formats_demandes: list[str] = []
     monkeypatch.setattr(
         ods_ej_entetes,
         "copier_feuille",
         lambda _document, source, destination: destinations.append((source, destination)) or feuille,
     )
-    monkeypatch.setattr(ods_ej_entetes, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(
+        ods_ej_entetes,
+        "obtenir_format",
+        lambda _formats, format_chaine: formats_demandes.append(format_chaine) or 42,
+    )
     monkeypatch.setattr(ods_ej_entetes, "definir_largeur_colonnes", lambda *_: None)
 
     ods_ej_entetes.ajouter_CtrlCoherenceEntete(
@@ -142,6 +147,7 @@ def test_ajouter_ctrl_coherence_entete_copie_la_feuille_triee_et_ajoute_les_form
         "=F3*20%", "=J3-S3", "=F3+J3", "=O3-U3", "=O3-(P3+R3)",
     ]
     assert [feuille.getCellByPosition(index, 1).NumberFormat for index in range(18, 23)] == [42] * 5
+    assert formats_demandes == ["0,00"]
 
 
 def test_ajouter_sequentialite_copie_uniquement_les_colonnes_demandees_en_valeur(

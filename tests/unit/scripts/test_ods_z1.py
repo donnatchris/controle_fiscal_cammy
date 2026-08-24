@@ -14,6 +14,7 @@ def test_add_Synthese_0_copie_le_csv_preparatoire(tmp_path: Path, monkeypatch) -
         encoding="utf-8-sig",
     )
     lignes: list[object] = []
+    formats_demandes: list[str] = []
 
     class FausseFeuille:
         def setName(self, _: str) -> None:
@@ -28,7 +29,11 @@ def test_add_Synthese_0_copie_le_csv_preparatoire(tmp_path: Path, monkeypatch) -
         getNumberFormats=lambda: object(),
     )
     monkeypatch.setattr(ods_z1, "ecrire_tableau", lambda _f, rows, *_a, **_kw: lignes.extend(rows))
-    monkeypatch.setattr(ods_z1, "obtenir_format", lambda _formats, _format: 42)
+    monkeypatch.setattr(
+        ods_z1,
+        "obtenir_format",
+        lambda _formats, format_chaine: formats_demandes.append(format_chaine) or 42,
+    )
     monkeypatch.setattr(ods_z1, "definir_largeur_colonnes", lambda *_: None)
 
     ods_z1.add_Synthese_0(
@@ -52,6 +57,7 @@ def test_add_Synthese_0_copie_le_csv_preparatoire(tmp_path: Path, monkeypatch) -
         "D_QUANTITE": "17",
         "D_MONTANT": "8967.90",
     }]
+    assert formats_demandes == ["0,00"]
 
 
 def test_ajouter_Cplte_copie_la_feuille_initiale_et_ajoute_la_periode_du_nom_fichier(

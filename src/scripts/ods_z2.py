@@ -59,7 +59,9 @@ COLONNES_TEXTE = {
 COLONNE_DATE = "E_DATE"
 COLONNE_MONTANT = "D_MONTANT"
 FORMAT_DATE = "YYYY-MM-DD"
-FORMAT_MONTANT = "0.00"
+# Les formats sont créés avec la locale fr-FR : la virgule doit être utilisée
+# comme séparateur décimal, sinon Calc affiche les montants divisés par 100.
+FORMAT_MONTANT = "0,00"
 COLONNES_CPLTE_ANNEE_MOIS_Z = ("AJ_Année_Z", "AJ_Mois_Z")
 MOTIF_PERIODE_NOM_FICHIER = re.compile(
     r"_(?P<mois>0[1-9]|1[0-2])(?P<annee>\d{4})(?=_|\s*\.)",
